@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.lodi</groupId>
+        <artifactId>lodi</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>lodi-common</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>lodi-common-log</module>
+        <module>lodi-common-config</module>
+        <module>lodi-common-model</module>
+        <module>lodi-common-core</module>
+        <module>lodi-common-security</module>
+    </modules>
+
+</project>
