@@ -5,5 +5,6 @@ package com.lodi.common.core.mapper;
  * @author MaybeBin
  * @createDate 2023-09-19
  */
-public interface BaseMapper {
+public interface BaseMapper<T> extends com.baomidou.mybatisplus.core.mapper.BaseMapper<T> {
+
 }

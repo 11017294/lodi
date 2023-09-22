@@ -11,4 +11,12 @@
 
     <artifactId>lodi-common-model</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.lodi</groupId>
+            <artifactId>lodi-common-core</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 </project>

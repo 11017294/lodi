@@ -53,3 +53,14 @@ spring:
             delete-allow: false # 不允许执行delete操作
             create-table-allow: false # 不允许创建表
             # 更多用法，参考官方文档：https://github.com/alibaba/druid/wiki/%E9%85%8D%E7%BD%AE-wallfilter
+
+#mybatis配置
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  #日志输出配置
+  global-config:
+    db-config:
+      logic-delete-field: is_delete  #全局逻辑删除字段值
+      logic-delete-value: 1 #逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 #逻辑未删除值(默认为 0)

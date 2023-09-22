@@ -1,13 +1,19 @@
 package com.lodi.admin;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * admin 服务
  * @author MaybeBin
  * @createDate 2023-09-19
  */
+@MapperScan("com.lodi.xo.mapper")
+@ComponentScan(basePackages = {
+        "com.lodi.xo.service"
+})
 @SpringBootApplication
 public class AdminApplication {
 

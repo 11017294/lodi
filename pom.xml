@@ -30,6 +30,7 @@
         <spring-cloud-alibaba.version>2021.1</spring-cloud-alibaba.version>
         <spring-boot.version>2.7.14</spring-boot.version>
         <!-- DB 相关 -->
+        <mybatis.plus.version>3.5.1</mybatis.plus.version>
         <druid.version>1.2.18</druid.version>
     </properties>
 
@@ -58,6 +59,11 @@
                 <scope>import</scope>
             </dependency>
             <!-- DB 相关 -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis.plus.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
