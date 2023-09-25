@@ -4,7 +4,7 @@ server:
 
 spring:
   application:
-    name: lodi-web
+    name: lodi-admin
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/lodi?characterEncoding=utf8&serverTimezone=UTC
@@ -64,3 +64,29 @@ mybatis-plus:
       logic-delete-field: is_delete  #全局逻辑删除字段值
       logic-delete-value: 1 #逻辑已删除值(默认为 1)
       logic-not-delete-value: 0 #逻辑未删除值(默认为 0)
+
+# springdoc-openapi项目配置
+springdoc:
+  api-docs:
+    enabled: true # 是否开启接口文档
+  swagger-ui:
+    enabled: true # 2.1 是否开启 Swagger 文档的官方 UI 界面
+    path: /swagger-ui.html
+    persistAuthorization: true # 持久化认证数据，如果设置为 true，它会保留授权数据并且不会在浏览器关闭/刷新时丢失
+  default-flat-param-object: true # 参见 https://doc.xiaominfo.com/docs/faq/v4/knife4j-parameterobject-flat-param 文档
+# knife4j的增强配置，不需要增强可以不配
+knife4j:
+  enable: true
+  setting:
+    language: zh_cn
+
+lodi:
+  info:
+    version: 1.0.0
+  swagger:
+    title: 管理后台
+    description: 提供管理员管理的所有功能
+    author: MaybeBin
+    version: ${lodi.info.version}
+    url: https://github.com/11017294
+    email: 11017294@qq.com
