@@ -1,4 +1,4 @@
-package com.lodi;
+package com.lodi.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
