@@ -15,7 +15,8 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan(basePackages = {
         "com.lodi.xo.service",
         "com.lodi.admin",
-        "com.lodi.common.config"
+        "com.lodi.common.config",
+        "com.lodi.common.core"
 })
 @SpringBootApplication
 @EnableDiscoveryClient
