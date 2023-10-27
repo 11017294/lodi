@@ -1,8 +1,9 @@
 package com.lodi.common.security.filter;
 
+import com.lodi.common.model.entity.User;
+import com.lodi.xo.security.SecurityUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -14,7 +15,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collection;
 
 /**
  * JWT认证过滤器 【验证token有效性】
@@ -37,42 +37,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             log.error("前端传递的token为: {}", token);
 
             // 通过用户名加载SpringSecurity用户
-            UserDetails userDetails = new UserDetails() {
-                @Override
-                public Collection<? extends GrantedAuthority> getAuthorities() {
-                    return null;
-                }
-
-                @Override
-                public String getPassword() {
-                    return "aaa";
-                }
-
-                @Override
-                public String getUsername() {
-                    return "aaa";
-                }
-
-                @Override
-                public boolean isAccountNonExpired() {
-                    return false;
-                }
-
-                @Override
-                public boolean isAccountNonLocked() {
-                    return false;
-                }
-
-                @Override
-                public boolean isCredentialsNonExpired() {
-                    return false;
-                }
-
-                @Override
-                public boolean isEnabled() {
-                    return false;
-                }
-            };
+            UserDetails userDetails = new SecurityUser(new User());
 
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                     userDetails, null, userDetails.getAuthorities());

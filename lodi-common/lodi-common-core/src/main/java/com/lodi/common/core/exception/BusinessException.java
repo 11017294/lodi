@@ -13,6 +13,11 @@ public class BusinessException extends RuntimeException {
 
     private final int code;
 
+    public BusinessException(Exception e) {
+        super(e);
+        code = ErrorCode.SYSTEM_ERROR.getCode();
+    }
+
     public BusinessException(ErrorCode errorCode) {
         super(errorCode.getMessage());
         this.code = errorCode.getCode();
