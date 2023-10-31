@@ -6,8 +6,8 @@
 
     <resultMap id="BaseResultMap" type="com.lodi.common.model.entity.User">
             <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="userAccount" column="user_account" jdbcType="VARCHAR"/>
-            <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+            <result property="username" column="username" jdbcType="VARCHAR"/>
+            <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
             <result property="userPassword" column="user_password" jdbcType="VARCHAR"/>
             <result property="userAvatar" column="user_avatar" jdbcType="VARCHAR"/>
             <result property="summary" column="summary" jdbcType="VARCHAR"/>
@@ -30,7 +30,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,user_account,user_name,
+        id,username,nickname,
         user_password,user_avatar,summary,
         birthday,gender,email,
         user_role,login_count,ip_source,

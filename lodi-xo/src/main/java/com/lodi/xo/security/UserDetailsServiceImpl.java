@@ -23,7 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userService.getUserByAccount(username);
+        User user = userService.getUserByUsername(username);
         if(user == null){
             throw new UsernameNotFoundException("用户不存在");
         }
@@ -36,7 +36,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         return new SecurityUser(
                 user.getId(),
-                user.getUserAccount(),
+                user.getUsername(),
                 user.getUserPassword(),
                 user.getStatus(),
                 JwtUtils.generateExpireTime(),

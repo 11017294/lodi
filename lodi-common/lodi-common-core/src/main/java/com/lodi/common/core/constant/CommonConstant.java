@@ -22,7 +22,7 @@ public interface CommonConstant {
      */
     String USER_ID = "userId";
 
-    String USER_NAME = "userName";
+    String USERNAME = "username";
 
     String EXPIRE_TIME = "expireTime";
 

@@ -9,8 +9,8 @@ use lodi;
 CREATE TABLE IF NOT EXISTS lodi.t_user
 (
     id                 BIGINT         NOT NULL AUTO_INCREMENT COMMENT 'id' PRIMARY KEY,
-    user_account       VARCHAR(256)   NOT NULL                COMMENT '用户账号',
-    user_name          VARCHAR(256)   NOT NULL                COMMENT '用户名',
+    username           VARCHAR(256)   NOT NULL                COMMENT '用户名',
+    nickname           VARCHAR(256)   NOT NULL                COMMENT '昵称',
     user_password      VARCHAR(256)   NOT NULL                COMMENT '用户密码',
     user_avatar        VARCHAR(256)   NOT NULL                COMMENT '用户头像',
     summary            VARCHAR(200)                           COMMENT '自我简介最多150字',

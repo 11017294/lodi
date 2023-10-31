@@ -37,7 +37,7 @@ public class UserController {
         return Result.success(userService.listUser(userQueryRequest));
     }
 
-    @Operation(summary = "获取用户列表")
+    @Operation(summary = "获取用户分页")
     @GetMapping("page")
     public Result<Page<User>> getUserPage(UserPageRequest userPageRequest){
         return Result.success(userService.getUserPage(userPageRequest));

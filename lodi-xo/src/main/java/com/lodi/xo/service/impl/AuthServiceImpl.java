@@ -71,7 +71,7 @@ public class AuthServiceImpl implements AuthService {
             throw new BusinessException("两次密码不一致", PARAMS_ERROR.getCode());
         }
         // 校验账号唯一性
-        User oldUser = userService.getUserByAccount(userRegisterRequest.getUsername());
+        User oldUser = userService.getUserByUsername(userRegisterRequest.getUsername());
         if(Objects.nonNull(oldUser)){
             throw new BusinessException("账号已存在", PARAMS_ERROR.getCode());
         }
@@ -79,14 +79,12 @@ public class AuthServiceImpl implements AuthService {
         String encode = encodePassword(userPassword);
         // 转换对象
         User user = new User();
-        user.setUserAccount(userRegisterRequest.getUsername());
-
         BeanUtils.copyProperties(userRegisterRequest, user);
         // 设置默认值
-        user.setUserName(user.getUserAccount());
+        user.setNickname(user.getUsername());
         user.setUserPassword(encode);
         // todo 临时设置
-        user.setUserAvatar(user.getUserAccount());
+        user.setUserAvatar(user.getUsername());
 
         return userService.save(user);
     }

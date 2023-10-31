@@ -24,14 +24,14 @@ public class User extends BaseEntity<User> {
     private Long id;
 
     /**
-     * 用户账号
-     */
-    private String userAccount;
-
-    /**
      * 用户名
      */
-    private String userName;
+    private String username;
+
+    /**
+     * 昵称
+     */
+    private String nickname;
 
     /**
      * 用户密码

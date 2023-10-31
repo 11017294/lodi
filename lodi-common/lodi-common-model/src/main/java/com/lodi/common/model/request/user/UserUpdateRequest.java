@@ -20,8 +20,8 @@ public class UserUpdateRequest implements Serializable {
     @Schema(title = "id", description = "id", requiredMode = Schema.RequiredMode.REQUIRED, example = "10000")
     private Long id;
 
-    @Schema(title = "用户名", description = "用户名", example = "lodi")
-    private String userName;
+    @Schema(title = "昵称", description = "昵称", example = "lodi")
+    private String nickname;
 
     @Schema(title = "用户头像", description = "用户头像", example = "")
     private String userAvatar;

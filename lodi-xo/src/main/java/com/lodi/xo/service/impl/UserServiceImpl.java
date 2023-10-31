@@ -34,8 +34,8 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     }
 
     @Override
-    public User getUserByAccount(String userAccount) {
-        return baseMapper.selectByUserAccount(userAccount);
+    public User getUserByUsername(String username) {
+        return baseMapper.selectByUsername(username);
     }
 
 }

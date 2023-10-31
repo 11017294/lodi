@@ -40,7 +40,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
         // 请求头 'Authorization': token
         if (StringUtils.hasText(token)) {
-            log.error("前端传递的token为: {}", token);
+            log.info("前端传递的token为: {}", token);
 
             LoginUser loginUser = tokenService.getLoginUser(token);
             if(Objects.nonNull(loginUser)){

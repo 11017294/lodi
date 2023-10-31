@@ -49,7 +49,7 @@ public class TokenService {
         // <4> 生成 JWT 的 Token
         Map<String, Object> claims = new HashMap<>();
         claims.put(USER_ID, loginUser.getId());
-        claims.put(USER_NAME, loginUser.getUsername());
+        claims.put(USERNAME, loginUser.getUsername());
         claims.put(EXPIRE_TIME, loginUser.getExpireTime());
 
         return JwtUtils.createToken(claims);

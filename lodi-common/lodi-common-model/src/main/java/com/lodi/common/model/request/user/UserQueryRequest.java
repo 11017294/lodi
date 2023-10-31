@@ -17,11 +17,11 @@ public class UserQueryRequest implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(title = "用户账号", description = "用户账号", example = "lodi")
-    private String userAccount;
-
     @Schema(title = "用户名", description = "用户名", example = "lodi")
-    private String userName;
+    private String username;
+
+    @Schema(title = "昵称", description = "昵称", example = "lodi")
+    private String nickname;
 
     @Schema(title = "用户头像", description = "用户头像", example = "")
     private String userAvatar;

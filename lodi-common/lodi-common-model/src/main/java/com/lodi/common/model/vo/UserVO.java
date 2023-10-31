@@ -20,16 +20,16 @@ public class UserVO implements Serializable {
     private Long id;
 
     /**
-     * 用户账号
-     */
-    @Schema(title = "用户账号")
-    private String userAccount;
-
-    /**
      * 用户名
      */
     @Schema(title = "用户名")
-    private String userName;
+    private String username;
+
+    /**
+     * 昵称
+     */
+    @Schema(title = "昵称")
+    private String nickname;
 
     /**
      * 用户头像

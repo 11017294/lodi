@@ -30,9 +30,9 @@ public class JwtUtils {
         return claims.get(USER_ID, Long.class);
     }
 
-    public static String getUserName(String token) {
+    public static String getUsername(String token) {
         Claims claims = parseToken(token);
-        return claims.get(USER_NAME, String.class);
+        return claims.get(USERNAME, String.class);
     }
 
     public static Long getExpireTime(String token) {

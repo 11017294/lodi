@@ -16,7 +16,7 @@ public class UserRegisterRequest implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(title = "用户账号", description = "用户账号", requiredMode = Schema.RequiredMode.REQUIRED, example = "admin")
+    @Schema(title = "用户名", description = "用户名", requiredMode = Schema.RequiredMode.REQUIRED, example = "admin")
     private String username;
 
     @Schema(title = "密码", description = "密码", requiredMode = Schema.RequiredMode.REQUIRED, example = "123456")

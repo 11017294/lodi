@@ -19,6 +19,6 @@ public interface UserService extends BaseService<User> {
 
     Page<User> getUserPage(UserPageRequest userPageRequest);
 
-    User getUserByAccount(String userAccount);
+    User getUserByUsername(String username);
 
 }
