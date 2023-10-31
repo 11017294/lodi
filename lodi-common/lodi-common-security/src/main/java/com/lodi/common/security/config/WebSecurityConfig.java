@@ -52,18 +52,6 @@ public class WebSecurityConfig {
                 .authenticationEntryPoint(authenticationEntryPoint())
                 .accessDeniedHandler(accessDeniedHandler());
 
-        // 登录
-        http.formLogin()
-                .loginProcessingUrl("/auth/login")
-                .successHandler(authenticationSuccessHandler())
-                .failureHandler(authenticationFailureHandler());
-
-        // 退出
-        http.logout()
-                .logoutUrl("/logout")   // 设置注销入口地址
-                .logoutSuccessHandler(logoutSuccessHandler())
-                .invalidateHttpSession(true);
-
         // 会话管理
         http.sessionManagement()
                 .invalidSessionStrategy(invalidSessionStrategy()); // 超时处理
@@ -99,18 +87,9 @@ public class WebSecurityConfig {
                 .antMatchers(
                         "/v2/api-docs/**",
                         "/v3/api-docs/**",
+                        "/auth/register",
                         "/auth/login"
                 );
-    }
-
-    @Bean
-    public AuthenticationSuccessHandler authenticationSuccessHandler() {
-        return new AuthenticationSuccessHandlerImpl();
-    }
-
-    @Bean
-    public AuthenticationFailureHandler authenticationFailureHandler() {
-        return new AuthenticationFailureHandlerImpl();
     }
 
     @Bean
@@ -126,11 +105,6 @@ public class WebSecurityConfig {
     @Bean
     public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter() {
         return new JwtAuthenticationTokenFilter();
-    }
-
-    @Bean
-    public LogoutSuccessHandler logoutSuccessHandler() {
-        return new LogoutSuccessHandlerImpl();
     }
 
     @Bean

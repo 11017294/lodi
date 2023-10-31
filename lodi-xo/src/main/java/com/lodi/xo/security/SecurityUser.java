@@ -1,10 +1,12 @@
 package com.lodi.xo.security;
 
-import com.lodi.common.model.entity.User;
+import com.lodi.common.model.system.LoginUser;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+
+import static com.lodi.common.core.constant.StatusConstant.ON;
 
 /**
  * 用户详细信息 实现类
@@ -18,28 +20,40 @@ public class SecurityUser implements UserDetails {
     private final Long id;
     private final String username;
     private final String password;
-    private final boolean enabled;
+    private final Integer status;
+
+    /**
+     * 权限
+     */
     private final Collection<? extends GrantedAuthority> authorities;
+
+    /**
+     * 到期时间
+     */
+    private Long expireTime;
 
     public SecurityUser(
             Long id,
             String username,
             String password,
-            boolean enabled,
+            Integer status,
+            Long expireTime,
             Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.enabled = enabled;
+        this.status = status;
+        this.expireTime = expireTime;
         this.authorities = authorities;
     }
 
-    public SecurityUser(User user) {
-        this.id = user.getId();
-        this.username = user.getUserAccount();
-        this.password = user.getUserPassword();
-        this.enabled = true;
-        this.authorities = null;
+    public SecurityUser(LoginUser loginUser) {
+        this.id = loginUser.getId();
+        this.username = loginUser.getUsername();
+        this.password = "";
+        this.status = loginUser.getStatus();
+        this.expireTime = loginUser.getExpireTime();
+        this.authorities = loginUser.getAuthorities();
     }
 
     @Override
@@ -69,15 +83,24 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        long currentTime = System.currentTimeMillis();
+        return currentTime < expireTime;
     }
 
     @Override
     public boolean isEnabled() {
-        return enabled;
+        return status == ON;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public Long getExpireTime() {
+        return expireTime;
+    }
+
+    public void setExpireTime(Long expireTime) {
+        this.expireTime = expireTime;
     }
 }

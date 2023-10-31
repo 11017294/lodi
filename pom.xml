@@ -34,6 +34,7 @@
         <druid.version>1.2.18</druid.version>
         <!-- 工具类相关 -->
         <hutool.version>5.8.9</hutool.version>
+        <jjwt.version>0.9.1</jjwt.version>
         <!-- 文档相关 -->
         <knife4j.version>4.3.0</knife4j.version>
         <springdoc.version>1.7.0</springdoc.version>
@@ -82,6 +83,11 @@
                 <version>${hutool.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
             </dependency>
             <!-- 文档相关 -->
             <dependency>

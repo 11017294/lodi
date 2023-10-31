@@ -20,5 +20,10 @@ public interface CommonConstant {
     /**
      * 登录用户key
      */
-    String LOGIN_USER_KEY = "LOGIN_USER_KEY";
+    String USER_ID = "userId";
+
+    String USER_NAME = "userName";
+
+    String EXPIRE_TIME = "expireTime";
+
 }

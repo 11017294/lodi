@@ -34,6 +34,11 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.lodi</groupId>
+            <artifactId>lodi-common-config</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 
 </project>

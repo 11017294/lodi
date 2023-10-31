@@ -1,5 +1,6 @@
 package com.lodi.xo.security;
 
+import com.lodi.common.core.utils.JwtUtils;
 import com.lodi.common.model.entity.User;
 import com.lodi.xo.service.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,11 +33,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if(user.getIsDelete() == DELETE ){
             throw new UsernameNotFoundException("用户已被删除");
         }
+
         return new SecurityUser(
                 user.getId(),
                 user.getUserAccount(),
                 user.getUserPassword(),
-                user.getStatus() == ON,
+                user.getStatus(),
+                JwtUtils.generateExpireTime(),
                 null);
     }
 }

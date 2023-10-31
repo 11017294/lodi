@@ -1,1 +1,3 @@
 com.lodi.common.config.swagger.LodiSwaggerConfiguration
+com.lodi.common.config.redis.RedisConfig
+com.lodi.common.config.redis.RedisService

@@ -4,6 +4,7 @@ import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
 import com.lodi.common.core.web.domain.Result;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -44,4 +45,14 @@ public class GlobalExceptionHandler {
         return Result.error(ErrorCode.SYSTEM_ERROR.getCode(), e.getMessage());
     }
 
+    /**
+     * 凭证无效异常
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(BadCredentialsException.class)
+    public Result<String> handleBadCredentialsException(BadCredentialsException e) {
+        log.error("BadCredentialsException", e);
+        return Result.error(ErrorCode.SYSTEM_ERROR.getCode(), e.getMessage());
+    }
 }

@@ -13,7 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @MapperScan("com.lodi.xo.mapper")
 @ComponentScan(basePackages = {
-        "com.lodi.xo.service",
+        "com.lodi.xo",
         "com.lodi.admin",
         "com.lodi.common.core"
 })
