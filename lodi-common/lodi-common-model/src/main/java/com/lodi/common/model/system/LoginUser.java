@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 /**
+ * 登录用户信息
  * @author MaybeBin
  * @createDate 2023-10-31
  */

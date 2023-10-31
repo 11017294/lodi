@@ -24,6 +24,7 @@ import static com.lodi.common.core.constant.TokenConstants.LOGIN_TOKEN_KEY;
 import static com.lodi.common.core.enums.ErrorCode.PARAMS_ERROR;
 
 /**
+ * 用户认证 服务层实现
  * @author MaybeBin
  * @createDate 2023-10-31
  */
