@@ -15,7 +15,6 @@
         <dependency>
             <groupId>com.lodi</groupId>
             <artifactId>lodi-common-model</artifactId>
-            <version>1.0.0</version>
         </dependency>
 
         <dependency>
@@ -37,7 +36,6 @@
         <dependency>
             <groupId>com.lodi</groupId>
             <artifactId>lodi-common-config</artifactId>
-            <version>1.0.0</version>
         </dependency>
     </dependencies>
 

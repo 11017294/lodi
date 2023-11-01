@@ -15,17 +15,14 @@
         <dependency>
             <groupId>com.lodi</groupId>
             <artifactId>lodi-xo</artifactId>
-            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>com.lodi</groupId>
             <artifactId>lodi-common-config</artifactId>
-            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>com.lodi</groupId>
             <artifactId>lodi-common-security</artifactId>
-            <version>1.0.0</version>
         </dependency>
 
         <dependency>

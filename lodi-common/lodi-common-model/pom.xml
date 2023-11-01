@@ -15,7 +15,6 @@
         <dependency>
             <groupId>com.lodi</groupId>
             <artifactId>lodi-common-core</artifactId>
-            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
