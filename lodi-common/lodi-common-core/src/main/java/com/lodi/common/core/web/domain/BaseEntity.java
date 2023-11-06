@@ -1,6 +1,7 @@
 package com.lodi.common.core.web.domain;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 
@@ -31,7 +32,7 @@ public class BaseEntity<T extends Model> extends Model {
     /**
      * 是否删除：0-未删 1-已删
      */
-    @TableField(value = "is_delete")
+    @TableLogic
     private Integer isDelete;
 
 }

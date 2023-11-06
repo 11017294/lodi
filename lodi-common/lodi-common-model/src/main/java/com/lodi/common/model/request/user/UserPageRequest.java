@@ -14,7 +14,7 @@ import java.util.Date;
  */
 @Data
 @Schema(title = "用户分页查询")
-public class UserPageRequest extends PageRequest implements Serializable {
+public class UserPageRequest extends PageRequest {
 
     private static final long serialVersionUID = 1L;
 

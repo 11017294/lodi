@@ -5,7 +5,7 @@ create database if not exists lodi;
 -- 切换库
 use lodi;
 
--- 用户表
+-- 用户
 CREATE TABLE IF NOT EXISTS lodi.t_user
 (
     id                 BIGINT         NOT NULL AUTO_INCREMENT COMMENT 'id' PRIMARY KEY,
@@ -30,22 +30,22 @@ CREATE TABLE IF NOT EXISTS lodi.t_user
     create_time        DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     update_time        DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     is_delete          TINYINT        NOT NULL DEFAULT 0 COMMENT '是否删除：0-未删 1-已删'
-)  comment '用户表';
+)  comment '用户';
 
--- 博客表
-CREATE TABLE IF NOT EXISTS lodi.t_blog
+-- 文章
+CREATE TABLE IF NOT EXISTS lodi.t_article
 (
     id                 BIGINT         NOT NULL AUTO_INCREMENT PRIMARY KEY,
     title              VARCHAR(128)   NOT NULL              COMMENT '标题',
     summary            VARCHAR(256)                         COMMENT '文章简介',
     content            LONGTEXT       NOT NULL              COMMENT '内容',
     cover              VARCHAR(256)   NOT NULL              COMMENT '封面',
-    user_id            BIGINT         NOT NULL              COMMENT '作者uid',
-    tag_uid            VARCHAR(255)                         COMMENT '标签id',
-    blog_sort_id       BIGINT                               COMMENT '博客分类UID',
+    user_id            BIGINT         NOT NULL              COMMENT '作者ID',
+    tag_id             VARCHAR(255)                         COMMENT '标签ID',
+    categories_id      BIGINT                               COMMENT '文章类别ID',
     is_publish         TINYINT        NOT NULL DEFAULT 1    COMMENT '是否发布：0-否 1-是',
     open_comment       TINYINT        NOT NULL DEFAULT 1    COMMENT '是否开启评论：0-否 1-是',
-    click_count        INT(10)        NOT NULL DEFAULT 0    COMMENT '博客点击数',
+    click_count        INT(10)        NOT NULL DEFAULT 0    COMMENT '文章点击数',
     collect_count      INT(10)        NOT NULL DEFAULT 0    COMMENT '收藏次数',
     upvote_count       INT(10)        NOT NULL DEFAULT 0    COMMENT '点赞次数',
 
@@ -56,22 +56,22 @@ CREATE TABLE IF NOT EXISTS lodi.t_blog
     create_time        DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     update_time        DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     is_delete          TINYINT        NOT NULL DEFAULT 0 COMMENT '是否删除：0-未删 1-已删'
-) COMMENT '博客表';
+) COMMENT '文章';
 
--- 博客分类表
-CREATE TABLE IF NOT EXISTS lodi.t_blog_sort
+-- 文章类别
+CREATE TABLE IF NOT EXISTS lodi.t_categories
 (
     id                 BIGINT         NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    sort_name          VARCHAR(255)                                    COMMENT '分类名',
-    content            VARCHAR(255)                                    COMMENT '分类简介',
+    category_name      VARCHAR(255)                                    COMMENT '类别名称',
+    content            VARCHAR(255)                                    COMMENT '类别简介',
     sort               INT(10)        NOT NULL DEFAULT 0               COMMENT '排序字段，越大越靠前',
     click_count        INT(10)        NOT NULL DEFAULT 0               COMMENT '点击数',
     create_time        DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     update_time        DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     is_delete          TINYINT        NOT NULL DEFAULT 0 COMMENT '是否删除：0-未删 1-已删'
-) COMMENT '博客分类表';
+) COMMENT '文章类别';
 
--- 博客标签表
+-- 标签
 CREATE TABLE IF NOT EXISTS lodi.t_tag
 (
     id                 BIGINT         NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -82,4 +82,4 @@ CREATE TABLE IF NOT EXISTS lodi.t_tag
     create_time        DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     update_time        DATETIME       NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     is_delete          TINYINT        NOT NULL DEFAULT 0 COMMENT '是否删除：0-未删 1-已删'
-) COMMENT '标签表';
+) COMMENT '标签';

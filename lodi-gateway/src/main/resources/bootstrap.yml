@@ -42,12 +42,12 @@ knife4j:
       - name: 后台管理
         url: /lodi-admin/v3/api-docs?group=all  # 子服务存在其他分组情况，聚合其他分组
         service-name: lodi-admin  # 服务名称(Optional)
-        context-path: / # 路由前缀
+        context-path: /lodi-admin # 路由前缀
         order: 2  # 排序
       - name: 博客
         url: /lodi-web/v3/api-docs?group=all
         service-name: lodi-web
-        context-path: /
+        context-path: /lodi-web
         order: 3
 
 logging:
