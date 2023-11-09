@@ -1,1 +1,1 @@
-com.lodi.common.security.config.WebSecurityConfig
+com.lodi.common.security.config.WebMvcConfig

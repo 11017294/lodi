@@ -9,7 +9,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @author MaybeBin
  * @createDate 2023-09-19
  */
-@SpringBootApplication
+@SpringBootApplication(excludeName = "org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration")
 @EnableDiscoveryClient
 public class GatewayApplication {
 

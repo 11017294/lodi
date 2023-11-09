@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 /**
  * 登录请求体
+ *
  * @author MaybeBin
  * @createDate 2023-10-24
  */
@@ -21,5 +22,8 @@ public class LoginRequest implements Serializable {
 
     @Schema(title = "密码", description = "密码", requiredMode = Schema.RequiredMode.REQUIRED, example = "123456")
     private String password;
+
+    @Schema(title = "登录类型", description = "登录类型", requiredMode = Schema.RequiredMode.REQUIRED, example = "password")
+    private String loginType;
 
 }

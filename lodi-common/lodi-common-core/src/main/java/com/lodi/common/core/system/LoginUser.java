@@ -1,13 +1,13 @@
-package com.lodi.common.model.system;
+package com.lodi.common.core.system;
 
 import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 
 /**
  * 登录用户信息
+ *
  * @author MaybeBin
  * @createDate 2023-10-31
  */
@@ -26,14 +26,13 @@ public class LoginUser implements Serializable {
     private Integer status;
 
     /**
-     * 权限
+     * 角色
      */
-    private Collection<? extends GrantedAuthority> authorities;
+    private List<String> roles;
 
     /**
      * 到期时间
      */
     private Long expireTime;
-
 
 }
