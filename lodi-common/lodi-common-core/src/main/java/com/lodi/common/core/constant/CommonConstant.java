@@ -26,4 +26,8 @@ public interface CommonConstant {
 
     String EXPIRE_TIME = "expireTime";
 
+    String UTF8 = "UTF-8";
+
+    String EMPTY = "";
+
 }

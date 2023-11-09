@@ -55,10 +55,18 @@ public class TokenService {
         return JwtUtils.createToken(claims);
     }
 
+    /**
+     * 设置用户相关信息
+     * @param securityUser
+     */
     private void setUserAgent(LoginUser securityUser) {
         securityUser.setExpireTime(JwtUtils.generateExpireTime());
     }
 
+    /**
+     * 验证token是否过期
+     * @param securityUser
+     */
     public void verifyToken(LoginUser securityUser) {
         Long expireTime = securityUser.getExpireTime();
         long currentTime = System.currentTimeMillis();
@@ -67,15 +75,30 @@ public class TokenService {
         }
     }
 
+    /**
+     * 获取登录用户
+     * @param token
+     * @return
+     */
     public LoginUser getLoginUser(String token) {
         Long userId = JwtUtils.getUserId(token);
         return redisService.getCacheObject(getTokenKey(userId.toString()));
     }
 
+    /**
+     * 刷新token
+     * @param loginUser
+     */
     public void refreshToken(LoginUser loginUser) {
+        loginUser.setExpireTime(JwtUtils.generateExpireTime());
         redisService.setCacheObject(getTokenKey(loginUser.getId().toString()), loginUser, DURATION_IN_SECONDS, TimeUnit.SECONDS);
     }
 
+    /**
+     * 拼接token key
+     * @param userId
+     * @return
+     */
     private String getTokenKey(String userId){
         return LOGIN_TOKEN_KEY + userId;
     }

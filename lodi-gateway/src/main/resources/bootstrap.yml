@@ -3,6 +3,19 @@ server:
 
 # 注册中心相关配置
 spring:
+  #redis相关配置
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 1
+    timeout: 300000
+    lettuce:
+      pool:
+        max-active: 20
+        max-wait: -1
+        #最大阻塞等待时间(负数表示没限制)
+        max-idle: 5
+        min-idle: 0
   application:
     name: lodi-gateway
   cloud:
@@ -28,6 +41,19 @@ spring:
             - Path=/lodi-web/**
           filters:
             - StripPrefix=1
+# 安全配置
+security:
+  # 不校验白名单
+  ignore:
+    whites:
+      - /lodi-admin/doc.html
+      - /lodi-admin/webjars/**
+      - /lodi-admin/swagger-resources/**
+      - /lodi-admin/swagger-ui.html
+      - /lodi-admin/v2/api-docs/**
+      - /lodi-admin/v3/api-docs/**
+      - /lodi-admin/auth/register
+      - /lodi-admin/auth/logi
 
 # 聚合swagger文档
 knife4j:
