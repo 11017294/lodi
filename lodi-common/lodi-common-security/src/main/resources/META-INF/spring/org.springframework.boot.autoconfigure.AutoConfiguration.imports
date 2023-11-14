@@ -1,1 +1,2 @@
 com.lodi.common.security.config.WebMvcConfig
+com.lodi.common.security.aspect.PreAuthorizeAspect

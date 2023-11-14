@@ -26,29 +26,29 @@ public class AuthController {
     private AuthService authService;
 
     /**
-     {
-         "username":"sds",
-         "password":"as",
-         "checkPassword":"as"
-     }
-     * */
+      {
+          "username":"admin",
+          "password":"123456",
+          "loginType":"password"
+      }
+     **/
     @Operation(summary = "登录")
     @PostMapping("login")
-    public Result<String> login(@RequestBody LoginRequest loginRequest){
+    public Result<String> login(@RequestBody LoginRequest loginRequest) {
         String token = authService.login(loginRequest);
         return Result.success(token);
     }
 
     @Operation(summary = "用户注册")
     @PostMapping("register")
-    public Result<Boolean> register(@RequestBody UserRegisterRequest userRegisterRequest){
+    public Result<Boolean> register(@RequestBody UserRegisterRequest userRegisterRequest) {
         Boolean flag = authService.register(userRegisterRequest);
         return Result.success(flag);
     }
 
     @Operation(summary = "用户注销")
     @PostMapping("logout")
-    public Result<Boolean> logout(){
+    public Result<Boolean> logout() {
         Boolean flag = authService.logout();
         return Result.success(flag);
     }

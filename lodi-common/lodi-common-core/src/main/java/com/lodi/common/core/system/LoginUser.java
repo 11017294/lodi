@@ -3,7 +3,7 @@ package com.lodi.common.core.system;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 /**
  * 登录用户信息
@@ -28,7 +28,12 @@ public class LoginUser implements Serializable {
     /**
      * 角色
      */
-    private List<String> roles;
+    private Set<String> roles;
+
+    /**
+     * 权限
+     */
+    private Set<String> permissions;
 
     /**
      * 到期时间

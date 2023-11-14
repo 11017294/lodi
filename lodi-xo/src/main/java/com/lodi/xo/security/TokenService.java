@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -39,7 +40,7 @@ public class TokenService {
         loginUser.setId(user.getId());
         loginUser.setUsername(user.getUsername());
         loginUser.setStatus(user.getStatus());
-        loginUser.setRoles(Arrays.asList(user.getUserRole()));
+        loginUser.setRoles(new HashSet<>(Arrays.asList(user.getUserRole())));
         loginUser.setExpireTime(JwtUtils.generateExpireTime());
 
         // <1> 设置用户终端相关的信息，包括 IP、城市、浏览器、操作系统

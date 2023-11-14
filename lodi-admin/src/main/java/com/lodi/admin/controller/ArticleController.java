@@ -11,6 +11,7 @@ import com.lodi.common.model.request.article.ArticlePageRequest;
 import com.lodi.common.model.request.article.ArticleUpdateRequest;
 import com.lodi.common.model.request.article.AuditArticleRequest;
 import com.lodi.common.model.vo.ArticleVO;
+import com.lodi.common.security.annotation.RequiresRoles;
 import com.lodi.xo.service.ArticleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -34,15 +35,15 @@ public class ArticleController {
 
     @Operation(summary = "获取文章分页")
     @GetMapping("page")
-    public Result<Page<Article>> getArticlePage(ArticlePageRequest articlePageRequest){
+    public Result<Page<Article>> getArticlePage(ArticlePageRequest articlePageRequest) {
         return Result.success(articleService.getArticlePage(articlePageRequest));
     }
 
     @Operation(summary = "获取文章信息")
     @GetMapping("get")
-    public Result<ArticleVO> getArticle(IdRequest idRequest){
+    public Result<ArticleVO> getArticle(IdRequest idRequest) {
         Article article = articleService.getById(idRequest.getId());
-        if(article == null){
+        if (article == null) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
         ArticleVO articleVO = new ArticleVO();
@@ -52,32 +53,33 @@ public class ArticleController {
 
     @Operation(summary = "新增文章")
     @PostMapping("add")
-    public Result<Boolean> addArticle(@RequestBody ArticleAddRequest articleAddRequest){
+    public Result<Boolean> addArticle(@RequestBody ArticleAddRequest articleAddRequest) {
         return Result.success(articleService.insertArticle(articleAddRequest));
     }
 
     @Operation(summary = "更新文章")
     @PostMapping(value = "update")
-    public Result<Boolean> updateArticle(@RequestBody ArticleUpdateRequest articleUpdateRequest){
+    public Result<Boolean> updateArticle(@RequestBody ArticleUpdateRequest articleUpdateRequest) {
         return Result.success(articleService.updateArticle(articleUpdateRequest));
     }
 
     @Operation(summary = "删除文章")
     @PostMapping("delete")
-    public Result<Boolean> deleteArticle(@RequestBody IdRequest request){
+    public Result<Boolean> deleteArticle(@RequestBody IdRequest request) {
         return Result.success(articleService.deleteArticle(request.getId()));
     }
 
-    // todo 管理员操作
+    @RequiresRoles("admin")
     @Operation(summary = "批量删除文章")
     @PostMapping("deleteBatch")
-    public Result<Boolean> deleteBatchArticle(@RequestBody Long[] ids){
+    public Result<Boolean> deleteBatchArticle(@RequestBody Long[] ids) {
         return Result.success(articleService.removeByIds(Arrays.asList(ids)));
     }
 
+    @RequiresRoles("admin")
     @Operation(summary = "审核")
     @PostMapping("audit")
-    public Result<Boolean> auditArticle(@RequestBody AuditArticleRequest auditArticleRequest){
+    public Result<Boolean> auditArticle(@RequestBody AuditArticleRequest auditArticleRequest) {
         return Result.success(articleService.auditArticle(auditArticleRequest));
     }
 

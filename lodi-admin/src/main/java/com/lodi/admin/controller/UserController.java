@@ -10,6 +10,7 @@ import com.lodi.common.model.request.user.UserPageRequest;
 import com.lodi.common.model.request.user.UserQueryRequest;
 import com.lodi.common.model.request.user.UserUpdateRequest;
 import com.lodi.common.model.vo.UserVO;
+import com.lodi.common.security.annotation.RequiresRoles;
 import com.lodi.xo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -31,23 +32,24 @@ public class UserController {
     @Resource
     private UserService userService;
 
+    @RequiresRoles("admin")
     @Operation(summary = "获取用户列表")
     @GetMapping("list")
-    public Result<List<User>> listUser(UserQueryRequest userQueryRequest){
+    public Result<List<User>> listUser(UserQueryRequest userQueryRequest) {
         return Result.success(userService.listUser(userQueryRequest));
     }
 
     @Operation(summary = "获取用户分页")
     @GetMapping("page")
-    public Result<Page<User>> getUserPage(UserPageRequest userPageRequest){
+    public Result<Page<User>> getUserPage(UserPageRequest userPageRequest) {
         return Result.success(userService.getUserPage(userPageRequest));
     }
 
     @Operation(summary = "获取用户信息")
     @GetMapping("get")
-    public Result<UserVO> getUser(IdRequest idRequest){
+    public Result<UserVO> getUser(IdRequest idRequest) {
         User user = userService.getById(idRequest.getId());
-        if(user == null){
+        if (user == null) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
         UserVO userVO = new UserVO();
@@ -55,15 +57,16 @@ public class UserController {
         return Result.success(userVO);
     }
 
+    @RequiresRoles("admin")
     @Operation(summary = "删除用户")
     @PostMapping("delete")
-    public Result<Boolean> deleteUser(@RequestBody IdRequest idRequest){
+    public Result<Boolean> deleteUser(@RequestBody IdRequest idRequest) {
         return Result.success(userService.removeById(idRequest.getId()));
     }
 
     @Operation(summary = "更新用户")
     @PostMapping(value = "update")
-    public Result<Boolean> updateUser(@RequestBody UserUpdateRequest userUpdateRequest){
+    public Result<Boolean> updateUser(@RequestBody UserUpdateRequest userUpdateRequest) {
         User user = new User();
         BeanUtils.copyProperties(userUpdateRequest, user);
         return Result.success(userService.updateById(user));
