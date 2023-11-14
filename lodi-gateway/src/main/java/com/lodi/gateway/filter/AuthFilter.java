@@ -6,7 +6,7 @@ import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.utils.JwtUtils;
 import com.lodi.common.core.utils.ServletUtils;
 import com.lodi.common.core.utils.StrUtils;
-import com.lodi.common.core.system.LoginUser;
+import com.lodi.common.model.system.LoginUser;
 import com.lodi.gateway.config.IgnoreWhiteProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -27,7 +27,6 @@ import static com.lodi.common.core.constant.TokenConstants.*;
 
 /**
  * 网关认证过滤器
- *
  * @author MaybeBin
  * @createDate 2023-11-06
  */
@@ -52,26 +51,26 @@ public class AuthFilter implements GlobalFilter, Ordered {
 
         // 3 todo 白名单放行
         String url = request.getPath().toString();
-        if (StrUtils.matches(url, ignoreWhite.getWhites())) {
+        if(StrUtils.matches(url, ignoreWhite.getWhites())){
             return chain.filter(exchange);
         }
 
         // 4 认证
         // 4.1 验证token
         String token = request.getHeaders().getFirst(TOKEN_HEADER);
-        if (StringUtils.isBlank(token)) {
+        if(StringUtils.isBlank(token)){
             return unauthorizedResponse(exchange, "该资源需要登录访问，请登录后访问");
         }
         // 4.2 解析token
         Long userId = JwtUtils.getUserId(token);
-        if (Objects.isNull(userId)) {
+        if(Objects.isNull(userId)){
             return unauthorizedResponse(exchange, "凭证已失效，请重新登录");
         }
         String tokenKey = getTokenKey(String.valueOf(userId));
         // 4.3 从redis拿到登录用户的信息
         LoginUser loginUser = redisService.getCacheObject(tokenKey);
         // 4.4 判断凭证是否有效
-        if (Objects.isNull(loginUser)) {
+        if(Objects.isNull(loginUser)){
             return unauthorizedResponse(exchange, "凭证已失效，请重新登录");
         }
         // 验证token有效期，若满足要求，则刷新token有效期
@@ -83,7 +82,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
     }
 
     private void addHeader(ServerHttpRequest.Builder mutate, String name, Object value) {
-        if (value == null) {
+        if (value == null){
             return;
         }
         Gson gson = new Gson();
@@ -93,7 +92,6 @@ public class AuthFilter implements GlobalFilter, Ordered {
 
     /**
      * 清除请求头信息
-     *
      * @param mutate
      * @param name
      */
@@ -103,14 +101,13 @@ public class AuthFilter implements GlobalFilter, Ordered {
 
     /**
      * 验证token有效期，若满足要求，则刷新token有效期
-     *
      * @param loginUser
      */
     public void verifyToken(LoginUser loginUser) {
         Long expireTime = loginUser.getExpireTime();
         long currentTime = System.currentTimeMillis();
         // 有效时长小于5天，则刷新token有效期
-        if (expireTime - currentTime < TOKEN_REFRESH_THRESHOLD_IN_SECONDS) {
+        if(expireTime - currentTime < TOKEN_REFRESH_THRESHOLD_IN_SECONDS){
             // 刷新token
             String tokenKey = getTokenKey(loginUser.getId().toString());
             loginUser.setExpireTime(JwtUtils.generateExpireTime());
@@ -123,7 +120,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
         return ServletUtils.webFluxResponseWriter(exchange.getResponse(), msg, ErrorCode.NO_AUTH_ERROR.getCode());
     }
 
-    private String getTokenKey(String userId) {
+    private String getTokenKey(String userId){
         return LOGIN_TOKEN_KEY + userId;
     }
 
