@@ -19,6 +19,7 @@
         <module>lodi-common</module>
         <module>lodi-api</module>
         <module>lodi-job</module>
+        <module>lodi-gen</module>
     </modules>
 
     <properties>
@@ -31,8 +32,10 @@
         <spring-cloud-alibaba.version>2021.0.5.0</spring-cloud-alibaba.version>
         <spring-boot.version>2.7.14</spring-boot.version>
         <!-- DB 相关 -->
-        <mybatis.plus.version>3.5.1</mybatis.plus.version>
+        <mybatis.plus.version>3.5.4</mybatis.plus.version>
         <druid.version>1.2.18</druid.version>
+        <mybatis-plus-generator.version>3.5.4</mybatis-plus-generator.version>
+        <freemarker.version>1.2.4</freemarker.version>
         <!-- 工具类相关 -->
         <hutool.version>5.8.9</hutool.version>
         <jjwt.version>0.9.1</jjwt.version>
@@ -77,6 +80,17 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>${druid.version}</version>
+            </dependency>
+            <!--mybatis-plus 代码生成器-->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plus-generator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.scripting</groupId>
+                <artifactId>mybatis-freemarker</artifactId>
+                <version>${freemarker.version}</version>
             </dependency>
             <!-- 工具类相关 -->
             <dependency>

@@ -1,0 +1,26 @@
+package com.lodi.gen;
+
+import com.lodi.gen.mybatisPlus.GeneratorCode;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+/**
+ * 代码生成器 服务
+ *
+ * @author MaybeBin
+ * @createDate 2023-11-16
+ */
+@SpringBootApplication
+public class GenApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(GenApplication.class, args);
+        System.out.println(
+                "(♥◠‿◠)ﾉﾞ  web服务启动成功   ლ(´ڡ`ლ)ﾞ  \n" +
+                        " _                   _   _      \n" +
+                        "| |       ___     __| | (_)     \n" +
+                        "| |      / _ \\   / _` | | |    \n" +
+                        "| |___  | (_) | | (_| | | |     \n" +
+                        "|_____|  \\___/   \\__,_| |_|   \n");
+        GeneratorCode.execute("t_anime_info");
+    }
+}

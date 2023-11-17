@@ -1,0 +1,13 @@
+#app
+server:
+  port: 9520
+
+spring:
+  application:
+    name: lodi-gen
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/lodi?characterEncoding=utf8&serverTimezone=UTC
+    username: root
+    password: 333
+    type: com.alibaba.druid.pool.DruidDataSource
