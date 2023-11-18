@@ -2,7 +2,6 @@ package com.lodi.gen.mybatisPlus;
 
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
-import com.baomidou.mybatisplus.generator.config.TemplateType;
 import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.lodi.common.core.mapper.BaseMapper;
@@ -26,11 +25,10 @@ public class GeneratorCode {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "333";
 
-    private static final String projectUrl = "E:\\myCode\\lodi";
+    private static final String projectUrl = "E:\\MyCode\\dev\\lodi";
     private static final String packageUrl = projectUrl + "\\lodi-xo\\src\\main";
 
     public static void execute(String tableName) {
-        String titleName = tableNameToFieldName(tableName);
         FastAutoGenerator.create(URL, USERNAME, PASSWORD)
                 .globalConfig(builder -> {
                     builder.author(AUTHOR) // 设置作者
@@ -82,43 +80,28 @@ public class GeneratorCode {
                     ;
                 })
                 // 模板配置
-                .templateConfig(builder -> {
-                    builder.disable(TemplateType.XML, TemplateType.MAPPER,
-                            TemplateType.SERVICE, TemplateType.SERVICE_IMPL,
-                            TemplateType.CONTROLLER
-                    );
-                })
+//                .templateConfig(builder -> {
+//                    builder.disable(TemplateType.XML, TemplateType.MAPPER,
+//                            TemplateType.SERVICE, TemplateType.SERVICE_IMPL,
+//                            TemplateType.CONTROLLER
+//                    );
+//                })
                 .strategyConfig(builder -> {
                     builder.addInclude(tableName) // 设置需要生成的表名
                             .addTablePrefix("t_", "c_") // 设置过滤表前缀
                             .entityBuilder().superClass(BaseEntity.class)   // 设置父类
                             .enableChainModel() // 开启链式模型
+                            .enableFileOverride() // 启用文件覆盖
                             .enableLombok() // 开启Lombok
                             .addSuperEntityColumns("CREATE_TIME", "UPDATE_TIME", "IS_DELETE")   // 父类公共字段
                             .serviceBuilder().superServiceClass(BaseService.class)  // 设置父类
                             .superServiceImplClass(BaseServiceImpl.class)   // 设置父类
                             .formatServiceFileName("%sService") // 设置文件名格式
-                            .mapperBuilder().superClass(BaseMapper.class);  // 设置父类
+                            .mapperBuilder().superClass(BaseMapper.class)
+                            .enableBaseColumnList().enableBaseResultMap();  // 设置父类
                 })
                 .templateEngine(new EnhanceFreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
                 .execute();
-    }
-
-    public static String tableNameToFieldName(String tableName) {
-        String[] parts = tableName.split("_");
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < parts.length; ++i) {
-            if (!parts[i].equalsIgnoreCase("t")) {
-                if (sb.length() == 0) { // 首单词小写
-                    sb.append(Character.toLowerCase(parts[i].charAt(0)))
-                            .append(parts[i].substring(1).toLowerCase());
-                } else { // 其他单词首字母大写
-                    sb.append(Character.toUpperCase(parts[i].charAt(0)))
-                            .append(parts[i].substring(1).toLowerCase());
-                }
-            }
-        }
-        return sb.toString();
     }
 
 }

@@ -1,38 +1,36 @@
-package ${package.Request};
+package ${request.packageName};
 
 <#list table.importPackages as pkg>
     <#if pkg != 'com.baomidou.mybatisplus.annotation.IdType'
     && pkg != 'com.baomidou.mybatisplus.annotation.TableId'
     && pkg != 'com.baomidou.mybatisplus.annotation.TableName'
     && pkg != 'com.lodi.common.core.web.domain.BaseEntity'>
-        import ${pkg};
+import ${pkg};
     </#if>
 </#list>
 <#if springdoc>
-    import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.media.Schema;
 <#elseif swagger>
-    import io.swagger.annotations.ApiModel;
-    import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 </#if>
 <#if entityLombokModel>
-    import lombok.Data;
+import lombok.Data;
 </#if>
 
 /**
-* <p>
-    * ${table.comment!} 请求体
-    * </p>
-*
-* @author ${author}
-* @since ${date}
-*/
+ * ${table.comment!} 请求体
+ *
+ * @author ${author}
+ * @since ${date}
+ */
 <#if entityLombokModel>
-    @Data
+@Data
 </#if>
 <#if springdoc>
-    @Schema(name = "${entity}", description = "${table.comment!}")
+@Schema(name = "${entity}", description = "${table.comment!}")
 <#elseif swagger>
-    @ApiModel(value = "${entity}对象", description = "${table.comment!}")
+@ApiModel(value = "${entity}对象", description = "${table.comment!}")
 </#if>
 public class ${entity}Request implements Serializable {
 <#if entitySerialVersionUID>
@@ -47,13 +45,13 @@ public class ${entity}Request implements Serializable {
 
     <#if field.comment!?length gt 0>
         <#if springdoc>
-            @Schema(description = "${field.comment}")
+    @Schema(description = "${field.comment}")
         <#elseif swagger>
-            @ApiModelProperty("${field.comment}")
+    @ApiModelProperty("${field.comment}")
         <#else>
-            /**
-            * ${field.comment}
-            */
+    /**
+    * ${field.comment}
+    */
         </#if>
     </#if>
     private ${field.propertyType} ${field.propertyName};
@@ -67,26 +65,26 @@ public class ${entity}Request implements Serializable {
             <#assign getprefix="get"/>
         </#if>
 
-        public ${field.propertyType} ${getprefix}${field.capitalName}() {
+    public ${field.propertyType} ${getprefix}${field.capitalName}() {
         return ${field.propertyName};
-        }
+    }
 
         <#if chainModel>
-            public ${entity} set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
+    public ${entity}${request.postfix} set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
         <#else>
-            public void set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
+    public void set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
         </#if>
         this.${field.propertyName} = ${field.propertyName};
         <#if chainModel>
-            return this;
+        return this;
         </#if>
-        }
+    }
     </#list>
 </#if>
 <#if entityColumnConstant>
     <#list table.fields as field>
 
-        public static final String ${field.name?upper_case} = "${field.name}";
+    public static final String ${field.name?upper_case} = "${field.name}";
     </#list>
 </#if>
 <#if activeRecord>
@@ -104,7 +102,7 @@ public class ${entity}Request implements Serializable {
 
     @Override
     public String toString() {
-    return "${entity}{" +
+        return "${entity}{" +
     <#list table.fields as field>
         <#if field_index==0>
             "${field.propertyName} = " + ${field.propertyName} +
@@ -112,7 +110,7 @@ public class ${entity}Request implements Serializable {
             ", ${field.propertyName} = " + ${field.propertyName} +
         </#if>
     </#list>
-    "}";
+        "}";
     }
 </#if>
 }
