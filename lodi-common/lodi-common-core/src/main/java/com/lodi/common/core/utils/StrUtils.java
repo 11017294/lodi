@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * 字符串比对工具类
+ *
  * @author MaybeBin
  * @createDate 2023-11-08
  */
@@ -16,7 +17,7 @@ public class StrUtils {
     /**
      * 查找指定字符串是否匹配指定字符串列表中的任意一个字符串
      *
-     * @param str 指定字符串
+     * @param str  指定字符串
      * @param strs 需要检查的字符串数组
      * @return 是否匹配
      */
@@ -39,7 +40,7 @@ public class StrUtils {
      * ** 表示任意层路径;
      *
      * @param pattern 匹配规则
-     * @param url 需要匹配的url
+     * @param url     需要匹配的url
      * @return
      */
     public static boolean isMatch(String pattern, String url) {

@@ -6,6 +6,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 /**
  * 网关服务
+ *
  * @author MaybeBin
  * @createDate 2023-09-19
  */

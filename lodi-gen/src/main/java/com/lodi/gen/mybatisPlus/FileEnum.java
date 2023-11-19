@@ -1,11 +1,8 @@
 package com.lodi.gen.mybatisPlus;
 
-import com.sun.xml.internal.ws.api.message.Packet;
-
 import java.util.EnumSet;
 
 /**
- *
  * @author MaybeBin
  * @createDate 2023-11-19
  */
@@ -27,8 +24,9 @@ public enum FileEnum {
         }
         return null;
     }
-    public static Boolean isPacketMangling(String value){
-        if(VO.toString().equals(value)){
+
+    public static Boolean isPacketMangling(String value) {
+        if (VO.toString().equals(value)) {
             return false;
         }
         for (FileEnum fileEnum : EnumSet.allOf(FileEnum.class)) {
@@ -38,6 +36,5 @@ public enum FileEnum {
         }
         return false;
     }
-
 
 }

@@ -5,6 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * Swagger 配置属性
+ *
  * @author MaybeBin
  * @createDate 2023-09-22
  */

@@ -22,9 +22,8 @@ public class UserServiceImplTest {
     UserServiceImpl userService;
 
     @Test
-    public void test(){
+    public void test() {
         List<User> list = userService.list();
     }
-
 
 }

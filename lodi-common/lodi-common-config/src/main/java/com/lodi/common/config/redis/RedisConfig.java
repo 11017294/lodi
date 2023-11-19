@@ -16,6 +16,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * redis配置
+ *
  * @author MaybeBin
  * @createDate 2023-10-30
  */
@@ -25,7 +26,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 public class RedisConfig extends CachingConfigurerSupport {
 
     @Bean
-    @SuppressWarnings(value = { "unchecked", "rawtypes" })
+    @SuppressWarnings(value = {"unchecked", "rawtypes"})
     public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
         RedisTemplate<Object, Object> template = new RedisTemplate<>();
         template.setConnectionFactory(connectionFactory);

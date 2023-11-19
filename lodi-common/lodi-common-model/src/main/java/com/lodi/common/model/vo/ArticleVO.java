@@ -1,6 +1,5 @@
 package com.lodi.common.model.vo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -8,6 +7,7 @@ import java.io.Serializable;
 
 /**
  * 文章 视图
+ *
  * @author MaybeBin
  * @createDate 2023-11-01
  */

@@ -102,9 +102,10 @@ public class GeneratorCode {
 
     /**
      * 自定义类型
+     *
      * @return
      */
-    private static List<CustomFile> injectionConfig(){
+    private static List<CustomFile> injectionConfig() {
         List<CustomFile> list = new ArrayList<>();
         list.add(new CustomFile.Builder()
                 .fileName(FileEnum.AddRequest.toString())

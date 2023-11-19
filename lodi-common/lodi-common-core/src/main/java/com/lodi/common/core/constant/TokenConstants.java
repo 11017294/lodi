@@ -2,6 +2,7 @@ package com.lodi.common.core.constant;
 
 /**
  * 令牌常量
+ *
  * @author MaybeBin
  * @createDate 2023-10-30
  */

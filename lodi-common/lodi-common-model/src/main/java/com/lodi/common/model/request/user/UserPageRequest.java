@@ -4,11 +4,11 @@ import com.lodi.common.core.web.page.PageRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
  * 用户分页查询 请求体
+ *
  * @author MaybeBin
  * @createDate 2023-10-26
  */

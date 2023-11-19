@@ -7,6 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 /**
  * web 服务
+ *
  * @author MaybeBin
  * @createDate 2023-09-19
  */

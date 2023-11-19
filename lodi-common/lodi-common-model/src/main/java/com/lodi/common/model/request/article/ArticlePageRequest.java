@@ -6,6 +6,7 @@ import lombok.Data;
 
 /**
  * 文章分页查询 请求体
+ *
  * @author MaybeBin
  * @createDate 2023-11-01
  */

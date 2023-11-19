@@ -2,6 +2,7 @@ package com.lodi.common.core.enums;
 
 /**
  * 错误码枚举
+ *
  * @author MaybeBin
  * @createDate 2023-09-19
  */

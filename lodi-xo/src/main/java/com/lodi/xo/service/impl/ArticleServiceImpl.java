@@ -7,8 +7,6 @@ import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
 import com.lodi.common.core.service.impl.BaseServiceImpl;
 import com.lodi.common.model.entity.Article;
-import com.lodi.common.model.entity.User;
-import com.lodi.common.model.request.IdRequest;
 import com.lodi.common.model.request.article.ArticleAddRequest;
 import com.lodi.common.model.request.article.ArticlePageRequest;
 import com.lodi.common.model.request.article.ArticleUpdateRequest;
@@ -24,10 +22,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import static com.lodi.common.core.constant.StatusConstant.ON;
-
 /**
  * 文章 服务层实现
+ *
  * @author MaybeBin
  * @createDate 2023-11-01
  */
@@ -110,7 +107,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
             throw new BusinessException(ErrorCode.PARAMS_ERROR, "参数错误");
         }
         // 状态与当前状态相同，则不执行操作
-        if (newStatus == article.getAuditStatus()){
+        if (newStatus == article.getAuditStatus()) {
             return true;
         }
         // todo 直接使用article进行更新（updateTime 未设置自动填充）
@@ -120,7 +117,3 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
         return updateById(newArticle);
     }
 }
-
-
-
-

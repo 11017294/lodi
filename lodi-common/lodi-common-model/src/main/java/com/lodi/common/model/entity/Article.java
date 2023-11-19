@@ -9,17 +9,18 @@ import lombok.Data;
 
 /**
  * 文章
+ *
  * @author MaybeBin
  * @createDate 2023-11-01
  */
 @Data
-@TableName(value ="t_article")
+@TableName(value = "t_article")
 public class Article extends BaseEntity<Article> {
 
     private static final long serialVersionUID = 1L;
 
     /**
-     * 
+     *
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;

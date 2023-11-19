@@ -1,11 +1,14 @@
 package com.lodi.common.core.web.page;
 
 import lombok.Data;
+
 import java.io.Serializable;
+
 import static com.lodi.common.core.constant.CommonConstant.SORT_ORDER_ASC;
 
 /**
  * 分页 请求体
+ *
  * @author MaybeBin
  * @createDate 2023-10-27
  */

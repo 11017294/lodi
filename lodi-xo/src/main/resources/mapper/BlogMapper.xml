@@ -5,25 +5,25 @@
 <mapper namespace="com.lodi.xo.mapper.ArticleMapper">
 
     <resultMap id="BaseResultMap" type="com.lodi.common.model.entity.Article">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="title" column="title" jdbcType="VARCHAR"/>
-            <result property="summary" column="summary" jdbcType="VARCHAR"/>
-            <result property="content" column="content" jdbcType="VARCHAR"/>
-            <result property="cover" column="cover" jdbcType="VARCHAR"/>
-            <result property="userId" column="user_id" jdbcType="BIGINT"/>
-            <result property="tagId" column="tag_id" jdbcType="VARCHAR"/>
-            <result property="categoriesId" column="categories_id" jdbcType="BIGINT"/>
-            <result property="isPublish" column="is_publish" jdbcType="TINYINT"/>
-            <result property="openComment" column="open_comment" jdbcType="TINYINT"/>
-            <result property="clickCount" column="click_count" jdbcType="INTEGER"/>
-            <result property="collectCount" column="collect_count" jdbcType="INTEGER"/>
-            <result property="upvoteCount" column="upvote_count" jdbcType="INTEGER"/>
-            <result property="vipArticle" column="vip_article" jdbcType="TINYINT"/>
-            <result property="auditStatus" column="audit_status" jdbcType="TINYINT"/>
-            <result property="sort" column="sort" jdbcType="INTEGER"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-            <result property="isDelete" column="is_delete" jdbcType="TINYINT"/>
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="summary" column="summary" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="cover" column="cover" jdbcType="VARCHAR"/>
+        <result property="userId" column="user_id" jdbcType="BIGINT"/>
+        <result property="tagId" column="tag_id" jdbcType="VARCHAR"/>
+        <result property="categoriesId" column="categories_id" jdbcType="BIGINT"/>
+        <result property="isPublish" column="is_publish" jdbcType="TINYINT"/>
+        <result property="openComment" column="open_comment" jdbcType="TINYINT"/>
+        <result property="clickCount" column="click_count" jdbcType="INTEGER"/>
+        <result property="collectCount" column="collect_count" jdbcType="INTEGER"/>
+        <result property="upvoteCount" column="upvote_count" jdbcType="INTEGER"/>
+        <result property="vipArticle" column="vip_article" jdbcType="TINYINT"/>
+        <result property="auditStatus" column="audit_status" jdbcType="TINYINT"/>
+        <result property="sort" column="sort" jdbcType="INTEGER"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="isDelete" column="is_delete" jdbcType="TINYINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">

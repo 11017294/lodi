@@ -7,10 +7,12 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import java.util.Map;
 
 import static com.lodi.common.core.constant.CommonConstant.*;
-import static com.lodi.common.core.constant.TokenConstants.*;
+import static com.lodi.common.core.constant.TokenConstants.DURATION_IN_SECONDS;
+import static com.lodi.common.core.constant.TokenConstants.TOKEN_SECRET;
 
 /**
  * jwt 工具类
+ *
  * @author MaybeBin
  * @createDate 2023-10-30
  */
@@ -18,6 +20,7 @@ public class JwtUtils {
 
     /**
      * 生成token
+     *
      * @param claims
      * @return token
      */
@@ -28,6 +31,7 @@ public class JwtUtils {
 
     /**
      * 解析token
+     *
      * @param token
      * @return 数据声明
      */
@@ -37,6 +41,7 @@ public class JwtUtils {
 
     /**
      * 从令牌中获取用户id
+     *
      * @param token
      * @return 用户id
      */
@@ -47,6 +52,7 @@ public class JwtUtils {
 
     /**
      * 从数据声明中获取用户id
+     *
      * @param claims
      * @return 用户id
      */
@@ -56,6 +62,7 @@ public class JwtUtils {
 
     /**
      * 从令牌中获取用户名
+     *
      * @param token
      * @return 用户名
      */
@@ -66,6 +73,7 @@ public class JwtUtils {
 
     /**
      * 从数据声明中获取用户名
+     *
      * @param claims
      * @return 用户名
      */
@@ -75,6 +83,7 @@ public class JwtUtils {
 
     /**
      * 从令牌中获取过期时间
+     *
      * @param token
      * @return 过期时间的时间戳
      */
@@ -85,6 +94,7 @@ public class JwtUtils {
 
     /**
      * 从数据声明中获取过期时间
+     *
      * @param claims
      * @return 过期时间的时间戳
      */
@@ -94,6 +104,7 @@ public class JwtUtils {
 
     /**
      * 生成过期时间
+     *
      * @return 过期时间的时间戳
      */
     public static Long generateExpireTime() {
@@ -102,6 +113,7 @@ public class JwtUtils {
 
     /**
      * 生成过期时间
+     *
      * @param durationInSeconds token 持续时间（秒）
      * @return 过期时间的时间戳
      */

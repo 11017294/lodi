@@ -9,6 +9,7 @@ import java.util.Date;
 
 /**
  * Entity基类
+ *
  * @author MaybeBin
  * @createDate 2023-09-20
  */

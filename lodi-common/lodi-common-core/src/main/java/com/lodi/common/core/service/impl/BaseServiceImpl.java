@@ -6,6 +6,7 @@ import com.lodi.common.core.service.BaseService;
 
 /**
  * Service 实现类 基类
+ *
  * @author MaybeBin
  * @createDate 2023-09-19
  */

@@ -13,6 +13,7 @@ import java.util.Map;
 
 /**
  * 项目集成测试
+ *
  * @author MaybeBin
  * @createDate 2023-09-22
  */
@@ -50,7 +51,7 @@ public class ProjectIntegrationTest {
      * 测试 MyBatis Plus 的配置是否正确
      */
     @Test
-    void testMybatisPlusConfiguration(){
+    void testMybatisPlusConfiguration() {
         userService.list();
     }
 

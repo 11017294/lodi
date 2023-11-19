@@ -4,6 +4,7 @@ import com.lodi.common.core.enums.ErrorCode;
 
 /**
  * 业务异常
+ *
  * @author MaybeBin
  * @createDate 2023-09-19
  */

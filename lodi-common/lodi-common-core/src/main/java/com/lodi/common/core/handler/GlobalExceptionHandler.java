@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
  * 全局异常处理器
+ *
  * @author MaybeBin
  * @createDate 2023-09-19
  */
@@ -47,6 +48,7 @@ public class GlobalExceptionHandler {
 
     /**
      * 凭证无效异常
+     *
      * @param e
      * @return
      */

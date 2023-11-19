@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 /**
  * 添加文章 请求体
+ *
  * @author MaybeBin
  * @createDate 2023-11-02
  */

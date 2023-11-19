@@ -2,6 +2,7 @@ package com.lodi.common.core.constant;
 
 /**
  * 状态常量
+ *
  * @author MaybeBin
  * @createDate 2023-09-19
  */

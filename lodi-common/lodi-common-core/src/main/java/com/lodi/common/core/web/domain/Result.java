@@ -5,6 +5,7 @@ import lombok.Data;
 
 /**
  * 通用返回类
+ *
  * @author MaybeBin
  * @createDate 2023-09-19
  */
@@ -23,9 +24,10 @@ public class Result<T> {
 
     /**
      * 成功
+     *
      * @param data
-     * @return
      * @param <T>
+     * @return
      */
     public static <T> Result<T> success(T data) {
         return new Result<>(0, data, "ok");
@@ -33,6 +35,7 @@ public class Result<T> {
 
     /**
      * 失败
+     *
      * @param errorCode
      * @return
      */
@@ -42,6 +45,7 @@ public class Result<T> {
 
     /**
      * 失败
+     *
      * @param errorCode
      * @param message
      * @return
@@ -52,6 +56,7 @@ public class Result<T> {
 
     /**
      * 失败
+     *
      * @param code
      * @param message
      * @return

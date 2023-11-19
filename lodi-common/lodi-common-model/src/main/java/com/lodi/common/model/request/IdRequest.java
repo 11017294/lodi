@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 /**
  * Id 请求体
+ *
  * @author MaybeBin
  * @createDate 2023-10-26
  */

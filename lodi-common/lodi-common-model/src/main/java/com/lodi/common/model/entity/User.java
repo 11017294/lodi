@@ -3,18 +3,19 @@ package com.lodi.common.model.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import java.util.Date;
-
 import com.lodi.common.core.web.domain.BaseEntity;
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * 用户
+ *
  * @author MaybeBin
  * @createDate 2023-09-20
  */
 @Data
-@TableName(value ="t_user")
+@TableName(value = "t_user")
 public class User extends BaseEntity<User> {
 
     /**
@@ -99,7 +100,7 @@ public class User extends BaseEntity<User> {
     private String lastLoginIp;
 
     /**
-     * 是否开启邮件通知：0-关闭 1-开启 
+     * 是否开启邮件通知：0-关闭 1-开启
      */
     private Integer startEmailNotify;
 
