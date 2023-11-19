@@ -20,7 +20,7 @@ import io.swagger.annotations.ApiModelProperty;
 @TableName("${schemaName}${table.name}")
 </#if>
 <#if springdoc>
-@Schema(name = "${entity}", description = "$!{table.comment}")
+@Schema(name = "${entity}", description = "${table.comment}")
 <#elseif swagger>
 @ApiModel(value = "${entity}对象", description = "${table.comment!}")
 </#if>

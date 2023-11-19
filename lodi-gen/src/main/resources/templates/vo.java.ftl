@@ -1,4 +1,4 @@
-package ${request.packageName};
+package ${VO.packageName};
 
 <#list table.importPackages as pkg>
     <#if pkg != 'com.baomidou.mybatisplus.annotation.IdType'
@@ -19,7 +19,7 @@ import lombok.Data;
 </#if>
 
 /**
- * ${table.comment!} 请求体
+ * ${table.comment!} 视图
  *
  * @author ${author}
  * @since ${date}
@@ -28,11 +28,11 @@ import lombok.Data;
 @Data
 </#if>
 <#if springdoc>
-@Schema(name = "${entity}", description = "${table.comment!}")
+@Schema(title = "${table.comment!} 视图")
 <#elseif swagger>
-@ApiModel(value = "${entity}对象", description = "${table.comment!}")
+@ApiModel(value = "${entity}", description = "${table.comment!} 视图")
 </#if>
-public class ${entity}Request implements Serializable {
+public class ${entity}VO implements Serializable {
 <#if entitySerialVersionUID>
 
     private static final long serialVersionUID = 1L;
@@ -45,7 +45,7 @@ public class ${entity}Request implements Serializable {
 
     <#if field.comment!?length gt 0>
         <#if springdoc>
-    @Schema(description = "${field.comment}")
+    @Schema(title = "${field.comment}", description = "${field.comment}")
         <#elseif swagger>
     @ApiModelProperty("${field.comment}")
         <#else>
@@ -70,7 +70,7 @@ public class ${entity}Request implements Serializable {
     }
 
         <#if chainModel>
-    public ${entity}${request.postfix} set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
+    public ${entity}VO set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
         <#else>
     public void set${field.capitalName}(${field.propertyType} ${field.propertyName}) {
         </#if>

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.util.HashMap;
@@ -45,26 +46,31 @@ public class EnhanceFreemarkerTemplateEngine extends FreemarkerTemplateEngine {
         String entityName = tableInfo.getEntityName();
         // 修改request路径和包
         InjectionConfig injectionConfig = config.getInjectionConfig();
+        // 增加参数
         Map<String, Object> hashMap = new HashMap<>();
+        String entityNameHump = decapitalizeFirstLetter(entityName);
+        hashMap.put("entityHump", entityNameHump);
+
         List<CustomFile> customFiles = injectionConfig.getCustomFiles();
         for (int i = 0; i < customFiles.size(); i++) {
             CustomFile oldCustomFile = customFiles.get(i);
-            if (!"Request".equals(oldCustomFile.getFileName())) {
-                continue;
+            String packageName = oldCustomFile.getPackageName();
+            if (FileEnum.isPacketMangling(oldCustomFile.getFileName())) {
+                CustomFile customFile = new CustomFile.Builder()
+                        .fileName(oldCustomFile.getFileName())
+                        .templatePath(oldCustomFile.getTemplatePath())
+                        .filePath(oldCustomFile.getFilePath() + File.separator + entityNameHump)
+                        .packageName(oldCustomFile.getPackageName() + "." + entityNameHump)
+                        .build();
+                customFiles.set(i, customFile);
+                packageName = customFile.getPackageName();
             }
-            String entityNameHump = decapitalizeFirstLetter(entityName);
-            CustomFile customFile = new CustomFile.Builder()
-                    .fileName(oldCustomFile.getFileName())
-                    .templatePath(oldCustomFile.getTemplatePath())
-                    .filePath(oldCustomFile.getFilePath() + File.separator + entityNameHump)
-                    .packageName(oldCustomFile.getPackageName() + "." + entityNameHump)
-                    .build();
-            customFiles.set(i, customFile);
             // 得到包名
+            String fileEnum = FileEnum.getStringValue(oldCustomFile.getFileName());
             HashMap<String, Object> requestMap = new HashMap<>();
-            requestMap.put("packageName", customFile.getPackageName());
-            requestMap.put("postfix", "Request");
-            hashMap.put("request", requestMap);
+            requestMap.put("packageName", packageName);
+            requestMap.put("postfix", fileEnum);
+            hashMap.put(fileEnum, requestMap);
         }
 
         // 获取object map
@@ -72,6 +78,7 @@ public class EnhanceFreemarkerTemplateEngine extends FreemarkerTemplateEngine {
 
         // 返回结果封装
         objectMap.put("result", "com.lodi.common.core.web.domain.Result");
+        objectMap.put("page", "com.baomidou.mybatisplus.extension.plugins.pagination.Page");
         objectMap.putAll(hashMap);
         return objectMap;
     }

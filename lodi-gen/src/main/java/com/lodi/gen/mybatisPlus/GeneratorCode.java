@@ -10,7 +10,9 @@ import com.lodi.common.core.service.impl.BaseServiceImpl;
 import com.lodi.common.core.web.domain.BaseEntity;
 
 import java.sql.Types;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -52,13 +54,7 @@ public class GeneratorCode {
                 }))
                 // 自定义类型
                 .injectionConfig(consumer -> {
-                    CustomFile customFile = new CustomFile.Builder()
-                            .fileName("Request")
-                            .filePath(projectUrl + "\\lodi-common\\lodi-common-model\\src\\main\\java\\com\\lodi\\common\\model\\request")
-                            .packageName("com.lodi.common.model.request")
-                            .templatePath("/templates/request.java.ftl")
-                            .build();
-                    consumer.customFile(customFile);
+                    consumer.customFile(injectionConfig());
                 })
                 .packageConfig(builder -> {
                     Map<OutputFile, String> pathInfo = new HashMap<>();
@@ -68,7 +64,6 @@ public class GeneratorCode {
                     pathInfo.put(OutputFile.mapper, packageUrl + "\\java\\com\\lodi\\xo\\mapper");
                     pathInfo.put(OutputFile.service, packageUrl + "\\java\\com\\lodi\\xo\\service");
                     pathInfo.put(OutputFile.serviceImpl, packageUrl + "\\java\\com\\lodi\\xo\\service\\impl");
-
                     builder
                             .parent("com.lodi") // 设置父包名
                             .entity("common.model.entity")
@@ -98,10 +93,44 @@ public class GeneratorCode {
                             .superServiceImplClass(BaseServiceImpl.class)   // 设置父类
                             .formatServiceFileName("%sService") // 设置文件名格式
                             .mapperBuilder().superClass(BaseMapper.class)
-                            .enableBaseColumnList().enableBaseResultMap();  // 设置父类
+                            .enableBaseColumnList().enableBaseResultMap()
+                            .controllerBuilder().enableRestStyle();  // 设置父类
                 })
                 .templateEngine(new EnhanceFreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
                 .execute();
+    }
+
+    /**
+     * 自定义类型
+     * @return
+     */
+    private static List<CustomFile> injectionConfig(){
+        List<CustomFile> list = new ArrayList<>();
+        list.add(new CustomFile.Builder()
+                .fileName(FileEnum.AddRequest.toString())
+                .filePath(projectUrl + "\\lodi-common\\lodi-common-model\\src\\main\\java\\com\\lodi\\common\\model\\request")
+                .packageName("com.lodi.common.model.request")
+                .templatePath("/templates/addRequest.java.ftl")
+                .build());
+        list.add(new CustomFile.Builder()
+                .fileName(FileEnum.PageRequest.toString())
+                .filePath(projectUrl + "\\lodi-common\\lodi-common-model\\src\\main\\java\\com\\lodi\\common\\model\\request")
+                .packageName("com.lodi.common.model.request")
+                .templatePath("/templates/pageRequest.java.ftl")
+                .build());
+        list.add(new CustomFile.Builder()
+                .fileName(FileEnum.UpdateRequest.toString())
+                .filePath(projectUrl + "\\lodi-common\\lodi-common-model\\src\\main\\java\\com\\lodi\\common\\model\\request")
+                .packageName("com.lodi.common.model.request")
+                .templatePath("/templates/updateRequest.java.ftl")
+                .build());
+        list.add(new CustomFile.Builder()
+                .fileName(FileEnum.VO.toString())
+                .filePath(projectUrl + "\\lodi-common\\lodi-common-model\\src\\main\\java\\com\\lodi\\common\\model\\vo")
+                .packageName("com.lodi.common.model.vo")
+                .templatePath("/templates/vo.java.ftl")
+                .build());
+        return list;
     }
 
 }
