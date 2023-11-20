@@ -6,23 +6,23 @@ import ${pkg}
 <#if springdoc>
 import io.swagger.v3.oas.annotations.media.Schema;
 <#elseif swagger>
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+    import io.swagger.annotations.ApiModel;
+    import io.swagger.annotations.ApiModelProperty;
 </#if>
 
 /**
- * ${table.comment}
- *
- * @author ${author}
- * @since ${date}
- */
+* ${table.comment}
+*
+* @author ${author}
+* @createDate ${date}
+*/
 <#if table.convert>
-@TableName("${schemaName}${table.name}")
+    @TableName("${schemaName}${table.name}")
 </#if>
 <#if springdoc>
-@Schema(name = "${entity}", description = "${table.comment}")
+    @Schema(name = "${entity}", description = "${table.comment}")
 <#elseif swagger>
-@ApiModel(value = "${entity}对象", description = "${table.comment!}")
+    @ApiModel(value = "${entity}对象", description = "${table.comment!}")
 </#if>
 <#if superEntityClass??>
 class ${entity} : ${superEntityClass}<#if activeRecord><${entity}></#if>() {

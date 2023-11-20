@@ -15,22 +15,22 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 </#if>
 <#if entityLombokModel>
-import lombok.Data;
+    import lombok.Data;
 </#if>
 
 /**
- * 添加${table.comment!} 请求体
- *
- * @author ${author}
- * @since ${date}
- */
+* 添加${table.comment!} 请求体
+*
+* @author ${author}
+* @createDate ${date}
+*/
 <#if entityLombokModel>
-@Data
+    @Data
 </#if>
 <#if springdoc>
-@Schema(title = "添加${table.comment!} 请求体")
+    @Schema(title = "添加${table.comment!} 请求体")
 <#elseif swagger>
-@ApiModel(value = "${entity}", description = "添加${table.comment!} 请求体")
+    @ApiModel(value = "${entity}", description = "添加${table.comment!} 请求体")
 </#if>
 public class ${entity}AddRequest implements Serializable {
 <#if entitySerialVersionUID>

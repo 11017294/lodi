@@ -23,16 +23,16 @@ import javax.annotation.Resource;
 import static com.lodi.common.core.enums.ErrorCode.NOT_FOUND_ERROR;
 
 /**
- * @author ${author}
- * @since ${date}
- */
+* @author ${author}
+* @createDate ${date}
+*/
 <#if springdoc>
-@Tag(name = "${table.comment}", description = "${table.comment}")
+    @Tag(name = "${table.comment}", description = "${table.comment}")
 </#if>
 <#if restControllerStyle>
-@RestController
+    @RestController
 <#else>
-@Controller
+    @Controller
 </#if>
 @RequestMapping("<#if package.ModuleName?? && package.ModuleName != "">/${package.ModuleName}</#if>/<#if controllerMappingHyphenStyle>${controllerMappingHyphen}<#else>${table.entityPath}</#if>")
 <#if kotlin>

@@ -9,24 +9,24 @@ import ${AddRequest.packageName}.${entity}${UpdateRequest.postfix};
 import ${AddRequest.packageName}.${entity}${PageRequest.postfix};
 import ${page};
 <#if table.serviceInterface>
-import ${package.Service}.${table.serviceName};
+    import ${package.Service}.${table.serviceName};
 </#if>
 import ${superServiceImplClassPackage};
 import org.springframework.stereotype.Service;
 
 /**
- * ${table.comment!} 服务层实现
- *
- * @author ${author}
- * @since ${date}
- */
+* ${table.comment!} 服务层实现
+*
+* @author ${author}
+* @createDate ${date}
+*/
 @Service
 <#if kotlin>
-open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>()<#if table.serviceInterface>, ${table.serviceName}</#if> {
+    open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>()<#if table.serviceInterface>, ${table.serviceName}</#if> {
 
-}
+    }
 <#else>
-public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}><#if table.serviceInterface> implements ${table.serviceName}</#if> {
+    public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.mapperName}, ${entity}><#if table.serviceInterface> implements ${table.serviceName}</#if> {
 
     @Override
     public Boolean insert${entity}(${entity}AddRequest addRequest) {
