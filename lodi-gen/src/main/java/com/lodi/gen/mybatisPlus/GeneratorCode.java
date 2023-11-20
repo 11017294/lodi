@@ -27,7 +27,7 @@ public class GeneratorCode {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "333";
 
-    private static final String projectUrl = "E:\\MyCode\\dev\\lodi";
+    private static final String projectUrl = "E:\\myCode\\lodi";
     private static final String packageUrl = projectUrl + "\\lodi-xo\\src\\main";
 
     public static void execute(String tableName) {

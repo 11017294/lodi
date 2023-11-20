@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lodi.xo.mapper.AnimeInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.lodi.common.model.entity.AnimeInfo">
+        <id column="id" property="id" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="is_delete" property="isDelete" />
+        <result column="series_id" property="seriesId" />
+        <result column="anime_name" property="animeName" />
+        <result column="region" property="region" />
+        <result column="anime_type" property="animeType" />
+        <result column="season_number" property="seasonNumber" />
+        <result column="anime_genre" property="animeGenre" />
+        <result column="first_air_date" property="firstAirDate" />
+        <result column="play_urls" property="playUrls" />
+        <result column="highlight_images" property="highlightImages" />
+        <result column="cover_url" property="coverUrl" />
+        <result column="author" property="author" />
+        <result column="production_company" property="productionCompany" />
+        <result column="voice_actors" property="voiceActors" />
+        <result column="synopsis" property="synopsis" />
+        <result column="airing_status" property="airingStatus" />
+        <result column="total_episodes" property="totalEpisodes" />
+        <result column="current_episode" property="currentEpisode" />
+        <result column="followers_count" property="followersCount" />
+        <result column="rating" property="rating" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        create_time,
+        update_time,
+        is_delete,
+        id, series_id, anime_name, region, anime_type, season_number, anime_genre, first_air_date, play_urls, highlight_images, cover_url, author, production_company, voice_actors, synopsis, airing_status, total_episodes, current_episode, followers_count, rating
+    </sql>
+
+</mapper>
