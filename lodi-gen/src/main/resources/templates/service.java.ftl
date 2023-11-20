@@ -11,7 +11,7 @@ import ${page};
  * ${table.comment!} 服务层
  *
  * @author ${author}
- * @since ${date}
+ * @createDate ${date}
  */
 <#if kotlin>
 interface ${table.serviceName} : ${superServiceClass}<${entity}>

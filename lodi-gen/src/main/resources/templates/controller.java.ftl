@@ -24,7 +24,7 @@ import static com.lodi.common.core.enums.ErrorCode.NOT_FOUND_ERROR;
 
 /**
  * @author ${author}
- * @since ${date}
+ * @createDate ${date}
  */
 <#if springdoc>
 @Tag(name = "${table.comment}", description = "${table.comment}")

@@ -10,7 +10,7 @@ import ${mapperAnnotationClass.name};
  * ${table.comment!} 数据层
  *
  * @author ${author}
- * @since ${date}
+ * @createDate ${date}
  */
 <#if mapperAnnotationClass??>
 @${mapperAnnotationClass.simpleName}

@@ -14,7 +14,7 @@ import io.swagger.annotations.ApiModelProperty;
  * ${table.comment}
  *
  * @author ${author}
- * @since ${date}
+ * @createDate ${date}
  */
 <#if table.convert>
 @TableName("${schemaName}${table.name}")

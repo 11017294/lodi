@@ -24,7 +24,7 @@ import lombok.Data;
  * ${table.comment!}分页查询 请求体
  *
  * @author ${author}
- * @since ${date}
+ * @createDate ${date}
  */
 <#if entityLombokModel>
 @Data

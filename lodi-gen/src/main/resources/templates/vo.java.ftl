@@ -22,7 +22,7 @@ import lombok.Data;
  * ${table.comment!} 视图
  *
  * @author ${author}
- * @since ${date}
+ * @createDate ${date}
  */
 <#if entityLombokModel>
 @Data
