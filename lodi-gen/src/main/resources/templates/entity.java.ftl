@@ -9,24 +9,24 @@ import ${pkg};
 <#if entityLombokModel>
 import lombok.Data;
     <#if chainModel>
-        import lombok.experimental.Accessors;
+import lombok.experimental.Accessors;
     </#if>
 </#if>
 
 /**
-* ${table.comment!}
-*
-* @author ${author}
-* @createDate ${date}
-*/
+ * ${table.comment!}
+ *
+ * @author ${author}
+ * @since ${date}
+ */
 <#if entityLombokModel>
-    @Data
+@Data
     <#if chainModel>
-        @Accessors(chain = true)
+@Accessors(chain = true)
     </#if>
 </#if>
 <#if table.convert>
-    @TableName("${schemaName}${table.name}")
+@TableName("${schemaName}${table.name}")
 </#if>
 <#if superEntityClass??>
 public class ${entity} extends ${superEntityClass}<${entity}> {

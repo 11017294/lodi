@@ -15,22 +15,22 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 </#if>
 <#if entityLombokModel>
-    import lombok.Data;
+import lombok.Data;
 </#if>
 
 /**
-* ${table.comment!}更新 请求体
-*
-* @author ${author}
-* @createDate ${date}
-*/
+ * ${table.comment!}更新 请求体
+ *
+ * @author ${author}
+ * @since ${date}
+ */
 <#if entityLombokModel>
-    @Data
+@Data
 </#if>
 <#if springdoc>
-    @Schema(title = "${table.comment!}更新 请求体")
+@Schema(title = "${table.comment!}更新 请求体")
 <#elseif swagger>
-    @ApiModel(value = "${entity}", description = "${table.comment!}更新 请求体")
+@ApiModel(value = "${entity}", description = "${table.comment!}更新 请求体")
 </#if>
 public class ${entity}${UpdateRequest.postfix} implements Serializable {
 <#if entitySerialVersionUID>

@@ -8,20 +8,20 @@ import ${AddRequest.packageName}.${entity}${PageRequest.postfix};
 import ${page};
 
 /**
-* ${table.comment!} 服务层
-*
-* @author ${author}
-* @createDate ${date}
-*/
+ * ${table.comment!} 服务层
+ *
+ * @author ${author}
+ * @since ${date}
+ */
 <#if kotlin>
-    interface ${table.serviceName} : ${superServiceClass}<${entity}>
+interface ${table.serviceName} : ${superServiceClass}<${entity}>
 <#else>
-    public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
+public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
 
     /**
-    * 新增${table.comment}
-    * @param addRequest 新增请求体
-    * @return
+     * 新增${table.comment}
+     * @param addRequest 新增请求体
+     * @return
      */
     Boolean insert${entity}(${entity}AddRequest addRequest);
 
