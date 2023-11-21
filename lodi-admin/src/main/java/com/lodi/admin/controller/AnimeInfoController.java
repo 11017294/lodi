@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.core.web.domain.Result;
 import com.lodi.common.core.exception.BusinessException;
 import com.lodi.common.model.request.IdRequest;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
@@ -33,13 +34,13 @@ public class AnimeInfoController {
 
     @Operation(summary = "获取动漫信息分页")
     @GetMapping("page")
-    public Result<Page<AnimeInfo>> getAnimeInfoPage(AnimeInfoPageRequest pageRequest) {
+    public Result<Page<AnimeInfo>> getAnimeInfoPage(@ParameterObject AnimeInfoPageRequest pageRequest) {
         return Result.success(animeInfoService.getAnimeInfoPage(pageRequest));
     }
 
     @Operation(summary = "获取动漫信息")
     @GetMapping("get")
-    public Result<AnimeInfoVO> getAnimeInfo(IdRequest request) {
+    public Result<AnimeInfoVO> getAnimeInfo(@ParameterObject IdRequest request) {
         AnimeInfo animeInfo = animeInfoService.getById(request.getId());
         if (animeInfo == null) {
             throw new BusinessException(NOT_FOUND_ERROR);
@@ -51,7 +52,7 @@ public class AnimeInfoController {
 
     @Operation(summary = "根据系列ID获取动漫信息")
     @GetMapping("getAnimeInfoBySeriesId")
-    public Result<List<AnimeInfo>> getAnimeInfoBySeriesId(IdRequest request) {
+    public Result<List<AnimeInfo>> getAnimeInfoBySeriesId(@ParameterObject IdRequest request) {
         List<AnimeInfo> animeInfos = animeInfoService.getAnimeInfoBySeriesId(request.getId());
         if (animeInfos == null) {
             throw new BusinessException(NOT_FOUND_ERROR);

@@ -15,6 +15,7 @@ import com.lodi.common.security.annotation.RequiresRoles;
 import com.lodi.xo.service.ArticleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,13 +36,13 @@ public class ArticleController {
 
     @Operation(summary = "获取文章分页")
     @GetMapping("page")
-    public Result<Page<Article>> getArticlePage(ArticlePageRequest articlePageRequest) {
+    public Result<Page<Article>> getArticlePage(@ParameterObject ArticlePageRequest articlePageRequest) {
         return Result.success(articleService.getArticlePage(articlePageRequest));
     }
 
     @Operation(summary = "获取文章信息")
     @GetMapping("get")
-    public Result<ArticleVO> getArticle(IdRequest idRequest) {
+    public Result<ArticleVO> getArticle(@ParameterObject IdRequest idRequest) {
         Article article = articleService.getById(idRequest.getId());
         if (article == null) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);

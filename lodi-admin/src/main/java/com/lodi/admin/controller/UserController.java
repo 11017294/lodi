@@ -1,6 +1,8 @@
 package com.lodi.admin.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lodi.api.RemoteFileService;
+import com.lodi.common.core.constant.FileDirectoryConstant;
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
 import com.lodi.common.core.web.domain.Result;
@@ -14,8 +16,10 @@ import com.lodi.common.security.annotation.RequiresRoles;
 import com.lodi.xo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -31,23 +35,25 @@ public class UserController {
 
     @Resource
     private UserService userService;
+    @Resource
+    private RemoteFileService remoteFileService;
 
     @RequiresRoles("admin")
     @Operation(summary = "获取用户列表")
     @GetMapping("list")
-    public Result<List<User>> listUser(UserQueryRequest userQueryRequest) {
+    public Result<List<User>> listUser(@ParameterObject UserQueryRequest userQueryRequest) {
         return Result.success(userService.listUser(userQueryRequest));
     }
 
     @Operation(summary = "获取用户分页")
     @GetMapping("page")
-    public Result<Page<User>> getUserPage(UserPageRequest userPageRequest) {
+    public Result<Page<User>> getUserPage(@ParameterObject UserPageRequest userPageRequest) {
         return Result.success(userService.getUserPage(userPageRequest));
     }
 
     @Operation(summary = "获取用户信息")
     @GetMapping("get")
-    public Result<UserVO> getUser(IdRequest idRequest) {
+    public Result<UserVO> getUser(@ParameterObject IdRequest idRequest) {
         User user = userService.getById(idRequest.getId());
         if (user == null) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
@@ -70,6 +76,15 @@ public class UserController {
         User user = new User();
         BeanUtils.copyProperties(userUpdateRequest, user);
         return Result.success(userService.updateById(user));
+    }
+
+    @Operation(summary = "上传头像")
+    @PostMapping(value = "uploadAvatar")
+    public Result<String> uploadAvatar(@RequestParam("file") MultipartFile file) {
+        if (file.isEmpty()) {
+            throw new BusinessException(ErrorCode.FILE_IS_EMPTY);
+        }
+        return remoteFileService.upload(file, FileDirectoryConstant.AVATAR);
     }
 
 }
