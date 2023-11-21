@@ -1,32 +1,22 @@
-package com.lodi.admin;
+package com.lodi.file;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.context.annotation.ComponentScan;
 
 /**
- * admin 服务
+ * 文件服务
  *
  * @author MaybeBin
- * @createDate 2023-09-19
+ * @createDate 2023-11-20
  */
-@MapperScan("com.lodi.xo.mapper")
-@ComponentScan(basePackages = {
-        "com.lodi.xo",
-        "com.lodi.admin"
-})
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = "com.lodi.api")
-public class AdminApplication {
-
+public class FileApplication {
     public static void main(String[] args) {
-        SpringApplication.run(AdminApplication.class, args);
+        SpringApplication.run(FileApplication.class, args);
         System.out.println(
-                "(♥◠‿◠)ﾉﾞ  admin服务启动成功   ლ(´ڡ`ლ)ﾞ  \n" +
+                "(♥◠‿◠)ﾉﾞ  文件服务启动成功   ლ(´ڡ`ლ)ﾞ  \n" +
                 " _                   _   _      \n" +
                 "| |       ___     __| | (_)     \n" +
                 "| |      / _ \\   / _` | | |    \n" +

@@ -18,6 +18,7 @@ public enum ErrorCode {
 
     SYSTEM_ERROR(50000, "系统内部异常"),
     RESPONSE_PACK_ERROR(50002, "response封装错误"),
+    FILE_IS_EMPTY(50003, "文件为空"),
     OPERATION_ERROR(50001, "操作失败");
 
     private final int code;

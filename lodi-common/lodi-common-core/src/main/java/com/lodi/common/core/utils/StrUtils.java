@@ -5,6 +5,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 字符串比对工具类
@@ -46,6 +47,10 @@ public class StrUtils {
     public static boolean isMatch(String pattern, String url) {
         AntPathMatcher matcher = new AntPathMatcher();
         return matcher.match(pattern, url);
+    }
+
+    public static String getUUID(){
+        return UUID.randomUUID().toString().replace("-", "");
     }
 
 }

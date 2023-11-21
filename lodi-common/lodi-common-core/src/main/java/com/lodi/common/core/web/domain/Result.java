@@ -3,6 +3,8 @@ package com.lodi.common.core.web.domain;
 import com.lodi.common.core.enums.ErrorCode;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * 通用返回类
  *
@@ -10,11 +12,17 @@ import lombok.Data;
  * @createDate 2023-09-19
  */
 @Data
-public class Result<T> {
+public class Result<T> implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private int code;
     private T data;
     private String message;
+
+    public Result() {
+
+    }
 
     private Result(int code, T data, String message) {
         this.code = code;

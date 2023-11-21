@@ -9,34 +9,31 @@
         <version>1.0.0</version>
     </parent>
 
-    <artifactId>lodi-admin</artifactId>
+    <artifactId>lodi-file</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>com.lodi</groupId>
-            <artifactId>lodi-xo</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.lodi</groupId>
-            <artifactId>lodi-common-config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.lodi</groupId>
-            <artifactId>lodi-common-security</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.lodi</groupId>
-            <artifactId>lodi-api</artifactId>
+            <artifactId>lodi-common-core</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.baomidou</groupId>
+                    <artifactId>mybatis-plus-boot-starter</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-data-redis</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
@@ -49,10 +46,6 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-bootstrap</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
     </dependencies>
 

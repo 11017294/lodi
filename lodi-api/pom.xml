@@ -11,4 +11,11 @@
 
     <artifactId>lodi-api</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.lodi</groupId>
+            <artifactId>lodi-common-core</artifactId>
+        </dependency>
+    </dependencies>
+
 </project>
