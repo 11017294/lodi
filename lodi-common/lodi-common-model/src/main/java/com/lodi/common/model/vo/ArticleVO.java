@@ -1,9 +1,11 @@
 package com.lodi.common.model.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 文章 视图
@@ -34,6 +36,12 @@ public class ArticleVO implements Serializable {
 
     @Schema(title = "作者ID", description = "作者ID", example = "10000")
     private Long userId;
+
+    @Schema(title = "作者昵称", description = "作者昵称")
+    private String nickname;
+
+    @Schema(title = "作者头像", description = "作者头像")
+    private String userAvatar;
 
     @Schema(title = "标签ID", description = "标签ID", example = "100,101,102")
     private String tagId;
@@ -73,6 +81,10 @@ public class ArticleVO implements Serializable {
      */
     @Schema(title = "审核状态", description = "审核状态", example = "1")
     private Integer auditStatus;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Schema(title = "创建时间", description = "创建时间", format = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
 
     @Schema(title = "排序字段", description = "排序字段")
     private Integer sort;
