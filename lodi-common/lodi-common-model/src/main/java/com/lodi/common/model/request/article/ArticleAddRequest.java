@@ -17,7 +17,7 @@ public class ArticleAddRequest implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(title = "标题", description = "标题")
+    @Schema(description = "标题")
     private String title;
 
     @Schema(title = "文章简介", description = "文章简介")
@@ -29,25 +29,18 @@ public class ArticleAddRequest implements Serializable {
     @Schema(title = "封面", description = "封面")
     private String cover;
 
-    @Schema(title = "标签ID", description = "标签ID", example = "100,101,102")
+    @Schema(title = "标签ID", description = "标签ID")
     private String tagId;
 
-    @Schema(title = "文章类别ID", description = "文章类别ID", example = "100")
-    private Long categoriesId;
+    @Schema(title = "文章类别ID", description = "文章类别ID")
+    private Long categoryId;
 
-    /**
-     * 0-否 1-是
-     */
-    @Schema(title = "是否发布", description = "是否发布", example = "0")
+    @Schema(title = "是否发布：0-否 1-是", description = "是否发布：0-否 1-是")
     private Integer isPublish;
 
-    /**
-     * 0-否 1-是
-     */
-    @Schema(title = "是否开启评论", description = "是否开启评论", example = "0")
+    @Schema(title = "是否开启评论：0-否 1-是", description = "是否开启评论：0-否 1-是")
     private Integer openComment;
 
     @Schema(title = "排序字段", description = "排序字段")
     private Integer sort;
-
 }

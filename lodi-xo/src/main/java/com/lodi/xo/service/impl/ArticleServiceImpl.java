@@ -81,8 +81,8 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
                         Article::getContent, articlePageRequest.getContent())
                 .eq(Objects.nonNull(articlePageRequest.getUserId()),
                         Article::getUserId, articlePageRequest.getUserId())
-                .eq(Objects.nonNull(articlePageRequest.getCategoriesId()),
-                        Article::getCategoriesId, articlePageRequest.getCategoriesId())
+                .eq(Objects.nonNull(articlePageRequest.getCategoryId()),
+                        Article::getCategoryId, articlePageRequest.getCategoryId())
                 .eq(Objects.nonNull(articlePageRequest.getIsPublish()),
                         Article::getIsPublish, articlePageRequest.getIsPublish())
                 .eq(Objects.nonNull(articlePageRequest.getOpenComment()),

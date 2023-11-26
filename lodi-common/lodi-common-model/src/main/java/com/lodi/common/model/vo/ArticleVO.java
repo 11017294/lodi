@@ -14,12 +14,11 @@ import java.util.Date;
  * @createDate 2023-11-01
  */
 @Data
-@Schema(title = "文章视图")
+@Schema(title = "文章 视图")
 public class ArticleVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(title = "id", description = "id", example = "10000")
     private Long id;
 
     @Schema(title = "标题", description = "标题")
@@ -34,31 +33,19 @@ public class ArticleVO implements Serializable {
     @Schema(title = "封面", description = "封面")
     private String cover;
 
-    @Schema(title = "作者ID", description = "作者ID", example = "10000")
+    @Schema(title = "作者ID", description = "作者ID")
     private Long userId;
 
-    @Schema(title = "作者昵称", description = "作者昵称")
-    private String nickname;
-
-    @Schema(title = "作者头像", description = "作者头像")
-    private String userAvatar;
-
-    @Schema(title = "标签ID", description = "标签ID", example = "100,101,102")
+    @Schema(title = "标签ID", description = "标签ID")
     private String tagId;
 
-    @Schema(title = "文章类别ID", description = "文章类别ID", example = "100")
-    private Long categoriesId;
+    @Schema(title = "文章类别ID", description = "文章类别ID")
+    private Long categoryId;
 
-    /**
-     * 0-否 1-是
-     */
-    @Schema(title = "是否发布", description = "是否发布", example = "0")
+    @Schema(title = "是否发布：0-否 1-是", description = "是否发布：0-否 1-是")
     private Integer isPublish;
 
-    /**
-     * 0-否 1-是
-     */
-    @Schema(title = "是否开启评论", description = "是否开启评论", example = "0")
+    @Schema(title = "是否开启评论：0-否 1-是", description = "是否开启评论：0-否 1-是")
     private Integer openComment;
 
     @Schema(title = "文章点击数", description = "文章点击数")
@@ -70,16 +57,10 @@ public class ArticleVO implements Serializable {
     @Schema(title = "点赞次数", description = "点赞次数")
     private Integer upvoteCount;
 
-    /**
-     * 0-普通文章 1-VIP文章
-     */
-    @Schema(title = "VIP文章", description = "VIP文章", example = "0")
+    @Schema(title = "vip文章：0-普通文章 1-vip文章", description = "vip文章：0-普通文章 1-vip文章")
     private Integer vipArticle;
 
-    /**
-     * 0-未审核 1-审核通过 2-审核不通过
-     */
-    @Schema(title = "审核状态", description = "审核状态", example = "1")
+    @Schema(title = "审核状态：0-未审核 1-审核通过 2-审核不通过", description = "审核状态：0-未审核 1-审核通过 2-审核不通过")
     private Integer auditStatus;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

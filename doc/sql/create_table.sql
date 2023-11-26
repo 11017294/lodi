@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS lodi.t_article
     cover         VARCHAR(256)                       NOT NULL COMMENT '封面',
     user_id       BIGINT                             NOT NULL COMMENT '作者ID',
     tag_id        VARCHAR(255)                       NULL COMMENT '标签ID',
-    categories_id BIGINT                             NULL COMMENT '文章类别ID',
+    category_id   BIGINT                             NULL COMMENT '文章类别ID',
     is_publish    TINYINT  DEFAULT 1                 NOT NULL COMMENT '是否发布：0-否 1-是',
     open_comment  TINYINT  DEFAULT 1                 NOT NULL COMMENT '是否开启评论：0-否 1-是',
     click_count   INT(10)  DEFAULT 0                 NOT NULL COMMENT '文章点击数',
@@ -58,10 +58,10 @@ CREATE TABLE IF NOT EXISTS lodi.t_article
 ) COMMENT '文章';
 
 -- 文章类别
-CREATE TABLE IF NOT EXISTS lodi.t_categories
+CREATE TABLE IF NOT EXISTS lodi.t_category
 (
     id            BIGINT                             NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    category_name VARCHAR(255)                       NULL COMMENT '类别名称',
+    name          VARCHAR(255)                       NULL COMMENT '类别名称',
     content       VARCHAR(255)                       NULL COMMENT '类别简介',
     sort          INT(10)                            NOT NULL DEFAULT 0 COMMENT '排序字段，越大越靠前',
     click_count   INT(10)                            NOT NULL DEFAULT 0 COMMENT '点击数',
@@ -71,10 +71,10 @@ CREATE TABLE IF NOT EXISTS lodi.t_categories
 ) COMMENT '文章类别';
 
 -- 标签
-CREATE TABLE IF NOT EXISTS lodi.t_tag
+CREATE TABLE IF NOT EXISTS lodi.t_tags
 (
     id          BIGINT                             NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    tag_name    VARCHAR(255)                       NULL COMMENT '标签名',
+    name        VARCHAR(255)                       NULL COMMENT '标签名称',
     content     VARCHAR(255)                       NULL COMMENT '标签简介',
     sort        INT(10)                            NOT NULL DEFAULT 0 COMMENT '排序字段，越大越靠前',
     click_count INT(10)                            NOT NULL DEFAULT 0 COMMENT '点击数',
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS lodi.t_tag
     is_delete   TINYINT  DEFAULT 0                 NOT NULL COMMENT '是否删除：0-未删 1-已删'
 ) COMMENT '标签';
 
--- 动漫信息
+-- 动漫信息     # 主要角色
 CREATE TABLE IF NOT EXISTS lodi.t_anime_info
 (
     id                 BIGINT                                  NOT NULL AUTO_INCREMENT PRIMARY KEY,

@@ -1,11 +1,12 @@
 package com.lodi.common.model.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.lodi.common.core.web.domain.BaseEntity;
+
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 文章
@@ -14,105 +15,87 @@ import lombok.Data;
  * @createDate 2023-11-01
  */
 @Data
-@TableName(value = "t_article")
+@Accessors(chain = true)
+@TableName("t_article")
 public class Article extends BaseEntity<Article> {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     *
-     */
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
 
     /**
-     * 标题
-     */
-    @TableField(value = "title")
+    * 标题
+    */
     private String title;
 
     /**
-     * 文章简介
-     */
-    @TableField(value = "summary")
+    * 文章简介
+    */
     private String summary;
 
     /**
-     * 内容
-     */
-    @TableField(value = "content")
+    * 内容
+    */
     private String content;
 
     /**
-     * 封面
-     */
-    @TableField(value = "cover")
+    * 封面
+    */
     private String cover;
 
     /**
-     * 作者id
-     */
-    @TableField(value = "user_id")
+    * 作者ID
+    */
     private Long userId;
 
     /**
-     * 标签ID
-     */
-    @TableField(value = "tag_id")
+    * 标签ID
+    */
     private String tagId;
 
     /**
-     * 文章类别ID
-     */
-    @TableField(value = "categories_id")
-    private Long categoriesId;
+    * 文章类别ID
+    */
+    private Long categoryId;
 
     /**
-     * 是否发布：0-否 1-是
-     */
-    @TableField(value = "is_publish")
+    * 是否发布：0-否 1-是
+    */
     private Integer isPublish;
 
     /**
-     * 是否开启评论：0-否 1-是
-     */
-    @TableField(value = "open_comment")
+    * 是否开启评论：0-否 1-是
+    */
     private Integer openComment;
 
     /**
-     * 文章点击数
-     */
-    @TableField(value = "click_count")
+    * 文章点击数
+    */
     private Integer clickCount;
 
     /**
-     * 收藏次数
-     */
-    @TableField(value = "collect_count")
+    * 收藏次数
+    */
     private Integer collectCount;
 
     /**
-     * 点赞次数
-     */
-    @TableField(value = "upvote_count")
+    * 点赞次数
+    */
     private Integer upvoteCount;
 
     /**
-     * vip文章：0-普通文章 1-vip文章
-     */
-    @TableField(value = "vip_article")
+    * vip文章：0-普通文章 1-vip文章
+    */
     private Integer vipArticle;
 
     /**
-     * 审核状态：0-未审核 1-审核通过 2-审核不通过
-     */
-    @TableField(value = "audit_status")
+    * 审核状态：0-未审核 1-审核通过 2-审核不通过
+    */
     private Integer auditStatus;
 
     /**
-     * 排序字段
-     */
-    @TableField(value = "sort")
+    * 排序字段
+    */
     private Integer sort;
-
 }
