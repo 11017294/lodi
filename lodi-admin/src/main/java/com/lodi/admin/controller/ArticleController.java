@@ -59,27 +59,27 @@ public class ArticleController {
     }
 
     @Operation(summary = "更新文章")
-    @PostMapping(value = "update")
+    @PutMapping("update")
     public Result<Boolean> updateArticle(@RequestBody ArticleUpdateRequest articleUpdateRequest) {
         return Result.success(articleService.updateArticle(articleUpdateRequest));
     }
 
     @Operation(summary = "删除文章")
-    @PostMapping("delete")
+    @DeleteMapping("delete")
     public Result<Boolean> deleteArticle(@RequestBody IdRequest request) {
         return Result.success(articleService.deleteArticle(request.getId()));
     }
 
     @RequiresRoles("admin")
     @Operation(summary = "批量删除文章")
-    @PostMapping("deleteBatch")
+    @DeleteMapping("deleteBatch")
     public Result<Boolean> deleteBatchArticle(@RequestBody Long[] ids) {
         return Result.success(articleService.removeByIds(Arrays.asList(ids)));
     }
 
     @RequiresRoles("admin")
     @Operation(summary = "审核")
-    @PostMapping("audit")
+    @PutMapping("audit")
     public Result<Boolean> auditArticle(@RequestBody AuditArticleRequest auditArticleRequest) {
         return Result.success(articleService.auditArticle(auditArticleRequest));
     }

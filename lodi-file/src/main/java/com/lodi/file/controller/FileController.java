@@ -5,6 +5,7 @@ import com.lodi.common.core.exception.BusinessException;
 import com.lodi.common.core.web.domain.Result;
 import com.lodi.file.service.FileService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -35,7 +36,7 @@ public class FileController {
         }
     }
 
-    @PostMapping("delete")
+    @DeleteMapping("delete")
     public Result<Integer> delete(String fileName, String fileDirectory) {
         return Result.success(fileService.delete(fileName, fileDirectory));
     }

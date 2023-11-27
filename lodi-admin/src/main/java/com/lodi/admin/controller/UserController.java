@@ -41,7 +41,7 @@ public class UserController {
     @RequiresRoles("admin")
     @Operation(summary = "获取用户列表")
     @GetMapping("list")
-    public Result<List<User>> listUser(@ParameterObject UserQueryRequest userQueryRequest) {
+    public Result<List<User>> getUserList(@ParameterObject UserQueryRequest userQueryRequest) {
         return Result.success(userService.listUser(userQueryRequest));
     }
 
@@ -65,13 +65,13 @@ public class UserController {
 
     @RequiresRoles("admin")
     @Operation(summary = "删除用户")
-    @PostMapping("delete")
+    @DeleteMapping("delete")
     public Result<Boolean> deleteUser(@RequestBody IdRequest idRequest) {
         return Result.success(userService.removeById(idRequest.getId()));
     }
 
     @Operation(summary = "更新用户")
-    @PostMapping(value = "update")
+    @PutMapping("update")
     public Result<Boolean> updateUser(@RequestBody UserUpdateRequest userUpdateRequest) {
         User user = new User();
         BeanUtils.copyProperties(userUpdateRequest, user);
@@ -79,7 +79,7 @@ public class UserController {
     }
 
     @Operation(summary = "上传头像")
-    @PostMapping(value = "uploadAvatar")
+    @PostMapping("uploadAvatar")
     public Result<String> uploadAvatar(@RequestParam("file") MultipartFile file) {
         if (file.isEmpty()) {
             throw new BusinessException(ErrorCode.FILE_IS_EMPTY);

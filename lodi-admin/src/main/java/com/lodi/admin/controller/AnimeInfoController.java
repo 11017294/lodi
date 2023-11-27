@@ -67,13 +67,13 @@ public class AnimeInfoController {
     }
 
     @Operation(summary = "更新动漫信息")
-    @PostMapping(value = "update")
+    @PutMapping("update")
     public Result<Boolean> updateAnimeInfo(@RequestBody AnimeInfoUpdateRequest updateRequest) {
         return Result.success(animeInfoService.updateAnimeInfo(updateRequest));
     }
 
     @Operation(summary = "删除动漫信息")
-    @PostMapping("delete")
+    @DeleteMapping("delete")
     public Result<Boolean> deleteAnimeInfo(@RequestBody IdRequest request) {
         return Result.success(animeInfoService.deleteAnimeInfo(request.getId()));
     }
