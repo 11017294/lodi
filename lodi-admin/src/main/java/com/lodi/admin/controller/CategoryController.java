@@ -1,5 +1,7 @@
 package com.lodi.admin.controller;
 
+import com.lodi.common.model.convert.category.CategoryConvert;
+import com.lodi.common.model.convert.user.UserConvert;
 import com.lodi.common.model.entity.Category;
 import com.lodi.xo.service.CategoryService;
 import com.lodi.common.model.request.category.CategoryAddRequest;
@@ -34,14 +36,16 @@ public class CategoryController {
 
     @Operation(summary = "获取文章类别分页")
     @GetMapping("page")
-    public Result<Page<Category>> getCategoryPage(@ParameterObject CategoryPageRequest pageRequest) {
-        return Result.success(categoryService.getCategoryPage(pageRequest));
+    public Result<Page<CategoryVO>> getCategoryPage(@ParameterObject CategoryPageRequest pageRequest) {
+        Page<Category> categoryPage = categoryService.getCategoryPage(pageRequest);
+        return Result.success(CategoryConvert.INSTANCE.toVO(categoryPage));
     }
 
     @Operation(summary = "获取所有文章列表")
     @GetMapping("/list")
-    public Result<List<Category>> getCategoryList() {
-        return Result.success(categoryService.list());
+    public Result<List<CategoryVO>> getCategoryList() {
+        List<Category> categorieList = categoryService.list();
+        return Result.success(CategoryConvert.INSTANCE.toVO(categorieList));
     }
 
     @Operation(summary = "获取文章类别")
@@ -51,9 +55,7 @@ public class CategoryController {
         if (category == null) {
             throw new BusinessException(NOT_FOUND_ERROR);
         }
-        CategoryVO categoryVO = new CategoryVO();
-        BeanUtils.copyProperties(category, categoryVO);
-        return Result.success(categoryVO);
+        return Result.success(CategoryConvert.INSTANCE.toVO(category));
     }
 
     @Operation(summary = "新增文章类别")

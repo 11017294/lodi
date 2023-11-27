@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
 import com.lodi.common.core.web.domain.Result;
+import com.lodi.common.model.convert.animeInfo.AnimeInfoConvert;
+import com.lodi.common.model.convert.article.ArticleConvert;
 import com.lodi.common.model.entity.Article;
 import com.lodi.common.model.request.IdRequest;
 import com.lodi.common.model.request.article.ArticleAddRequest;
@@ -36,8 +38,10 @@ public class ArticleController {
 
     @Operation(summary = "获取文章分页")
     @GetMapping("page")
-    public Result<Page<Article>> getArticlePage(@ParameterObject ArticlePageRequest articlePageRequest) {
-        return Result.success(articleService.getArticlePage(articlePageRequest));
+    public Result<Page<ArticleVO>> getArticlePage(@ParameterObject ArticlePageRequest articlePageRequest) {
+        Page<Article> articlePage = articleService.getArticlePage(articlePageRequest);
+        return Result.success(ArticleConvert.INSTANCE.toVO(articlePage));
+
     }
 
     @Operation(summary = "获取文章信息")
@@ -47,9 +51,7 @@ public class ArticleController {
         if (article == null) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
-        ArticleVO articleVO = new ArticleVO();
-        BeanUtils.copyProperties(article, articleVO);
-        return Result.success(articleVO);
+        return Result.success(ArticleConvert.INSTANCE.toVO(article));
     }
 
     @Operation(summary = "新增文章")

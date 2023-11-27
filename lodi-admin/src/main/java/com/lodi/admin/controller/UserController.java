@@ -6,6 +6,7 @@ import com.lodi.common.core.constant.FileDirectoryConstant;
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
 import com.lodi.common.core.web.domain.Result;
+import com.lodi.common.model.convert.user.UserConvert;
 import com.lodi.common.model.entity.User;
 import com.lodi.common.model.request.IdRequest;
 import com.lodi.common.model.request.user.UserPageRequest;
@@ -41,14 +42,16 @@ public class UserController {
     @RequiresRoles("admin")
     @Operation(summary = "获取用户列表")
     @GetMapping("list")
-    public Result<List<User>> getUserList(@ParameterObject UserQueryRequest userQueryRequest) {
-        return Result.success(userService.listUser(userQueryRequest));
+    public Result<List<UserVO>> getUserList(@ParameterObject UserQueryRequest userQueryRequest) {
+        List<User> users = userService.listUser(userQueryRequest);
+        return Result.success(UserConvert.INSTANCE.toVO(users));
     }
 
     @Operation(summary = "获取用户分页")
     @GetMapping("page")
-    public Result<Page<User>> getUserPage(@ParameterObject UserPageRequest userPageRequest) {
-        return Result.success(userService.getUserPage(userPageRequest));
+    public Result<Page<UserVO>> getUserPage(@ParameterObject UserPageRequest userPageRequest) {
+        Page<User> userPage = userService.getUserPage(userPageRequest);
+        return Result.success(UserConvert.INSTANCE.toVO(userPage));
     }
 
     @Operation(summary = "获取用户信息")
@@ -58,9 +61,7 @@ public class UserController {
         if (user == null) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
-        UserVO userVO = new UserVO();
-        BeanUtils.copyProperties(user, userVO);
-        return Result.success(userVO);
+        return Result.success(UserConvert.INSTANCE.toVO(user));
     }
 
     @RequiresRoles("admin")

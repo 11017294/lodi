@@ -1,20 +1,21 @@
 package com.lodi.admin.controller;
 
-import com.lodi.common.model.entity.AnimeInfo;
-import com.lodi.xo.service.AnimeInfoService;
-import com.lodi.common.model.request.animeInfo.AnimeInfoAddRequest;
-import com.lodi.common.model.request.animeInfo.AnimeInfoUpdateRequest;
-import com.lodi.common.model.request.animeInfo.AnimeInfoPageRequest;
-import com.lodi.common.model.vo.AnimeInfoVO;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.Operation;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lodi.common.core.web.domain.Result;
 import com.lodi.common.core.exception.BusinessException;
+import com.lodi.common.core.web.domain.Result;
+import com.lodi.common.model.convert.animeInfo.AnimeInfoConvert;
+import com.lodi.common.model.entity.AnimeInfo;
 import com.lodi.common.model.request.IdRequest;
+import com.lodi.common.model.request.animeInfo.AnimeInfoAddRequest;
+import com.lodi.common.model.request.animeInfo.AnimeInfoPageRequest;
+import com.lodi.common.model.request.animeInfo.AnimeInfoUpdateRequest;
+import com.lodi.common.model.vo.AnimeInfoVO;
+import com.lodi.xo.service.AnimeInfoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.api.annotations.ParameterObject;
-import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
+
 import javax.annotation.Resource;
 import java.util.List;
 
@@ -34,8 +35,9 @@ public class AnimeInfoController {
 
     @Operation(summary = "获取动漫信息分页")
     @GetMapping("page")
-    public Result<Page<AnimeInfo>> getAnimeInfoPage(@ParameterObject AnimeInfoPageRequest pageRequest) {
-        return Result.success(animeInfoService.getAnimeInfoPage(pageRequest));
+    public Result<Page<AnimeInfoVO>> getAnimeInfoPage(@ParameterObject AnimeInfoPageRequest pageRequest) {
+        Page<AnimeInfo> animeInfoPage = animeInfoService.getAnimeInfoPage(pageRequest);
+        return Result.success(AnimeInfoConvert.INSTANCE.toVO(animeInfoPage));
     }
 
     @Operation(summary = "获取动漫信息")
@@ -45,19 +47,17 @@ public class AnimeInfoController {
         if (animeInfo == null) {
             throw new BusinessException(NOT_FOUND_ERROR);
         }
-        AnimeInfoVO animeInfoVO = new AnimeInfoVO();
-        BeanUtils.copyProperties(animeInfo, animeInfoVO);
-        return Result.success(animeInfoVO);
+        return Result.success(AnimeInfoConvert.INSTANCE.toVO(animeInfo));
     }
 
     @Operation(summary = "根据系列ID获取动漫信息")
     @GetMapping("getAnimeInfoBySeriesId")
-    public Result<List<AnimeInfo>> getAnimeInfoBySeriesId(@ParameterObject IdRequest request) {
+    public Result<List<AnimeInfoVO>> getAnimeInfoBySeriesId(@ParameterObject IdRequest request) {
         List<AnimeInfo> animeInfos = animeInfoService.getAnimeInfoBySeriesId(request.getId());
         if (animeInfos == null) {
             throw new BusinessException(NOT_FOUND_ERROR);
         }
-        return Result.success(animeInfos);
+        return Result.success(AnimeInfoConvert.INSTANCE.toVO(animeInfos));
     }
 
     @Operation(summary = "新增动漫信息")

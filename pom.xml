@@ -42,6 +42,7 @@
         <hutool.version>5.8.9</hutool.version>
         <jjwt.version>0.9.1</jjwt.version>
         <transmittable-thread-local.version>2.14.3</transmittable-thread-local.version>
+        <mapstruct.version>1.5.5.Final</mapstruct.version>
         <!-- 七牛云 -->
         <qiniu.version>[[7.7.0, 7.7.99]</qiniu.version>
         <!-- 文档相关 -->
@@ -115,6 +116,21 @@
                 <groupId>com.google.code.gson</groupId>
                 <artifactId>gson</artifactId>
                 <version>${gson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-jdk8</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${mapstruct.version}</version>
             </dependency>
 
             <!-- 七牛云 -->

@@ -1,5 +1,6 @@
 package com.lodi.admin.controller;
 
+import com.lodi.common.model.convert.tags.TagsConvert;
 import com.lodi.common.model.entity.Category;
 import com.lodi.common.model.entity.Tags;
 import com.lodi.xo.service.TagsService;
@@ -35,14 +36,16 @@ public class TagsController {
 
     @Operation(summary = "获取标签分页")
     @GetMapping("page")
-    public Result<Page<Tags>> getTagsPage(@ParameterObject TagsPageRequest pageRequest) {
-        return Result.success(tagsService.getTagsPage(pageRequest));
+    public Result<Page<TagsVO>> getTagsPage(@ParameterObject TagsPageRequest pageRequest) {
+        Page<Tags> tagsPage = tagsService.getTagsPage(pageRequest);
+        return Result.success(TagsConvert.INSTANCE.toVO(tagsPage));
     }
 
     @Operation(summary = "获取标签列表")
     @GetMapping("/list")
-    public Result<List<Tags>> getTagsList() {
-        return Result.success(tagsService.list());
+    public Result<List<TagsVO>> getTagsList() {
+        List<Tags> tagsList = tagsService.list();
+        return Result.success(TagsConvert.INSTANCE.toVO(tagsList));
     }
 
     @Operation(summary = "获取标签")
@@ -52,9 +55,7 @@ public class TagsController {
         if (tags == null) {
             throw new BusinessException(NOT_FOUND_ERROR);
         }
-        TagsVO tagsVO = new TagsVO();
-        BeanUtils.copyProperties(tags, tagsVO);
-        return Result.success(tagsVO);
+        return Result.success(TagsConvert.INSTANCE.toVO(tags));
     }
 
     @Operation(summary = "新增标签")
