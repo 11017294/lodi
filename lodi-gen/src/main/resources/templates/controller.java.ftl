@@ -12,6 +12,7 @@ import ${superControllerClassPackage};
 <#if springdoc>
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
+import org.springdoc.api.annotations.ParameterObject;
 </#if>
 import ${page};
 import ${result};
@@ -51,13 +52,13 @@ public class ${table.controllerName} {
     @Operation(summary = "获取${table.comment}分页")
 </#if>
     @GetMapping("page")
-    public Result<Page<${entity}>> get${entity}Page(${entity}PageRequest pageRequest) {
+    public Result<Page<${entity}>> get${entity}Page(@ParameterObject ${entity}PageRequest pageRequest) {
         return Result.success(${table.entityPath}Service.get${entity}Page(pageRequest));
     }
 
     @Operation(summary = "获取${table.comment}")
     @GetMapping("get")
-    public Result<${entity}VO> get${entity}(IdRequest request) {
+    public Result<${entity}VO> get${entity}(@ParameterObject IdRequest request) {
         ${entity} ${entityHump} = ${table.entityPath}Service.getById(request.getId());
         if (${entityHump} == null) {
             throw new BusinessException(NOT_FOUND_ERROR);
@@ -74,13 +75,13 @@ public class ${table.controllerName} {
     }
 
     @Operation(summary = "更新${table.comment}")
-    @PostMapping(value = "update")
+    @PutMapping("update")
     public Result<Boolean> update${entity}(@RequestBody ${entity}UpdateRequest updateRequest) {
         return Result.success(${table.entityPath}Service.update${entity}(updateRequest));
     }
 
     @Operation(summary = "删除${table.comment}")
-    @PostMapping("delete")
+    @DeleteMapping("delete")
     public Result<Boolean> delete${entity}(@RequestBody IdRequest request) {
         return Result.success(${table.entityPath}Service.delete${entity}(request.getId()));
     }
