@@ -2,6 +2,7 @@ package com.lodi.gen.mybatisPlus;
 
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.OutputFile;
+import com.baomidou.mybatisplus.generator.config.TemplateType;
 import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
 import com.lodi.common.core.mapper.BaseMapper;
@@ -75,12 +76,13 @@ public class GeneratorCode {
                     ;
                 })
                 // 模板配置
-//                .templateConfig(builder -> {
-//                    builder.disable(TemplateType.XML, TemplateType.MAPPER,
-//                            TemplateType.SERVICE, TemplateType.SERVICE_IMPL,
+                .templateConfig(builder -> {
+                    builder.disable(TemplateType.XML, TemplateType.MAPPER,
+                            TemplateType.SERVICE, TemplateType.SERVICE_IMPL
+//                            ,
 //                            TemplateType.CONTROLLER
-//                    );
-//                })
+                    );
+                })
                 .strategyConfig(builder -> {
                     builder.addInclude(tableName) // 设置需要生成的表名
                             .addTablePrefix("t_", "c_") // 设置过滤表前缀
@@ -130,6 +132,12 @@ public class GeneratorCode {
                 .filePath(projectUrl + "\\lodi-common\\lodi-common-model\\src\\main\\java\\com\\lodi\\common\\model\\vo")
                 .packageName("com.lodi.common.model.vo")
                 .templatePath("/templates/vo.java.ftl")
+                .build());
+        list.add(new CustomFile.Builder()
+                .fileName(FileEnum.Convert.toString())
+                .filePath(projectUrl + "\\lodi-common\\lodi-common-model\\src\\main\\java\\com\\lodi\\common\\model\\convert")
+                .packageName("com.lodi.common.model.convert")
+                .templatePath("/templates/convert.java.ftl")
                 .build());
         return list;
     }

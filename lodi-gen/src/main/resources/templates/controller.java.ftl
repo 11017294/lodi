@@ -5,6 +5,7 @@ import ${package.Service}.${table.serviceName};
 import ${AddRequest.packageName}.${entity}${AddRequest.postfix};
 import ${AddRequest.packageName}.${entity}${UpdateRequest.postfix};
 import ${AddRequest.packageName}.${entity}${PageRequest.postfix};
+import ${Convert.packageName}.${entity}Convert;
 import ${VO.packageName}.${entity}${VO.postfix};
 <#if superControllerClassPackage??>
 import ${superControllerClassPackage};
@@ -18,7 +19,6 @@ import ${page};
 import ${result};
 import com.lodi.common.core.exception.BusinessException;
 import com.lodi.common.model.request.IdRequest;
-import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import static com.lodi.common.core.enums.ErrorCode.NOT_FOUND_ERROR;
@@ -52,8 +52,9 @@ public class ${table.controllerName} {
     @Operation(summary = "获取${table.comment}分页")
 </#if>
     @GetMapping("page")
-    public Result<Page<${entity}>> get${entity}Page(@ParameterObject ${entity}PageRequest pageRequest) {
-        return Result.success(${table.entityPath}Service.get${entity}Page(pageRequest));
+    public Result<Page<${entity}VO>> get${entity}Page(@ParameterObject ${entity}PageRequest pageRequest) {
+        Page<${entity}> ${table.entityPath}Page = ${table.entityPath}Service.get${entity}Page(pageRequest);
+        return Result.success(${entity}Convert.INSTANCE.toVO(${table.entityPath}Page));
     }
 
     @Operation(summary = "获取${table.comment}")
@@ -63,9 +64,7 @@ public class ${table.controllerName} {
         if (${entityHump} == null) {
             throw new BusinessException(NOT_FOUND_ERROR);
         }
-        ${entity}VO ${entityHump}VO = new ${entity}VO();
-        BeanUtils.copyProperties(${entityHump}, ${entityHump}VO);
-        return Result.success(${entityHump}VO);
+        return Result.success(${entity}Convert.INSTANCE.toVO(${entityHump});
     }
 
     @Operation(summary = "新增${table.comment}")

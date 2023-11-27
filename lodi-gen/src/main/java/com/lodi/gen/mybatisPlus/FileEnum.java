@@ -14,7 +14,9 @@ public enum FileEnum {
 
     UpdateRequest,
 
-    VO;
+    VO,
+
+    Convert;
 
     public static String getStringValue(String value) {
         for (FileEnum fileEnum : EnumSet.allOf(FileEnum.class)) {
