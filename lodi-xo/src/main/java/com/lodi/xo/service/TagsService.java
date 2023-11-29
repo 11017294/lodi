@@ -1,11 +1,11 @@
 package com.lodi.xo.service;
 
-import com.lodi.common.model.entity.Tags;
-import com.lodi.common.core.service.BaseService;
-import com.lodi.common.model.request.tags.TagsAddRequest;
-import com.lodi.common.model.request.tags.TagsUpdateRequest;
-import com.lodi.common.model.request.tags.TagsPageRequest;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lodi.common.core.service.BaseService;
+import com.lodi.common.model.entity.Tags;
+import com.lodi.common.model.request.tags.TagsAddRequest;
+import com.lodi.common.model.request.tags.TagsPageRequest;
+import com.lodi.common.model.request.tags.TagsUpdateRequest;
 
 import java.util.List;
 
@@ -19,6 +19,7 @@ public interface TagsService extends BaseService<Tags> {
 
     /**
      * 新增标签
+     *
      * @param addRequest 新增请求体
      * @return
      */
@@ -26,6 +27,7 @@ public interface TagsService extends BaseService<Tags> {
 
     /**
      * 更新标签
+     *
      * @param updateRequest 更新请求体
      * @return
      */
@@ -33,6 +35,7 @@ public interface TagsService extends BaseService<Tags> {
 
     /**
      * 删除标签
+     *
      * @param id 标签ID
      * @return
      */
@@ -40,9 +43,17 @@ public interface TagsService extends BaseService<Tags> {
 
     /**
      * 获取标签
+     *
      * @param pageRequest 分页查询请求体
      * @return
      */
     Page<Tags> getTagsPage(TagsPageRequest pageRequest);
+
+    /**
+     * 获取最热标签
+     *
+     * @return
+     */
+    List<Tags> getHotTag();
 
 }

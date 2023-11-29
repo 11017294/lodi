@@ -54,6 +54,13 @@ security:
       - /lodi-admin/v3/api-docs/**
       - /lodi-admin/auth/register
       - /lodi-admin/auth/login
+      - /lodi-web/doc.html
+      - /lodi-web/webjars/**
+      - /lodi-web/swagger-resources/**
+      - /lodi-web/swagger-ui.html
+      - /lodi-web/v2/api-docs/**
+      - /lodi-web/v3/api-docs/**
+      - /lodi-web/index/**
 
 # 聚合swagger文档
 knife4j:

@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
 import com.lodi.common.core.web.domain.Result;
-import com.lodi.common.model.convert.animeInfo.AnimeInfoConvert;
 import com.lodi.common.model.convert.article.ArticleConvert;
 import com.lodi.common.model.entity.Article;
 import com.lodi.common.model.request.IdRequest;
@@ -18,7 +17,6 @@ import com.lodi.xo.service.ArticleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.api.annotations.ParameterObject;
-import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -39,8 +37,7 @@ public class ArticleController {
     @Operation(summary = "获取文章分页")
     @GetMapping("page")
     public Result<Page<ArticleVO>> getArticlePage(@ParameterObject ArticlePageRequest articlePageRequest) {
-        Page<Article> articlePage = articleService.getArticlePage(articlePageRequest);
-        return Result.success(ArticleConvert.INSTANCE.toVO(articlePage));
+        return Result.success(articleService.getArticlePage(articlePageRequest));
 
     }
 

@@ -3,20 +3,16 @@ package com.lodi.web;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 
-/**
- * web 服务
- *
- * @author MaybeBin
- * @createDate 2023-09-19
- */
+@ComponentScan(basePackages = {
+        "com.lodi.xo",
+        "com.lodi.web"
+})
 @SpringBootApplication
 @EnableDiscoveryClient
-@ComponentScan(basePackages = {
-        "com.lodi.web",
-        "com.lodi.common.config"
-})
+@EnableFeignClients(basePackages = "com.lodi.api")
 public class WebApplication {
 
     public static void main(String[] args) {

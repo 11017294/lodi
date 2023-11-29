@@ -6,6 +6,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 文章 视图
@@ -36,11 +37,17 @@ public class ArticleVO implements Serializable {
     @Schema(title = "作者ID", description = "作者ID")
     private Long userId;
 
-    @Schema(title = "标签ID", description = "标签ID")
+    @Schema(title = "标签ID", description = "文章有多个标签，用逗号隔开")
     private String tagId;
+
+    @Schema(title = "标签列表", description = "文章有多个标签")
+    private List<String> tagsList;
 
     @Schema(title = "文章类别ID", description = "文章类别ID")
     private Long categoryId;
+
+    @Schema(title = "文章类别", description = "文章类别")
+    private String category;
 
     @Schema(title = "是否发布：0-否 1-是", description = "是否发布：0-否 1-是")
     private Integer isPublish;

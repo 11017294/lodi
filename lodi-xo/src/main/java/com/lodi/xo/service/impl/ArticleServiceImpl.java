@@ -3,24 +3,36 @@ package com.lodi.xo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lodi.common.core.constant.StatusConstant;
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
 import com.lodi.common.core.service.impl.BaseServiceImpl;
+import com.lodi.common.model.convert.article.ArticleConvert;
 import com.lodi.common.model.entity.Article;
+import com.lodi.common.model.entity.Category;
+import com.lodi.common.model.entity.Tags;
 import com.lodi.common.model.request.article.ArticleAddRequest;
 import com.lodi.common.model.request.article.ArticlePageRequest;
 import com.lodi.common.model.request.article.ArticleUpdateRequest;
 import com.lodi.common.model.request.article.AuditArticleRequest;
+import com.lodi.common.model.vo.ArticleVO;
 import com.lodi.xo.mapper.ArticleMapper;
 import com.lodi.xo.service.ArticleService;
+import com.lodi.xo.service.CategoryService;
+import com.lodi.xo.service.TagsService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
+import static com.lodi.common.core.constant.ArticleConstant.CONTENT;
+import static com.lodi.common.core.constant.ArticleConstant.PAGE_SIZE;
 
 /**
  * 文章 服务层实现
@@ -30,6 +42,11 @@ import java.util.Objects;
  */
 @Service
 public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> implements ArticleService {
+
+    @Resource
+    private TagsService tagsService;
+    @Resource
+    private CategoryService categoryService;
 
     @Override
     public Boolean insertArticle(ArticleAddRequest articleAddRequest) {
@@ -62,13 +79,6 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
         // 判断是否当前用户或管理员
 
         return removeById(id);
-    }
-
-    @Override
-    public Page<Article> getArticlePage(ArticlePageRequest articlePageRequest) {
-        Page<Article> page = new Page<>(articlePageRequest.getCurrent(), articlePageRequest.getPageSize());
-        LambdaQueryWrapper<Article> queryWrapper = buildQueryWrapper(articlePageRequest);
-        return baseMapper.selectPage(page, queryWrapper);
     }
 
     private LambdaQueryWrapper<Article> buildQueryWrapper(ArticlePageRequest articlePageRequest) {
@@ -116,4 +126,113 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
         newArticle.setAuditStatus(newStatus);
         return updateById(newArticle);
     }
+
+    @Override
+    public Page<ArticleVO> getArticlePage(ArticlePageRequest articlePageRequest) {
+        Page<Article> page = new Page<>(articlePageRequest.getCurrent(), articlePageRequest.getPageSize());
+        LambdaQueryWrapper<Article> queryWrapper = buildQueryWrapper(articlePageRequest);
+        Page<Article> articlePage = baseMapper.selectPage(page, queryWrapper);
+
+        return convertToArticleVOPage(articlePage);
+    }
+
+    @Override
+    public Page<ArticleVO> getArticleByOrderDesc(Long currentPage, String column) {
+        LambdaQueryWrapper<Article> queryWrapper = buildCommonQueryWrapper();
+
+        // 排序字段，排序相同时则再根据user_id和文章id排序
+        queryWrapper.last(String.format("order by %s desc, user_id, id ", column));
+        Page<Article> wherePage = new Page<>(currentPage, PAGE_SIZE);
+
+        // 分页查询
+        Page<Article> articlePage = baseMapper.selectPage(wherePage, queryWrapper);
+        return convertToArticleVOPage(articlePage);
+    }
+
+    @Override
+    public Page<ArticleVO> getArticleBySearch(Long currentPage, String keyword) {
+        LambdaQueryWrapper<Article> queryWrapper = buildCommonQueryWrapper();
+
+        // 不获取内容字段值
+        queryWrapper.like(Article::getTitle, keyword)
+                .or().like(Article::getSummary, keyword)
+                .or().like(Article::getContent, keyword);
+
+        // 按文章创建时间、用户id、文章id排序（倒序）
+        queryWrapper.orderByDesc(Article::getCreateTime, Article::getUserId, Article::getId);
+        Page<Article> wherePage = new Page<>(currentPage, PAGE_SIZE);
+
+        // 分页查询
+        Page<Article> articlePage = baseMapper.selectPage(wherePage, queryWrapper);
+        return convertToArticleVOPage(articlePage);
+    }
+
+    private Page<ArticleVO> convertToArticleVOPage(Page<Article> articlePage) {
+        Page<ArticleVO> articleVOPage = ArticleConvert.INSTANCE.toVO(articlePage);
+        List<ArticleVO> list = articleVOPage.getRecords();
+
+        // 设置分类和标签
+        setCategoryByArticleVOList(list);
+        setTagByArticleVOList(list);
+
+        return articleVOPage;
+    }
+
+    /**
+     * 构建公共查询条件
+     * 1、排除内容字段
+     * 2、文章发布状态为公开
+     *
+     * @return
+     */
+    private LambdaQueryWrapper<Article> buildCommonQueryWrapper() {
+        LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
+        // 不获取内容字段值
+        queryWrapper.select(Article.class, i -> !i.getProperty().equals(CONTENT));
+        queryWrapper.eq(Article::getIsPublish, StatusConstant.ON);
+        return queryWrapper;
+    }
+
+    @Override
+    public void setTagByArticleVO(ArticleVO articleVO) {
+        // 获取标签id
+        String tagIds = articleVO.getTagId();
+        if (StringUtils.isBlank(tagIds)) {
+            return;
+        }
+        String[] tagIdArray = tagIds.split(",");
+        List<String> tagsIdList = Arrays.stream(tagIdArray).collect(Collectors.toList());
+        // 查询标签信息
+        List<Tags> tagsList = tagsService.listByIds(tagsIdList);
+
+        // 得到标签名列表
+        List<String> tagsNameList = tagsList.stream().map(Tags::getName).collect(Collectors.toList());
+        articleVO.setTagsList(tagsNameList);
+    }
+
+    @Override
+    public void setCategoryByArticleVO(ArticleVO articleVO) {
+        // 查询分类信息
+        Category category = categoryService.getById(articleVO.getCategoryId());
+        if (Objects.isNull(category)) {
+            return;
+        }
+        articleVO.setCategory(category.getName());
+    }
+
+    @Override
+    public void setTagByArticleVOList(List<ArticleVO> articleVOList) {
+        for (ArticleVO articleVO : articleVOList) {
+            setTagByArticleVO(articleVO);
+        }
+    }
+
+    @Override
+    public void setCategoryByArticleVOList(List<ArticleVO> articleVOList) {
+        for (ArticleVO articleVO : articleVOList) {
+            setCategoryByArticleVO(articleVO);
+        }
+    }
+
 }
+
