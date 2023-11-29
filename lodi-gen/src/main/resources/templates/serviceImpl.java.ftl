@@ -3,7 +3,6 @@ package ${package.ServiceImpl};
 import ${package.Entity}.${entity};
 import ${package.Mapper}.${table.mapperName};
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import org.springframework.beans.BeanUtils;
 import ${AddRequest.packageName}.${entity}${AddRequest.postfix};
 import ${AddRequest.packageName}.${entity}${UpdateRequest.postfix};
 import ${AddRequest.packageName}.${entity}${PageRequest.postfix};
@@ -30,15 +29,13 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 
     @Override
     public Boolean insert${entity}(${entity}AddRequest addRequest) {
-        ${entity} ${entityHump} = new ${entity}();
-        BeanUtils.copyProperties(addRequest, ${entityHump});
-        return updateById(${entityHump});
+        ${entity} ${entityHump} = ${entity}Convert.INSTANCE.toEntity(addRequest);
+        return save(${entityHump});
     }
 
     @Override
     public Boolean update${entity}(${entity}UpdateRequest updateRequest) {
-        ${entity} ${entityHump} = new ${entity}();
-        BeanUtils.copyProperties(updateRequest, ${entityHump});
+        ${entity} ${entityHump} = ${entity}Convert.INSTANCE.toEntity(updateRequest);
         return updateById(${entityHump});
     }
 

@@ -19,6 +19,10 @@ public interface ${entity}Convert {
 
     ${entity}Convert INSTANCE = Mappers.getMapper(${entity}Convert.class);
 
+    ${entity} toEntity(${entity}AddRequest addRequest);
+
+    ${entity} toEntity(${entity}UpdateRequest updateRequest);
+
     ${entity}VO toVO(${entity} ${entityHump});
     
     List<${entity}VO> toVO(List<${entity}> ${entityHump}List); 
