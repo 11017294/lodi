@@ -36,9 +36,8 @@ public class ArticleController {
 
     @Operation(summary = "获取文章分页")
     @GetMapping("page")
-    public Result<Page<ArticleVO>> getArticlePage(@ParameterObject ArticlePageRequest articlePageRequest) {
-        return Result.success(articleService.getArticlePage(articlePageRequest));
-
+    public Result<Page<ArticleVO>> getArticlePage(@ParameterObject ArticlePageRequest pageRequest) {
+        return Result.success(articleService.getArticlePage(pageRequest));
     }
 
     @Operation(summary = "获取文章信息")
@@ -53,14 +52,14 @@ public class ArticleController {
 
     @Operation(summary = "新增文章")
     @PostMapping("add")
-    public Result<Boolean> addArticle(@RequestBody ArticleAddRequest articleAddRequest) {
-        return Result.success(articleService.insertArticle(articleAddRequest));
+    public Result<Boolean> addArticle(@RequestBody ArticleAddRequest addRequest) {
+        return Result.success(articleService.insertArticle(addRequest));
     }
 
     @Operation(summary = "更新文章")
     @PutMapping("update")
-    public Result<Boolean> updateArticle(@RequestBody ArticleUpdateRequest articleUpdateRequest) {
-        return Result.success(articleService.updateArticle(articleUpdateRequest));
+    public Result<Boolean> updateArticle(@RequestBody ArticleUpdateRequest updateRequest) {
+        return Result.success(articleService.updateArticle(updateRequest));
     }
 
     @Operation(summary = "删除文章")
@@ -79,8 +78,8 @@ public class ArticleController {
     @RequiresRoles("admin")
     @Operation(summary = "审核")
     @PutMapping("audit")
-    public Result<Boolean> auditArticle(@RequestBody AuditArticleRequest auditArticleRequest) {
-        return Result.success(articleService.auditArticle(auditArticleRequest));
+    public Result<Boolean> auditArticle(@RequestBody AuditArticleRequest auditRequest) {
+        return Result.success(articleService.auditArticle(auditRequest));
     }
 
 }

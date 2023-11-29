@@ -1,9 +1,9 @@
 package com.lodi.xo.service.impl;
 
+import com.lodi.common.model.convert.category.CategoryConvert;
 import com.lodi.common.model.entity.Category;
 import com.lodi.xo.mapper.CategoryMapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import org.springframework.beans.BeanUtils;
 import com.lodi.common.model.request.category.CategoryAddRequest;
 import com.lodi.common.model.request.category.CategoryUpdateRequest;
 import com.lodi.common.model.request.category.CategoryPageRequest;
@@ -23,15 +23,13 @@ public class CategoryServiceImpl extends BaseServiceImpl<CategoryMapper, Categor
 
     @Override
     public Boolean insertCategory(CategoryAddRequest addRequest) {
-        Category category = new Category();
-        BeanUtils.copyProperties(addRequest, category);
+        Category category = CategoryConvert.INSTANCE.toEntity(addRequest);
         return save(category);
     }
 
     @Override
     public Boolean updateCategory(CategoryUpdateRequest updateRequest) {
-        Category category = new Category();
-        BeanUtils.copyProperties(updateRequest, category);
+        Category category = CategoryConvert.INSTANCE.toEntity(updateRequest);
         return updateById(category);
     }
 

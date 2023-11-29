@@ -2,6 +2,8 @@ package com.lodi.common.model.convert.tags;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.model.entity.Tags;
+import com.lodi.common.model.request.tags.TagsAddRequest;
+import com.lodi.common.model.request.tags.TagsUpdateRequest;
 import com.lodi.common.model.vo.TagsVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -18,6 +20,10 @@ import java.util.List;
 public interface TagsConvert {
 
     TagsConvert INSTANCE = Mappers.getMapper(TagsConvert.class);
+
+    Tags toEntity(TagsAddRequest addRequest);
+
+    Tags toEntity(TagsUpdateRequest updateRequest);
 
     TagsVO toVO(Tags tags);
 

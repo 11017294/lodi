@@ -1,15 +1,15 @@
 package com.lodi.xo.service.impl;
 
-import com.lodi.common.model.entity.AnimeInfo;
-import com.lodi.xo.mapper.AnimeInfoMapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import org.springframework.beans.BeanUtils;
-import com.lodi.common.model.request.animeInfo.AnimeInfoAddRequest;
-import com.lodi.common.model.request.animeInfo.AnimeInfoUpdateRequest;
-import com.lodi.common.model.request.animeInfo.AnimeInfoPageRequest;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lodi.xo.service.AnimeInfoService;
 import com.lodi.common.core.service.impl.BaseServiceImpl;
+import com.lodi.common.model.convert.animeInfo.AnimeInfoConvert;
+import com.lodi.common.model.entity.AnimeInfo;
+import com.lodi.common.model.request.animeInfo.AnimeInfoAddRequest;
+import com.lodi.common.model.request.animeInfo.AnimeInfoPageRequest;
+import com.lodi.common.model.request.animeInfo.AnimeInfoUpdateRequest;
+import com.lodi.xo.mapper.AnimeInfoMapper;
+import com.lodi.xo.service.AnimeInfoService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,15 +25,13 @@ public class AnimeInfoServiceImpl extends BaseServiceImpl<AnimeInfoMapper, Anime
 
     @Override
     public Boolean insertAnimeInfo(AnimeInfoAddRequest addRequest) {
-        AnimeInfo animeInfo = new AnimeInfo();
-        BeanUtils.copyProperties(addRequest, animeInfo);
+        AnimeInfo animeInfo = AnimeInfoConvert.INSTANCE.toEntity(addRequest);
         return updateById(animeInfo);
     }
 
     @Override
     public Boolean updateAnimeInfo(AnimeInfoUpdateRequest updateRequest) {
-        AnimeInfo animeInfo = new AnimeInfo();
-        BeanUtils.copyProperties(updateRequest, animeInfo);
+        AnimeInfo animeInfo = AnimeInfoConvert.INSTANCE.toEntity(updateRequest);
         return updateById(animeInfo);
     }
 

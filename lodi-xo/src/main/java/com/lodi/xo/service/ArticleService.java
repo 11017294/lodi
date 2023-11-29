@@ -1,6 +1,5 @@
 package com.lodi.xo.service;
 
-
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.core.service.BaseService;
 import com.lodi.common.model.entity.Article;
@@ -23,18 +22,18 @@ public interface ArticleService extends BaseService<Article> {
     /**
      * 新增文章
      *
-     * @param articleAddRequest
+     * @param addRequest
      * @return
      */
-    Boolean insertArticle(ArticleAddRequest articleAddRequest);
+    Boolean insertArticle(ArticleAddRequest addRequest);
 
     /**
      * 修改文章
      *
-     * @param articleUpdateRequest
+     * @param updateRequest
      * @return
      */
-    Boolean updateArticle(ArticleUpdateRequest articleUpdateRequest);
+    Boolean updateArticle(ArticleUpdateRequest updateRequest);
 
     /**
      * 删除文章
@@ -47,18 +46,18 @@ public interface ArticleService extends BaseService<Article> {
     /**
      * 分页获取文章
      *
-     * @param articlePageRequest
+     * @param pageRequest
      * @return
      */
-    Page<ArticleVO> getArticlePage(ArticlePageRequest articlePageRequest);
+    Page<ArticleVO> getArticlePage(ArticlePageRequest pageRequest);
 
     /**
      * 审核文章
      *
-     * @param auditArticleRequest
+     * @param auditRequest
      * @return
      */
-    Boolean auditArticle(AuditArticleRequest auditArticleRequest);
+    Boolean auditArticle(AuditArticleRequest auditRequest);
 
     /**
      * 按字段排序获取文章（倒序）

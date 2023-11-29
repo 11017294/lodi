@@ -11,10 +11,27 @@ import com.lodi.common.model.request.userAuth.LoginRequest;
  */
 public interface AuthService {
 
+    /**
+     * 登录
+     *
+     * @param loginRequest
+     * @return
+     */
     String login(LoginRequest loginRequest);
 
-    Boolean register(UserRegisterRequest userRegisterRequest);
+    /**
+     * 注册
+     *
+     * @param registerRequest
+     * @return
+     */
+    Boolean register(UserRegisterRequest registerRequest);
 
+    /**
+     * 注销
+     *
+     * @return
+     */
     Boolean logout();
 
 }

@@ -21,7 +21,6 @@ import com.lodi.xo.service.ArticleService;
 import com.lodi.xo.service.CategoryService;
 import com.lodi.xo.service.TagsService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -49,13 +48,12 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
     private CategoryService categoryService;
 
     @Override
-    public Boolean insertArticle(ArticleAddRequest articleAddRequest) {
+    public Boolean insertArticle(ArticleAddRequest addRequest) {
         // 获取当前用户信息
 
         // 判断标签id、类别id 是否存在
 
-        Article article = new Article();
-        BeanUtils.copyProperties(articleAddRequest, article);
+        Article article = ArticleConvert.INSTANCE.toEntity(addRequest);
 
         // todo 临时设置
         article.setUserId(1L);
@@ -64,13 +62,13 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
     }
 
     @Override
-    public Boolean updateArticle(ArticleUpdateRequest articleUpdateRequest) {
+    public Boolean updateArticle(ArticleUpdateRequest updateRequest) {
         // 判断是否当前用户或管理员
 
         // 判断标签id、类别id 是否存在
 
-        Article article = new Article();
-        BeanUtils.copyProperties(articleUpdateRequest, article);
+        Article article = ArticleConvert.INSTANCE.toEntity(updateRequest);
+
         return updateById(article);
     }
 
@@ -81,33 +79,33 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
         return removeById(id);
     }
 
-    private LambdaQueryWrapper<Article> buildQueryWrapper(ArticlePageRequest articlePageRequest) {
+    private LambdaQueryWrapper<Article> buildQueryWrapper(ArticlePageRequest pageRequest) {
         return new LambdaQueryWrapper<Article>()
-                .like(StringUtils.isNotBlank(articlePageRequest.getTitle()),
-                        Article::getTitle, articlePageRequest.getTitle())
-                .like(StringUtils.isNotBlank(articlePageRequest.getSummary()),
-                        Article::getSummary, articlePageRequest.getSummary())
-                .like(StringUtils.isNotBlank(articlePageRequest.getContent()),
-                        Article::getContent, articlePageRequest.getContent())
-                .eq(Objects.nonNull(articlePageRequest.getUserId()),
-                        Article::getUserId, articlePageRequest.getUserId())
-                .eq(Objects.nonNull(articlePageRequest.getCategoryId()),
-                        Article::getCategoryId, articlePageRequest.getCategoryId())
-                .eq(Objects.nonNull(articlePageRequest.getIsPublish()),
-                        Article::getIsPublish, articlePageRequest.getIsPublish())
-                .eq(Objects.nonNull(articlePageRequest.getOpenComment()),
-                        Article::getOpenComment, articlePageRequest.getOpenComment())
-                .eq(Objects.nonNull(articlePageRequest.getVipArticle()),
-                        Article::getVipArticle, articlePageRequest.getVipArticle())
-                .eq(Objects.nonNull(articlePageRequest.getAuditStatus()),
-                        Article::getAuditStatus, articlePageRequest.getAuditStatus());
+                .like(StringUtils.isNotBlank(pageRequest.getTitle()),
+                        Article::getTitle, pageRequest.getTitle())
+                .like(StringUtils.isNotBlank(pageRequest.getSummary()),
+                        Article::getSummary, pageRequest.getSummary())
+                .like(StringUtils.isNotBlank(pageRequest.getContent()),
+                        Article::getContent, pageRequest.getContent())
+                .eq(Objects.nonNull(pageRequest.getUserId()),
+                        Article::getUserId, pageRequest.getUserId())
+                .eq(Objects.nonNull(pageRequest.getCategoryId()),
+                        Article::getCategoryId, pageRequest.getCategoryId())
+                .eq(Objects.nonNull(pageRequest.getIsPublish()),
+                        Article::getIsPublish, pageRequest.getIsPublish())
+                .eq(Objects.nonNull(pageRequest.getOpenComment()),
+                        Article::getOpenComment, pageRequest.getOpenComment())
+                .eq(Objects.nonNull(pageRequest.getVipArticle()),
+                        Article::getVipArticle, pageRequest.getVipArticle())
+                .eq(Objects.nonNull(pageRequest.getAuditStatus()),
+                        Article::getAuditStatus, pageRequest.getAuditStatus());
     }
 
     @Override
-    public Boolean auditArticle(AuditArticleRequest auditArticleRequest) {
-        Integer newStatus = auditArticleRequest.getAuditStatus();
+    public Boolean auditArticle(AuditArticleRequest auditRequest) {
+        Integer newStatus = auditRequest.getAuditStatus();
         // 检查文章是否存在
-        Article article = baseMapper.selectById(auditArticleRequest.getId());
+        Article article = baseMapper.selectById(auditRequest.getId());
         if (Objects.isNull(article)) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "未找到文章");
         }
@@ -122,7 +120,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
         }
         // todo 直接使用article进行更新（updateTime 未设置自动填充）
         Article newArticle = new Article();
-        newArticle.setId(auditArticleRequest.getId());
+        newArticle.setId(auditRequest.getId());
         newArticle.setAuditStatus(newStatus);
         return updateById(newArticle);
     }

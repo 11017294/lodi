@@ -42,15 +42,15 @@ public class UserController {
     @RequiresRoles("admin")
     @Operation(summary = "获取用户列表")
     @GetMapping("list")
-    public Result<List<UserVO>> getUserList(@ParameterObject UserQueryRequest userQueryRequest) {
-        List<User> users = userService.listUser(userQueryRequest);
+    public Result<List<UserVO>> getUserList(@ParameterObject UserQueryRequest queryRequest) {
+        List<User> users = userService.listUser(queryRequest);
         return Result.success(UserConvert.INSTANCE.toVO(users));
     }
 
     @Operation(summary = "获取用户分页")
     @GetMapping("page")
-    public Result<Page<UserVO>> getUserPage(@ParameterObject UserPageRequest userPageRequest) {
-        Page<User> userPage = userService.getUserPage(userPageRequest);
+    public Result<Page<UserVO>> getUserPage(@ParameterObject UserPageRequest pageRequest) {
+        Page<User> userPage = userService.getUserPage(pageRequest);
         return Result.success(UserConvert.INSTANCE.toVO(userPage));
     }
 
@@ -73,9 +73,8 @@ public class UserController {
 
     @Operation(summary = "更新用户")
     @PutMapping("update")
-    public Result<Boolean> updateUser(@RequestBody UserUpdateRequest userUpdateRequest) {
-        User user = new User();
-        BeanUtils.copyProperties(userUpdateRequest, user);
+    public Result<Boolean> updateUser(@RequestBody UserUpdateRequest updateRequest) {
+        User user = UserConvert.INSTANCE.toEntity(updateRequest);
         return Result.success(userService.updateById(user));
     }
 

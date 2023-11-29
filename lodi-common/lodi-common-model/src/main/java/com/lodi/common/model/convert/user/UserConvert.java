@@ -2,6 +2,7 @@ package com.lodi.common.model.convert.user;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.model.entity.User;
+import com.lodi.common.model.request.user.UserUpdateRequest;
 import com.lodi.common.model.vo.UserVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -18,6 +19,8 @@ import java.util.List;
 public interface UserConvert {
 
     UserConvert INSTANCE = Mappers.getMapper(UserConvert.class);
+
+    User toEntity(UserUpdateRequest updateRequest);
 
     UserVO toVO(User user);
 

@@ -16,10 +16,28 @@ import java.util.List;
  */
 public interface UserService extends BaseService<User> {
 
-    List<User> listUser(UserQueryRequest userQueryRequest);
+    /**
+     * 获取用户信息列表
+     *
+     * @param queryRequest
+     * @return
+     */
+    List<User> listUser(UserQueryRequest queryRequest);
 
-    Page<User> getUserPage(UserPageRequest userPageRequest);
+    /**
+     * 分页获取用户信息
+     *
+     * @param pageRequest
+     * @return
+     */
+    Page<User> getUserPage(UserPageRequest pageRequest);
 
+    /**
+     * 按用户名获取用户信息
+     *
+     * @param username
+     * @return
+     */
     User getUserByUsername(String username);
 
 }

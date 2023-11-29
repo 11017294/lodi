@@ -4,13 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.core.service.impl.BaseServiceImpl;
+import com.lodi.common.model.convert.tags.TagsConvert;
 import com.lodi.common.model.entity.Tags;
 import com.lodi.common.model.request.tags.TagsAddRequest;
 import com.lodi.common.model.request.tags.TagsPageRequest;
 import com.lodi.common.model.request.tags.TagsUpdateRequest;
 import com.lodi.xo.mapper.TagsMapper;
 import com.lodi.xo.service.TagsService;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,15 +28,13 @@ public class TagsServiceImpl extends BaseServiceImpl<TagsMapper, Tags> implement
 
     @Override
     public Boolean insertTags(TagsAddRequest addRequest) {
-        Tags tags = new Tags();
-        BeanUtils.copyProperties(addRequest, tags);
+        Tags tags = TagsConvert.INSTANCE.toEntity(addRequest);
         return save(tags);
     }
 
     @Override
     public Boolean updateTags(TagsUpdateRequest updateRequest) {
-        Tags tags = new Tags();
-        BeanUtils.copyProperties(updateRequest, tags);
+        Tags tags = TagsConvert.INSTANCE.toEntity(updateRequest);
         return updateById(tags);
     }
 

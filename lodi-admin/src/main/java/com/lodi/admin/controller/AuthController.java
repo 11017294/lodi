@@ -41,8 +41,8 @@ public class AuthController {
 
     @Operation(summary = "用户注册")
     @PostMapping("register")
-    public Result<Boolean> register(@RequestBody UserRegisterRequest userRegisterRequest) {
-        Boolean flag = authService.register(userRegisterRequest);
+    public Result<Boolean> register(@RequestBody UserRegisterRequest registerRequest) {
+        Boolean flag = authService.register(registerRequest);
         return Result.success(flag);
     }
 

@@ -22,15 +22,15 @@ import java.util.List;
 public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implements UserService {
 
     @Override
-    public List<User> listUser(UserQueryRequest userQueryRequest) {
+    public List<User> listUser(UserQueryRequest queryRequest) {
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         return baseMapper.selectList(queryWrapper);
     }
 
     @Override
-    public Page<User> getUserPage(UserPageRequest userPageRequest) {
+    public Page<User> getUserPage(UserPageRequest pageRequest) {
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
-        return baseMapper.selectPage(new Page<>(userPageRequest.getCurrent(), userPageRequest.getPageSize()), queryWrapper);
+        return baseMapper.selectPage(new Page<>(pageRequest.getCurrent(), pageRequest.getPageSize()), queryWrapper);
     }
 
     @Override
