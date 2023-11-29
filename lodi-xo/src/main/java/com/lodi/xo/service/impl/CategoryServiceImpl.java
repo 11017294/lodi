@@ -25,7 +25,7 @@ public class CategoryServiceImpl extends BaseServiceImpl<CategoryMapper, Categor
     public Boolean insertCategory(CategoryAddRequest addRequest) {
         Category category = new Category();
         BeanUtils.copyProperties(addRequest, category);
-        return updateById(category);
+        return save(category);
     }
 
     @Override

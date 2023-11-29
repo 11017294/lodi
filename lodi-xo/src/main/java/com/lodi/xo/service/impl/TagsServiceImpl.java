@@ -25,7 +25,7 @@ public class TagsServiceImpl extends BaseServiceImpl<TagsMapper, Tags> implement
     public Boolean insertTags(TagsAddRequest addRequest) {
         Tags tags = new Tags();
         BeanUtils.copyProperties(addRequest, tags);
-        return updateById(tags);
+        return save(tags);
     }
 
     @Override

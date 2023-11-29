@@ -16,8 +16,6 @@ public class TagsAddRequest implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
-
     @Schema(title = "标签名称", description = "标签名称")
     private String name;
 
