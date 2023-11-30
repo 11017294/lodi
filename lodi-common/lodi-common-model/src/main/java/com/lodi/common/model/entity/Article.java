@@ -52,7 +52,7 @@ public class Article extends BaseEntity<Article> {
     /**
     * 标签ID
     */
-    private String tagId;
+    private String tagsId;
 
     /**
     * 文章类别ID

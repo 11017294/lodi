@@ -13,7 +13,7 @@
         <result column="content" property="content" />
         <result column="cover" property="cover" />
         <result column="user_id" property="userId" />
-        <result column="tag_id" property="tagId" />
+        <result column="tags_id" property="tagsId" />
         <result column="category_id" property="categoryId" />
         <result column="is_publish" property="isPublish" />
         <result column="open_comment" property="openComment" />
@@ -30,7 +30,7 @@
         create_time,
         update_time,
         is_delete,
-        id, title, summary, content, cover, user_id, tag_id, category_id, is_publish, open_comment, click_count, collect_count, upvote_count, vip_article, audit_status, sort
+        id, title, summary, content, cover, user_id, tags_id, category_id, is_publish, open_comment, click_count, collect_count, upvote_count, vip_article, audit_status, sort
     </sql>
 
 </mapper>

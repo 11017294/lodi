@@ -47,7 +47,7 @@ public class ArticleVO implements Serializable {
     private String userAvatar;
 
     @Schema(title = "标签ID", description = "文章有多个标签，用逗号隔开")
-    private String tagId;
+    private String tagsId;
 
     @Schema(title = "标签列表", description = "文章有多个标签")
     private List<String> tagsList;

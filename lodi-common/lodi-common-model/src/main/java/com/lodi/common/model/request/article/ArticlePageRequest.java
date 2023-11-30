@@ -29,7 +29,7 @@ public class ArticlePageRequest extends PageRequest {
     private Long userId;
 
     @Schema(title = "标签ID", description = "标签ID")
-    private String tagId;
+    private String tagsId;
 
     @Schema(title = "文章类别ID", description = "文章类别ID")
     private Long categoryId;

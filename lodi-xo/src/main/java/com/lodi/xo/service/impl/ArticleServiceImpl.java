@@ -199,12 +199,12 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
     @Override
     public void setTagByArticleVO(ArticleVO articleVO) {
         // 获取标签id
-        String tagIds = articleVO.getTagId();
-        if (StringUtils.isBlank(tagIds)) {
+        String tagsId = articleVO.getTagsId();
+        if (StringUtils.isBlank(tagsId)) {
             return;
         }
-        String[] tagIdArray = tagIds.split(",");
-        List<String> tagsIdList = Arrays.stream(tagIdArray).collect(Collectors.toList());
+        String[] tagsIdArray = tagsId.split(",");
+        List<String> tagsIdList = Arrays.stream(tagsIdArray).collect(Collectors.toList());
         // 查询标签信息
         List<Tags> tagsList = tagsService.listByIds(tagsIdList);
 

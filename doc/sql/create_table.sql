@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS lodi.t_article
     content       LONGTEXT                           NOT NULL COMMENT '内容',
     cover         VARCHAR(256)                       NOT NULL COMMENT '封面',
     user_id       BIGINT                             NOT NULL COMMENT '作者ID',
-    tag_id        VARCHAR(255)                       NULL COMMENT '标签ID',
+    tags_id       VARCHAR(255)                       NULL COMMENT '标签ID',
     category_id   BIGINT                             NULL COMMENT '文章类别ID',
     is_publish    TINYINT  DEFAULT 1                 NOT NULL COMMENT '是否发布：0-否 1-是',
     open_comment  TINYINT  DEFAULT 1                 NOT NULL COMMENT '是否开启评论：0-否 1-是',
