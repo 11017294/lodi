@@ -28,7 +28,7 @@ import java.util.List;
 
 /**
  * @author MaybeBin
- * @createDate 2023-09-22
+ * @createDate 2023-11-29
  */
 @Slf4j
 @Tag(name = "首页相关接口")
@@ -45,11 +45,8 @@ public class IndexController {
     @GetMapping("get")
     public Result<ArticleVO> getArticle(@ParameterObject IdRequest idRequest) {
         log.info("获取文章信息");
-        Article article = articleService.getById(idRequest.getId());
-        if (article == null) {
-            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
-        }
-        return Result.success(ArticleConvert.INSTANCE.toVO(article));
+        ArticleVO articleVO = articleService.getArticleById(idRequest.getId());
+        return Result.success(articleVO);
     }
 
     @Operation(summary = "首页搜索文章")

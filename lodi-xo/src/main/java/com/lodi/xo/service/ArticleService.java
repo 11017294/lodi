@@ -105,4 +105,25 @@ public interface ArticleService extends BaseService<Article> {
      */
     void setCategoryByArticleVOList(List<ArticleVO> articleVOList);
 
+    /**
+     * 给文章设置用户信息
+     *
+     * @param articleVO
+     */
+    void setUserInfoByArticleVO(ArticleVO articleVO);
+
+    /**
+     * 给文章列表设置用户信息
+     *
+     * @param articleVOList
+     */
+    void setUserInfoByArticleVOList(List<ArticleVO> articleVOList);
+
+    /**
+     * 根据id获取文章
+     *
+     * @param id
+     * @return
+     */
+    ArticleVO getArticleById(Long id);
 }

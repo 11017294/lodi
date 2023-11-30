@@ -11,6 +11,7 @@ import com.lodi.common.model.convert.article.ArticleConvert;
 import com.lodi.common.model.entity.Article;
 import com.lodi.common.model.entity.Category;
 import com.lodi.common.model.entity.Tags;
+import com.lodi.common.model.entity.User;
 import com.lodi.common.model.request.article.ArticleAddRequest;
 import com.lodi.common.model.request.article.ArticlePageRequest;
 import com.lodi.common.model.request.article.ArticleUpdateRequest;
@@ -20,6 +21,7 @@ import com.lodi.xo.mapper.ArticleMapper;
 import com.lodi.xo.service.ArticleService;
 import com.lodi.xo.service.CategoryService;
 import com.lodi.xo.service.TagsService;
+import com.lodi.xo.service.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +48,8 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
     private TagsService tagsService;
     @Resource
     private CategoryService categoryService;
+    @Resource
+    private UserService userService;
 
     @Override
     public Boolean insertArticle(ArticleAddRequest addRequest) {
@@ -169,9 +173,10 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
         Page<ArticleVO> articleVOPage = ArticleConvert.INSTANCE.toVO(articlePage);
         List<ArticleVO> list = articleVOPage.getRecords();
 
-        // 设置分类和标签
+        // 设置分类、标签和用户信息
         setCategoryByArticleVOList(list);
         setTagByArticleVOList(list);
+        setUserInfoByArticleVOList(list);
 
         return articleVOPage;
     }
@@ -215,7 +220,18 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
         if (Objects.isNull(category)) {
             return;
         }
-        articleVO.setCategory(category.getName());
+        articleVO.setCategoryName(category.getName());
+    }
+
+    @Override
+    public void setUserInfoByArticleVO(ArticleVO articleVO) {
+        User user = userService.getById(articleVO.getUserId());
+        if(Objects.isNull(user)){
+            return;
+        }
+        articleVO.setNickname(user.getNickname());
+        articleVO.setUsername(user.getUsername());
+        articleVO.setUserAvatar(user.getUserAvatar());
     }
 
     @Override
@@ -232,5 +248,22 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
         }
     }
 
-}
+    @Override
+    public void setUserInfoByArticleVOList(List<ArticleVO> articleVOList) {
+        for (ArticleVO articleVO : articleVOList) {
+            setUserInfoByArticleVO(articleVO);
+        }
+    }
 
+    @Override
+    public ArticleVO getArticleById(Long id) {
+        Article article = baseMapper.selectById(id);
+        ArticleVO articleVO = ArticleConvert.INSTANCE.toVO(article);
+        // 设置分类、标签和用户信息
+        setCategoryByArticleVO(articleVO);
+        setTagByArticleVO(articleVO);
+        setUserInfoByArticleVO(articleVO);
+        return articleVO;
+    }
+
+}

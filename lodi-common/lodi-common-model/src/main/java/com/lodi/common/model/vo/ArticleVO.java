@@ -37,6 +37,15 @@ public class ArticleVO implements Serializable {
     @Schema(title = "作者ID", description = "作者ID")
     private Long userId;
 
+    @Schema(title = "作者昵称", description = "作者昵称")
+    private String nickname;
+
+    @Schema(title = "作者账号", description = "作者账号")
+    private String username;
+
+    @Schema(title = "用户头像", description = "用户头像")
+    private String userAvatar;
+
     @Schema(title = "标签ID", description = "文章有多个标签，用逗号隔开")
     private String tagId;
 
@@ -47,7 +56,7 @@ public class ArticleVO implements Serializable {
     private Long categoryId;
 
     @Schema(title = "文章类别", description = "文章类别")
-    private String category;
+    private String categoryName;
 
     @Schema(title = "是否发布：0-否 1-是", description = "是否发布：0-否 1-是")
     private Integer isPublish;
