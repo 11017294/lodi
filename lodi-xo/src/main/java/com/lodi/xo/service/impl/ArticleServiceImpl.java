@@ -127,7 +127,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
 
     @Override
     public Page<ArticleVO> getArticlePage(ArticlePageRequest articlePageRequest) {
-        Page<Article> page = new Page<>(articlePageRequest.getCurrent(), articlePageRequest.getPageSize());
+        Page<Article> page = new Page<>(articlePageRequest.getCurrentPage(), articlePageRequest.getPageSize());
         LambdaQueryWrapper<Article> queryWrapper = buildQueryWrapper(articlePageRequest);
         Page<Article> articlePage = baseMapper.selectPage(page, queryWrapper);
 

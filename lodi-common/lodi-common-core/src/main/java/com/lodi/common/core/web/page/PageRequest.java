@@ -20,7 +20,7 @@ public class PageRequest implements Serializable {
     /**
      * 当前页号
      */
-    private long current = 1;
+    private long currentPage = 1;
 
     /**
      * 页面大小

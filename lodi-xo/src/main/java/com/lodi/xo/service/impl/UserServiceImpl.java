@@ -30,7 +30,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     @Override
     public Page<User> getUserPage(UserPageRequest pageRequest) {
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
-        return baseMapper.selectPage(new Page<>(pageRequest.getCurrent(), pageRequest.getPageSize()), queryWrapper);
+        return baseMapper.selectPage(new Page<>(pageRequest.getCurrentPage(), pageRequest.getPageSize()), queryWrapper);
     }
 
     @Override

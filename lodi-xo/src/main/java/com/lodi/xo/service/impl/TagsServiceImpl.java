@@ -45,7 +45,7 @@ public class TagsServiceImpl extends BaseServiceImpl<TagsMapper, Tags> implement
 
     @Override
     public Page<Tags> getTagsPage(TagsPageRequest pageRequest) {
-        Page<Tags> page = new Page<>(pageRequest.getCurrent(), pageRequest.getPageSize());
+        Page<Tags> page = new Page<>(pageRequest.getCurrentPage(), pageRequest.getPageSize());
         LambdaQueryWrapper<Tags> queryWrapper = buildQueryWrapper(pageRequest);
         return baseMapper.selectPage(page, queryWrapper);
     }

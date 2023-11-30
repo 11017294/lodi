@@ -42,7 +42,7 @@ public class AnimeInfoServiceImpl extends BaseServiceImpl<AnimeInfoMapper, Anime
 
     @Override
     public Page<AnimeInfo> getAnimeInfoPage(AnimeInfoPageRequest pageRequest) {
-        Page<AnimeInfo> page = new Page<>(pageRequest.getCurrent(), pageRequest.getPageSize());
+        Page<AnimeInfo> page = new Page<>(pageRequest.getCurrentPage(), pageRequest.getPageSize());
         LambdaQueryWrapper<AnimeInfo> queryWrapper = buildQueryWrapper(pageRequest);
         return baseMapper.selectPage(page, queryWrapper);
     }

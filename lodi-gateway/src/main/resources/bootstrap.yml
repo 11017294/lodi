@@ -3,19 +3,6 @@ server:
 
 # 注册中心相关配置
 spring:
-  #redis相关配置
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    database: 1
-    timeout: 300000
-    lettuce:
-      pool:
-        max-active: 20
-        max-wait: -1
-        #最大阻塞等待时间(负数表示没限制)
-        max-idle: 5
-        min-idle: 0
   application:
     name: lodi-gateway
   cloud:
@@ -27,65 +14,3 @@ spring:
         group: dev # 使用的 Nacos 配置分组，默认为 DEFAULT_GROUP
         name: ${spring.application.name} # 使用的 Nacos 配置集的 dataId，默认为 spring.application.name
         file-extension: yml # 使用的 Nacos 配置集的 dataId 的文件拓展名，同时也是 Nacos 配置集的配置格式，默认为 properties
-    gateway:
-      routes:
-        - id: lodi_admin
-          uri: lb://lodi-admin  # 路由到 lodi-admin 服务的负载均衡地址
-          predicates:
-            - Path=/lodi-admin/** # 匹配路径以 /lodi-admin/ 开头的请求
-          filters:
-            - StripPrefix=1 # 过滤器，移除请求中的前缀路径
-        - id: lodi_web
-          uri: lb://lodi-web
-          predicates:
-            - Path=/lodi-web/**
-          filters:
-            - StripPrefix=1
-# 安全配置
-security:
-  # 不校验白名单
-  ignore:
-    whites:
-      - /lodi-admin/doc.html
-      - /lodi-admin/webjars/**
-      - /lodi-admin/swagger-resources/**
-      - /lodi-admin/swagger-ui.html
-      - /lodi-admin/v2/api-docs/**
-      - /lodi-admin/v3/api-docs/**
-      - /lodi-admin/auth/register
-      - /lodi-admin/auth/login
-      - /lodi-web/doc.html
-      - /lodi-web/webjars/**
-      - /lodi-web/swagger-resources/**
-      - /lodi-web/swagger-ui.html
-      - /lodi-web/v2/api-docs/**
-      - /lodi-web/v3/api-docs/**
-      - /lodi-web/index/**
-
-# 聚合swagger文档
-knife4j:
-  gateway:
-    enabled: true
-    # 排序规则(tag/operation排序自4.2.0版本新增)
-    # 取值：alpha-默认排序规则，官方swagger-ui默认实现,order-Knife4j提供的增强排序规则，开发者可扩展x-order，根据数值来自定义排序
-    tags-sorter: order
-    operations-sorter: order
-    strategy: manual  # 指定服务发现的模式聚合微服务文档
-    routes:
-      - name: 后台管理
-        url: /lodi-admin/v3/api-docs?group=all  # 子服务存在其他分组情况，聚合其他分组
-        service-name: lodi-admin  # 服务名称(Optional)
-        context-path: /lodi-admin # 路由前缀
-        order: 2  # 排序
-      - name: 博客
-        url: /lodi-web/v3/api-docs?group=all
-        service-name: lodi-web
-        context-path: /lodi-web
-        order: 3
-
-logging:
-  level:
-    org:
-      springframework:
-        cloud:
-          gateway: trace

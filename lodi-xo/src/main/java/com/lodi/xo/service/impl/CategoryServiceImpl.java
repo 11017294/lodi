@@ -40,7 +40,7 @@ public class CategoryServiceImpl extends BaseServiceImpl<CategoryMapper, Categor
 
     @Override
     public Page<Category> getCategoryPage(CategoryPageRequest pageRequest) {
-        Page<Category> page = new Page<>(pageRequest.getCurrent(), pageRequest.getPageSize());
+        Page<Category> page = new Page<>(pageRequest.getCurrentPage(), pageRequest.getPageSize());
         LambdaQueryWrapper<Category> queryWrapper = buildQueryWrapper(pageRequest);
         return baseMapper.selectPage(page, queryWrapper);
     }
