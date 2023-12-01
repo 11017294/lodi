@@ -78,6 +78,24 @@ public interface ArticleService extends BaseService<Article> {
     Page<ArticleVO> getArticleBySearch(Long currentPage, String keyword);
 
     /**
+     * 根据标签ID获取文章列表
+     *
+     * @param currentPage
+     * @param tagId
+     * @return
+     */
+    Page<ArticleVO> getArticleByTagId(Long currentPage, Long tagId);
+
+    /**
+     * 根据分类ID获取文章列表
+     *
+     * @param currentPage
+     * @param categoryId
+     * @return
+     */
+    Page<ArticleVO> getArticleByCategoryId(Long currentPage, Long categoryId);
+
+    /**
      * 给文章设置标签
      *
      * @param articleVO
@@ -126,4 +144,11 @@ public interface ArticleService extends BaseService<Article> {
      * @return
      */
     ArticleVO getArticleById(Long id);
+
+    /**
+     * 增加点击次数
+     *
+     * @param id
+     */
+    void incrementClickCount(Long id);
 }

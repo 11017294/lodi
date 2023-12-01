@@ -1,6 +1,7 @@
 package com.lodi.xo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.core.service.impl.BaseServiceImpl;
@@ -60,5 +61,14 @@ public class TagsServiceImpl extends BaseServiceImpl<TagsMapper, Tags> implement
         queryWrapper.orderByDesc(Tags::getClickCount);
         IPage<Tags> tagsIPage = baseMapper.selectPage(new Page(1, PAGE_SIZE), queryWrapper);
         return tagsIPage.getRecords();
+    }
+
+    @Override
+    public void incrementClickCount(Long id) {
+        // todo 后续增加ip限制，每个ip每天只计算一次点击次数
+        LambdaUpdateWrapper<Tags> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.setSql(" click_count = click_count + 1 ")
+                .eq(Tags::getId, id);
+        baseMapper.update(updateWrapper);
     }
 }

@@ -2,6 +2,7 @@ package com.lodi.xo.service.impl;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.core.constant.StatusConstant;
 import com.lodi.common.core.enums.ErrorCode;
@@ -84,25 +85,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
     }
 
     private LambdaQueryWrapper<Article> buildQueryWrapper(ArticlePageRequest pageRequest) {
-        return new LambdaQueryWrapper<Article>()
-                .like(StringUtils.isNotBlank(pageRequest.getTitle()),
-                        Article::getTitle, pageRequest.getTitle())
-                .like(StringUtils.isNotBlank(pageRequest.getSummary()),
-                        Article::getSummary, pageRequest.getSummary())
-                .like(StringUtils.isNotBlank(pageRequest.getContent()),
-                        Article::getContent, pageRequest.getContent())
-                .eq(Objects.nonNull(pageRequest.getUserId()),
-                        Article::getUserId, pageRequest.getUserId())
-                .eq(Objects.nonNull(pageRequest.getCategoryId()),
-                        Article::getCategoryId, pageRequest.getCategoryId())
-                .eq(Objects.nonNull(pageRequest.getIsPublish()),
-                        Article::getIsPublish, pageRequest.getIsPublish())
-                .eq(Objects.nonNull(pageRequest.getOpenComment()),
-                        Article::getOpenComment, pageRequest.getOpenComment())
-                .eq(Objects.nonNull(pageRequest.getVipArticle()),
-                        Article::getVipArticle, pageRequest.getVipArticle())
-                .eq(Objects.nonNull(pageRequest.getAuditStatus()),
-                        Article::getAuditStatus, pageRequest.getAuditStatus());
+        return new LambdaQueryWrapper<Article>().like(StringUtils.isNotBlank(pageRequest.getTitle()), Article::getTitle, pageRequest.getTitle()).like(StringUtils.isNotBlank(pageRequest.getSummary()), Article::getSummary, pageRequest.getSummary()).like(StringUtils.isNotBlank(pageRequest.getContent()), Article::getContent, pageRequest.getContent()).eq(Objects.nonNull(pageRequest.getUserId()), Article::getUserId, pageRequest.getUserId()).eq(Objects.nonNull(pageRequest.getCategoryId()), Article::getCategoryId, pageRequest.getCategoryId()).eq(Objects.nonNull(pageRequest.getIsPublish()), Article::getIsPublish, pageRequest.getIsPublish()).eq(Objects.nonNull(pageRequest.getOpenComment()), Article::getOpenComment, pageRequest.getOpenComment()).eq(Objects.nonNull(pageRequest.getVipArticle()), Article::getVipArticle, pageRequest.getVipArticle()).eq(Objects.nonNull(pageRequest.getAuditStatus()), Article::getAuditStatus, pageRequest.getAuditStatus());
     }
 
     @Override
@@ -156,16 +139,50 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
         LambdaQueryWrapper<Article> queryWrapper = buildCommonQueryWrapper();
 
         // 不获取内容字段值
-        queryWrapper.like(Article::getTitle, keyword)
-                .or().like(Article::getSummary, keyword)
-                .or().like(Article::getContent, keyword);
+        queryWrapper.like(Article::getTitle, keyword).or().like(Article::getSummary, keyword).or().like(Article::getContent, keyword);
 
         // 按文章创建时间、用户id、文章id排序（倒序）
-        queryWrapper.orderByDesc(Article::getCreateTime, Article::getUserId, Article::getId);
+        queryWrapper.orderByDesc(Article::getId);
         Page<Article> wherePage = new Page<>(currentPage, PAGE_SIZE);
 
         // 分页查询
         Page<Article> articlePage = baseMapper.selectPage(wherePage, queryWrapper);
+        return convertToArticleVOPage(articlePage);
+    }
+
+    @Override
+    public Page<ArticleVO> getArticleByTagId(Long currentPage, Long tagId) {
+        // 构建查询条件
+        LambdaQueryWrapper<Article> queryWrapper = buildCommonQueryWrapper();
+        queryWrapper.like(Article::getTagsId, tagId);
+        queryWrapper.orderByDesc(Article::getId);
+
+        // 执行分页查询
+        Page<Article> wherePage = new Page<>(currentPage, PAGE_SIZE);
+        Page<Article> articlePage = baseMapper.selectPage(wherePage, queryWrapper);
+
+        // 修改标签点击次数
+        tagsService.incrementClickCount(tagId);
+
+        // 将查询结果转换为VO分页
+        return convertToArticleVOPage(articlePage);
+    }
+
+    @Override
+    public Page<ArticleVO> getArticleByCategoryId(Long currentPage, Long categoryId) {
+        // 构建查询条件
+        LambdaQueryWrapper<Article> queryWrapper = buildCommonQueryWrapper();
+        queryWrapper.eq(Article::getCategoryId, categoryId);
+        queryWrapper.orderByDesc(Article::getId);
+
+        // 执行分页查询
+        Page<Article> wherePage = new Page<>(currentPage, PAGE_SIZE);
+        Page<Article> articlePage = baseMapper.selectPage(wherePage, queryWrapper);
+
+        // 修改分类点击次数
+        categoryService.incrementClickCount(categoryId);
+
+        // 将查询结果转换为VO分页
         return convertToArticleVOPage(articlePage);
     }
 
@@ -226,7 +243,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
     @Override
     public void setUserInfoByArticleVO(ArticleVO articleVO) {
         User user = userService.getById(articleVO.getUserId());
-        if(Objects.isNull(user)){
+        if (Objects.isNull(user)) {
             return;
         }
         articleVO.setNickname(user.getNickname());
@@ -263,7 +280,18 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
         setCategoryByArticleVO(articleVO);
         setTagByArticleVO(articleVO);
         setUserInfoByArticleVO(articleVO);
+
+        // 修改文章点击次数
+        incrementClickCount(id);
         return articleVO;
+    }
+
+    @Override
+    public void incrementClickCount(Long id) {
+        // todo 后续增加ip限制，每个ip每天只计算一次点击次数
+        LambdaUpdateWrapper<Article> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.setSql(" click_count = click_count + 1 ").eq(Article::getId, id);
+        baseMapper.update(updateWrapper);
     }
 
 }

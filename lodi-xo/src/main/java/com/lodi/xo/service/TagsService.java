@@ -56,4 +56,11 @@ public interface TagsService extends BaseService<Tags> {
      */
     List<Tags> getHotTag();
 
+    /**
+     * 增加点击次数
+     *
+     * @param id 标签id
+     */
+    void incrementClickCount(Long id);
+
 }

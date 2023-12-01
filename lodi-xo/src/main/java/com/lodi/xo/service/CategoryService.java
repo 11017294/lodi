@@ -1,11 +1,11 @@
 package com.lodi.xo.service;
 
-import com.lodi.common.model.entity.Category;
-import com.lodi.common.core.service.BaseService;
-import com.lodi.common.model.request.category.CategoryAddRequest;
-import com.lodi.common.model.request.category.CategoryUpdateRequest;
-import com.lodi.common.model.request.category.CategoryPageRequest;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lodi.common.core.service.BaseService;
+import com.lodi.common.model.entity.Category;
+import com.lodi.common.model.request.category.CategoryAddRequest;
+import com.lodi.common.model.request.category.CategoryPageRequest;
+import com.lodi.common.model.request.category.CategoryUpdateRequest;
 
 /**
  * 文章类别 服务层
@@ -17,6 +17,7 @@ public interface CategoryService extends BaseService<Category> {
 
     /**
      * 新增文章类别
+     *
      * @param addRequest 新增请求体
      * @return
      */
@@ -24,6 +25,7 @@ public interface CategoryService extends BaseService<Category> {
 
     /**
      * 更新文章类别
+     *
      * @param updateRequest 更新请求体
      * @return
      */
@@ -31,6 +33,7 @@ public interface CategoryService extends BaseService<Category> {
 
     /**
      * 删除文章类别
+     *
      * @param id 文章类别ID
      * @return
      */
@@ -38,8 +41,16 @@ public interface CategoryService extends BaseService<Category> {
 
     /**
      * 获取文章类别
+     *
      * @param pageRequest 分页查询请求体
      * @return
      */
     Page<Category> getCategoryPage(CategoryPageRequest pageRequest);
+
+    /**
+     * 增加点击次数
+     *
+     * @param id 分类id
+     */
+    void incrementClickCount(Long id);
 }

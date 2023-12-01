@@ -2,12 +2,8 @@ package com.lodi.web.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.core.constant.ArticleConstant;
-import com.lodi.common.core.enums.ErrorCode;
-import com.lodi.common.core.exception.BusinessException;
 import com.lodi.common.core.web.domain.Result;
-import com.lodi.common.model.convert.article.ArticleConvert;
 import com.lodi.common.model.convert.tags.TagsConvert;
-import com.lodi.common.model.entity.Article;
 import com.lodi.common.model.entity.Tags;
 import com.lodi.common.model.request.IdRequest;
 import com.lodi.common.model.vo.ArticleVO;
@@ -51,7 +47,7 @@ public class IndexController {
 
     @Operation(summary = "首页搜索文章")
     @GetMapping("getArticleBySearch")
-    public Result<Page<ArticleVO>> getArticleBySearch(@RequestParam("currentPage") Long currentPage, @RequestParam("keyword") String keyword) {
+    public Result<Page<ArticleVO>> getArticleBySearch(@RequestParam("currentPage") Long currentPage, @RequestParam("keywords") String keyword) {
         log.info("首页搜索文章");
         Page<ArticleVO> articlePage = articleService.getArticleBySearch(currentPage, keyword);
         return Result.success(articlePage);
