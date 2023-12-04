@@ -80,8 +80,8 @@ public class AuthServiceImpl implements AuthService {
     public Boolean register(UserRegisterRequest registerRequest) {
         // 校验参数
         String userPassword = registerRequest.getPassword();
-        String chenPassword = registerRequest.getCheckPassword();
-        if (!Objects.equals(userPassword, chenPassword)) {
+        String confirmPassword = registerRequest.getConfirmPassword();
+        if (!Objects.equals(userPassword, confirmPassword)) {
             throw new BusinessException("两次密码不一致", PARAMS_ERROR.getCode());
         }
         // 校验账号唯一性
