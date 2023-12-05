@@ -37,6 +37,11 @@
             <groupId>com.lodi</groupId>
             <artifactId>lodi-common-config</artifactId>
         </dependency>
+        <!-- mail -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

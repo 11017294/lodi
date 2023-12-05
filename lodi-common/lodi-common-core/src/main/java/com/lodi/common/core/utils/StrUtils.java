@@ -5,6 +5,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -49,8 +50,22 @@ public class StrUtils {
         return matcher.match(pattern, url);
     }
 
-    public static String getUUID(){
+    public static String getUUID() {
         return UUID.randomUUID().toString().replace("-", "");
+    }
+
+    /**
+     * 生成随机code(6位数)
+     *
+     * @return
+     */
+    public static String randomCode() {
+        StringBuilder str = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < 6; i++) {
+            str.append(random.nextInt(10));
+        }
+        return str.toString();
     }
 
 }

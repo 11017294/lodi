@@ -1,22 +1,21 @@
 package com.lodi.admin.controller;
 
-import com.lodi.common.model.convert.category.CategoryConvert;
-import com.lodi.common.model.convert.user.UserConvert;
-import com.lodi.common.model.entity.Category;
-import com.lodi.xo.service.CategoryService;
-import com.lodi.common.model.request.category.CategoryAddRequest;
-import com.lodi.common.model.request.category.CategoryUpdateRequest;
-import com.lodi.common.model.request.category.CategoryPageRequest;
-import com.lodi.common.model.vo.CategoryVO;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.Operation;
-import org.springdoc.api.annotations.ParameterObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lodi.common.core.web.domain.Result;
 import com.lodi.common.core.exception.BusinessException;
+import com.lodi.common.core.web.domain.Result;
+import com.lodi.common.model.convert.category.CategoryConvert;
+import com.lodi.common.model.entity.Category;
 import com.lodi.common.model.request.IdRequest;
-import org.springframework.beans.BeanUtils;
+import com.lodi.common.model.request.category.CategoryAddRequest;
+import com.lodi.common.model.request.category.CategoryPageRequest;
+import com.lodi.common.model.request.category.CategoryUpdateRequest;
+import com.lodi.common.model.vo.CategoryVO;
+import com.lodi.xo.service.CategoryService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.*;
+
 import javax.annotation.Resource;
 import java.util.List;
 
@@ -28,7 +27,7 @@ import static com.lodi.common.core.enums.ErrorCode.NOT_FOUND_ERROR;
  */
 @Tag(name = "文章类别", description = "文章类别")
 @RestController
-@RequestMapping("/category")
+@RequestMapping("category")
 public class CategoryController {
 
     @Resource
@@ -42,7 +41,7 @@ public class CategoryController {
     }
 
     @Operation(summary = "获取所有文章列表")
-    @GetMapping("/list")
+    @GetMapping("list")
     public Result<List<CategoryVO>> getCategoryList() {
         List<Category> categorieList = categoryService.list();
         return Result.success(CategoryConvert.INSTANCE.toVO(categorieList));

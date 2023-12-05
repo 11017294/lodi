@@ -1,22 +1,21 @@
 package com.lodi.admin.controller;
 
-import com.lodi.common.model.convert.tags.TagsConvert;
-import com.lodi.common.model.entity.Category;
-import com.lodi.common.model.entity.Tags;
-import com.lodi.xo.service.TagsService;
-import com.lodi.common.model.request.tags.TagsAddRequest;
-import com.lodi.common.model.request.tags.TagsUpdateRequest;
-import com.lodi.common.model.request.tags.TagsPageRequest;
-import com.lodi.common.model.vo.TagsVO;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.Operation;
-import org.springdoc.api.annotations.ParameterObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lodi.common.core.web.domain.Result;
 import com.lodi.common.core.exception.BusinessException;
+import com.lodi.common.core.web.domain.Result;
+import com.lodi.common.model.convert.tags.TagsConvert;
+import com.lodi.common.model.entity.Tags;
 import com.lodi.common.model.request.IdRequest;
-import org.springframework.beans.BeanUtils;
+import com.lodi.common.model.request.tags.TagsAddRequest;
+import com.lodi.common.model.request.tags.TagsPageRequest;
+import com.lodi.common.model.request.tags.TagsUpdateRequest;
+import com.lodi.common.model.vo.TagsVO;
+import com.lodi.xo.service.TagsService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.*;
+
 import javax.annotation.Resource;
 import java.util.List;
 
@@ -28,7 +27,7 @@ import static com.lodi.common.core.enums.ErrorCode.NOT_FOUND_ERROR;
  */
 @Tag(name = "标签", description = "标签")
 @RestController
-@RequestMapping("/tags")
+@RequestMapping("tags")
 public class TagsController {
 
     @Resource
@@ -42,7 +41,7 @@ public class TagsController {
     }
 
     @Operation(summary = "获取标签列表")
-    @GetMapping("/list")
+    @GetMapping("list")
     public Result<List<TagsVO>> getTagsList() {
         List<Tags> tagsList = tagsService.list();
         return Result.success(TagsConvert.INSTANCE.toVO(tagsList));

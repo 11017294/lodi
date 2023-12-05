@@ -27,7 +27,7 @@ import static com.lodi.common.core.enums.ErrorCode.NOT_FOUND_ERROR;
  */
 @Tag(name = "动漫信息", description = "动漫信息")
 @RestController
-@RequestMapping("/animeInfo")
+@RequestMapping("animeInfo")
 public class AnimeInfoController {
 
     @Resource

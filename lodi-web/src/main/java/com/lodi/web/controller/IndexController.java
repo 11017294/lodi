@@ -78,7 +78,7 @@ public class IndexController {
     }
 
     @Operation(summary = "获取最热标签")
-    @GetMapping("/getHotTag")
+    @GetMapping("getHotTag")
     public Result<List<TagsVO>> getHotTag() {
         log.info("获取最热标签");
         List<Tags> tagsList = tagsService.getHotTag();

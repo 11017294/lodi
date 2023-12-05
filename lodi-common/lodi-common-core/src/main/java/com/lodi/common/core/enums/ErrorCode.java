@@ -15,7 +15,8 @@ public enum ErrorCode {
     NO_AUTH_ERROR(40101, "无权限"),
     NOT_FOUND_ERROR(40400, "请求数据不存在"),
     FORBIDDEN_ERROR(40300, "禁止访问"),
-
+    EMAIL_CODE_NOT_FOUND(40200, "邮箱验证码不存在"),
+    INVALID_EMAIL_CODE(40201, "邮箱验证码无效"),
     SYSTEM_ERROR(50000, "系统内部异常"),
     RESPONSE_PACK_ERROR(50002, "response封装错误"),
     FILE_IS_EMPTY(50003, "文件为空"),
