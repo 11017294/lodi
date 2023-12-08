@@ -37,6 +37,6 @@ public interface RemoteFileService {
      * @return
      */
     @DeleteMapping("delete")
-    Result<String> delete(@RequestParam(value = "fileName") String fileName, @RequestParam(value = "fileDirectory") String fileDirectory);
+    Result<Integer> delete(@RequestParam(value = "fileName") String fileName, @RequestParam(value = "fileDirectory") String fileDirectory);
 
 }

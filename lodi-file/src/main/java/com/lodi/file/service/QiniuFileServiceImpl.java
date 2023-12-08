@@ -28,7 +28,8 @@ public class QiniuFileServiceImpl implements FileService {
             throw new BusinessException(ErrorCode.FILE_IS_EMPTY);
         }
         try {
-            return qiniuUtil.uploadQiniu(file, fileDirectory);
+            String basePath = "http://picture.bigchen.icu/";
+            return basePath + qiniuUtil.uploadQiniu(file, fileDirectory);
         } catch (QiniuException e) {
             log.error("上传文件到七牛云失败", e);
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "文件服务异常");

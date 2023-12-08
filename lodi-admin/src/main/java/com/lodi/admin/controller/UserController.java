@@ -84,7 +84,7 @@ public class UserController {
         if (file.isEmpty()) {
             throw new BusinessException(ErrorCode.FILE_IS_EMPTY);
         }
-        return remoteFileService.upload(file, FileDirectoryConstant.AVATAR);
+        return remoteFileService.upload(file, FileDirectoryConstant.DEFAULT);
     }
 
 }
