@@ -63,4 +63,10 @@ public interface TagsService extends BaseService<Tags> {
      */
     void incrementClickCount(Long id);
 
+    /**
+     * 验证标签id
+     *
+     * @param tags
+     */
+    void validateTagsId(Long[] tags);
 }

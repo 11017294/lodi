@@ -1,13 +1,14 @@
 package com.lodi.xo.service.impl;
 
-
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.core.constant.StatusConstant;
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
+import com.lodi.common.core.holder.SecurityContextHolder;
 import com.lodi.common.core.service.impl.BaseServiceImpl;
+import com.lodi.common.core.utils.SecurityUtils;
 import com.lodi.common.model.convert.article.ArticleConvert;
 import com.lodi.common.model.entity.Article;
 import com.lodi.common.model.entity.Category;
@@ -54,38 +55,71 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
 
     @Override
     public Boolean insertArticle(ArticleAddRequest addRequest) {
-        // 获取当前用户信息
-
+        Long[] tags = addRequest.getTags();
+        Long categoryId = addRequest.getCategoryId();
         // 判断标签id、类别id 是否存在
+        tagsService.validateTagsId(tags);
+        categoryService.validateCategoryId(categoryId);
 
         Article article = ArticleConvert.INSTANCE.toEntity(addRequest);
-
-        // todo 临时设置
-        article.setUserId(1L);
+        // 设置作者id
+        article.setUserId(SecurityContextHolder.getUserId());
 
         return save(article);
     }
 
     @Override
     public Boolean updateArticle(ArticleUpdateRequest updateRequest) {
-        // 判断是否当前用户或管理员
-
+        Long[] tags = updateRequest.getTags();
+        Long categoryId = updateRequest.getCategoryId();
         // 判断标签id、类别id 是否存在
+        tagsService.validateTagsId(tags);
+        categoryService.validateCategoryId(categoryId);
 
         Article article = ArticleConvert.INSTANCE.toEntity(updateRequest);
-
+        // 判断是否当前用户或管理员
+        isCurrentUserOrAdmin(article.getId());
         return updateById(article);
     }
 
     @Override
     public Boolean deleteArticle(Long id) {
         // 判断是否当前用户或管理员
-
+        isCurrentUserOrAdmin(id);
         return removeById(id);
     }
 
+    /**
+     * 判断是否当前用户或管理员
+     *
+     * @param articleId 文章id
+     */
+    private void isCurrentUserOrAdmin(Long articleId) {
+        if (articleId == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.select(Article::getUserId)
+                .eq(Article::getId, articleId);
+
+        Article article = baseMapper.selectOne(queryWrapper);
+        if (article == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+        SecurityUtils.isCurrentUserOrAdmin(article.getUserId());
+    }
+
     private LambdaQueryWrapper<Article> buildQueryWrapper(ArticlePageRequest pageRequest) {
-        return new LambdaQueryWrapper<Article>().like(StringUtils.isNotBlank(pageRequest.getTitle()), Article::getTitle, pageRequest.getTitle()).like(StringUtils.isNotBlank(pageRequest.getSummary()), Article::getSummary, pageRequest.getSummary()).like(StringUtils.isNotBlank(pageRequest.getContent()), Article::getContent, pageRequest.getContent()).eq(Objects.nonNull(pageRequest.getUserId()), Article::getUserId, pageRequest.getUserId()).eq(Objects.nonNull(pageRequest.getCategoryId()), Article::getCategoryId, pageRequest.getCategoryId()).eq(Objects.nonNull(pageRequest.getIsPublish()), Article::getIsPublish, pageRequest.getIsPublish()).eq(Objects.nonNull(pageRequest.getOpenComment()), Article::getOpenComment, pageRequest.getOpenComment()).eq(Objects.nonNull(pageRequest.getVipArticle()), Article::getVipArticle, pageRequest.getVipArticle()).eq(Objects.nonNull(pageRequest.getAuditStatus()), Article::getAuditStatus, pageRequest.getAuditStatus());
+        return new LambdaQueryWrapper<Article>()
+                .like(StringUtils.isNotBlank(pageRequest.getTitle()), Article::getTitle, pageRequest.getTitle())
+                .like(StringUtils.isNotBlank(pageRequest.getSummary()), Article::getSummary, pageRequest.getSummary())
+                .like(StringUtils.isNotBlank(pageRequest.getContent()), Article::getContent, pageRequest.getContent())
+                .eq(Objects.nonNull(pageRequest.getUserId()), Article::getUserId, pageRequest.getUserId())
+                .eq(Objects.nonNull(pageRequest.getCategoryId()), Article::getCategoryId, pageRequest.getCategoryId())
+                .eq(Objects.nonNull(pageRequest.getIsPublish()), Article::getIsPublish, pageRequest.getIsPublish())
+                .eq(Objects.nonNull(pageRequest.getOpenComment()), Article::getOpenComment, pageRequest.getOpenComment())
+                .eq(Objects.nonNull(pageRequest.getVipArticle()), Article::getVipArticle, pageRequest.getVipArticle())
+                .eq(Objects.nonNull(pageRequest.getAuditStatus()), Article::getAuditStatus, pageRequest.getAuditStatus());
     }
 
     @Override
@@ -210,6 +244,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
         // 不获取内容字段值
         queryWrapper.select(Article.class, i -> !i.getProperty().equals(CONTENT));
         queryWrapper.eq(Article::getIsPublish, StatusConstant.ON);
+        queryWrapper.eq(Article::getAuditStatus, StatusConstant.ON);
         return queryWrapper;
     }
 

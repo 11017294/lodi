@@ -53,4 +53,10 @@ public interface CategoryService extends BaseService<Category> {
      * @param id 分类id
      */
     void incrementClickCount(Long id);
+
+    /**
+     * 验证类别id
+     * @param categoryId
+     */
+    void validateCategoryId(Long categoryId);
 }

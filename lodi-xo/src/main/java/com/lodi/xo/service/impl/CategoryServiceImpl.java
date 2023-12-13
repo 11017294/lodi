@@ -3,6 +3,8 @@ package com.lodi.xo.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lodi.common.core.enums.ErrorCode;
+import com.lodi.common.core.exception.BusinessException;
 import com.lodi.common.core.service.impl.BaseServiceImpl;
 import com.lodi.common.model.convert.category.CategoryConvert;
 import com.lodi.common.model.entity.Category;
@@ -57,5 +59,19 @@ public class CategoryServiceImpl extends BaseServiceImpl<CategoryMapper, Categor
         updateWrapper.setSql(" click_count = click_count + 1 ")
                 .eq(Category::getId, id);
         baseMapper.update(updateWrapper);
+    }
+
+    @Override
+    public void validateCategoryId(Long categoryId) {
+        if (categoryId == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Category::getId, categoryId);
+
+        long count = count(queryWrapper);
+        if(count == 0){
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "文章类别不存在");
+        }
     }
 }

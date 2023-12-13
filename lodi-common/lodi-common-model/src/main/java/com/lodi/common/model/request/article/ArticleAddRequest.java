@@ -30,7 +30,7 @@ public class ArticleAddRequest implements Serializable {
     private String cover;
 
     @Schema(title = "标签ID", description = "标签ID")
-    private String tagsId;
+    private Long[] tags;
 
     @Schema(title = "文章类别ID", description = "文章类别ID")
     private Long categoryId;

@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lodi.common.core.enums.ErrorCode;
+import com.lodi.common.core.exception.BusinessException;
 import com.lodi.common.core.service.impl.BaseServiceImpl;
 import com.lodi.common.model.convert.tags.TagsConvert;
 import com.lodi.common.model.entity.Tags;
@@ -70,5 +72,19 @@ public class TagsServiceImpl extends BaseServiceImpl<TagsMapper, Tags> implement
         updateWrapper.setSql(" click_count = click_count + 1 ")
                 .eq(Tags::getId, id);
         baseMapper.update(updateWrapper);
+    }
+
+    @Override
+    public void validateTagsId(Long[] tags) {
+        if (tags == null || tags.length == 0) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        LambdaQueryWrapper<Tags> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.in(Tags::getId, tags);
+
+        long count = count(queryWrapper);
+        if (count != tags.length) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "标签不存在");
+        }
     }
 }

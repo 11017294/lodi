@@ -6,9 +6,12 @@ import com.lodi.common.model.request.article.ArticleAddRequest;
 import com.lodi.common.model.request.article.ArticleUpdateRequest;
 import com.lodi.common.model.vo.ArticleVO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 文章 Convert
@@ -21,8 +24,10 @@ public interface ArticleConvert {
 
     ArticleConvert INSTANCE = Mappers.getMapper(ArticleConvert.class);
 
+    @Mapping(target = "tagsId", source = "tags")
     Article toEntity(ArticleAddRequest addRequest);
 
+    @Mapping(target = "tagsId", source = "tags")
     Article toEntity(ArticleUpdateRequest updateRequest);
 
     ArticleVO toVO(Article article);
@@ -30,5 +35,15 @@ public interface ArticleConvert {
     List<ArticleVO> toVO(List<Article> articles);
 
     Page<ArticleVO> toVO(Page<Article> articlePage);
+
+    default String tagsToTagsId(Long[] tags) {
+        if (tags == null || tags.length == 0) {
+            return null;
+        }
+
+        return Arrays.stream(tags)
+                .map(String::valueOf)
+                .collect(Collectors.joining(","));
+    }
 
 }
