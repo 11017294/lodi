@@ -1,5 +1,6 @@
 package com.lodi.gateway;
 
+import com.lodi.common.core.handler.GlobalExceptionHandler;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -10,7 +11,8 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @author MaybeBin
  * @createDate 2023-09-19
  */
-@SpringBootApplication(excludeName = "org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration")
+@SpringBootApplication(excludeName = "org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration",
+        exclude = GlobalExceptionHandler.class)
 @EnableDiscoveryClient
 public class GatewayApplication {
 

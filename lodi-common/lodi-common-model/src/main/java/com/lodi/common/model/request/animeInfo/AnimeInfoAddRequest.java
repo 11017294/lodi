@@ -1,10 +1,12 @@
 package com.lodi.common.model.request.animeInfo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * 添加动漫信息 请求体
@@ -19,21 +21,26 @@ public class AnimeInfoAddRequest implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Schema(title = "番名", description = "番名")
+    @NotBlank(message = "番名不能为空")
     private String animeName;
 
     @Schema(title = "地区", description = "地区")
     private String region;
 
     @Schema(title = "动漫种类（TV、剧场）", description = "动漫种类（TV、剧场）")
+    @NotBlank(message = "动漫种类不能为空")
     private String animeType;
 
     @Schema(title = "季度编号", description = "季度编号")
+    @NotBlank(message = "季度编号不能为空")
     private String seasonNumber;
 
     @Schema(title = "动漫类型", description = "动漫类型")
+    @NotBlank(message = "动漫类型不能为空")
     private String animeGenre;
 
     @Schema(title = "首播时间", description = "首播时间")
+    @NotBlank(message = "首播时间不能为空")
     private LocalDate firstAirDate;
 
     @Schema(title = "播放地址（LIST）", description = "播放地址（LIST）")
@@ -46,9 +53,11 @@ public class AnimeInfoAddRequest implements Serializable {
     private String coverUrl;
 
     @Schema(title = "作者", description = "作者")
+    @NotBlank(message = "作者不能为空")
     private String author;
 
     @Schema(title = "制作公司", description = "制作公司")
+    @NotBlank(message = "制作公司不能为空")
     private String productionCompany;
 
     @Schema(title = "配音演员列表（LIST）", description = "配音演员列表（LIST）")
@@ -58,12 +67,15 @@ public class AnimeInfoAddRequest implements Serializable {
     private String synopsis;
 
     @Schema(title = "播放状态：0-未放映、1-正在更新、2-已完结", description = "播放状态：0-未放映、1-正在更新、2-已完结")
+    @NotNull(message = "播放状态不能为空")
     private Integer airingStatus;
 
     @Schema(title = "总集数", description = "总集数")
+    @NotNull(message = "总集数不能为空")
     private Integer totalEpisodes;
 
     @Schema(title = "当前集数", description = "当前集数")
+    @NotNull(message = "当前集数不能为空")
     private Integer currentEpisode;
 
 }

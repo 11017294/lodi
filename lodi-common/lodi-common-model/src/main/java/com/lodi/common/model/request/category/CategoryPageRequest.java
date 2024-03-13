@@ -16,8 +16,6 @@ public class CategoryPageRequest extends PageRequest {
 
     private static final long serialVersionUID = 1L;
 
-    private Long id;
-
     @Schema(title = "类别名称", description = "类别名称")
     private String name;
 

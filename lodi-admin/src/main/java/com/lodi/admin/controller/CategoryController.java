@@ -14,6 +14,7 @@ import com.lodi.xo.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.api.annotations.ParameterObject;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -35,7 +36,7 @@ public class CategoryController {
 
     @Operation(summary = "获取文章类别分页")
     @GetMapping("page")
-    public Result<Page<CategoryVO>> getCategoryPage(@ParameterObject CategoryPageRequest pageRequest) {
+    public Result<Page<CategoryVO>> getCategoryPage(@ParameterObject @Validated CategoryPageRequest pageRequest) {
         Page<Category> categoryPage = categoryService.getCategoryPage(pageRequest);
         return Result.success(CategoryConvert.INSTANCE.toVO(categoryPage));
     }
@@ -49,7 +50,7 @@ public class CategoryController {
 
     @Operation(summary = "获取文章类别")
     @GetMapping("get")
-    public Result<CategoryVO> getCategory(@ParameterObject IdRequest request) {
+    public Result<CategoryVO> getCategory(@ParameterObject @Validated IdRequest request) {
         Category category = categoryService.getById(request.getId());
         if (category == null) {
             throw new BusinessException(NOT_FOUND_ERROR);
@@ -59,19 +60,19 @@ public class CategoryController {
 
     @Operation(summary = "新增文章类别")
     @PostMapping("add")
-    public Result<Boolean> addCategory(@RequestBody CategoryAddRequest addRequest) {
+    public Result<Boolean> addCategory(@RequestBody @Validated CategoryAddRequest addRequest) {
         return Result.success(categoryService.insertCategory(addRequest));
     }
 
     @Operation(summary = "更新文章类别")
     @PutMapping("update")
-    public Result<Boolean> updateCategory(@RequestBody CategoryUpdateRequest updateRequest) {
+    public Result<Boolean> updateCategory(@RequestBody @Validated CategoryUpdateRequest updateRequest) {
         return Result.success(categoryService.updateCategory(updateRequest));
     }
 
     @Operation(summary = "删除文章类别")
     @DeleteMapping("delete")
-    public Result<Boolean> deleteCategory(@RequestBody IdRequest request) {
+    public Result<Boolean> deleteCategory(@RequestBody @Validated IdRequest request) {
         return Result.success(categoryService.deleteCategory(request.getId()));
     }
 }

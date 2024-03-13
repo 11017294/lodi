@@ -19,6 +19,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.BeanUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,21 +43,21 @@ public class UserController {
     @RequiresRoles("admin")
     @Operation(summary = "获取用户列表")
     @GetMapping("list")
-    public Result<List<UserVO>> getUserList(@ParameterObject UserQueryRequest queryRequest) {
+    public Result<List<UserVO>> getUserList(@ParameterObject @Validated UserQueryRequest queryRequest) {
         List<User> users = userService.listUser(queryRequest);
         return Result.success(UserConvert.INSTANCE.toVO(users));
     }
 
     @Operation(summary = "获取用户分页")
     @GetMapping("page")
-    public Result<Page<UserVO>> getUserPage(@ParameterObject UserPageRequest pageRequest) {
+    public Result<Page<UserVO>> getUserPage(@ParameterObject @Validated UserPageRequest pageRequest) {
         Page<User> userPage = userService.getUserPage(pageRequest);
         return Result.success(UserConvert.INSTANCE.toVO(userPage));
     }
 
     @Operation(summary = "获取用户信息")
     @GetMapping("get")
-    public Result<UserVO> getUser(@ParameterObject IdRequest idRequest) {
+    public Result<UserVO> getUser(@ParameterObject @Validated IdRequest idRequest) {
         User user = userService.getById(idRequest.getId());
         if (user == null) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
@@ -67,13 +68,13 @@ public class UserController {
     @RequiresRoles("admin")
     @Operation(summary = "删除用户")
     @DeleteMapping("delete")
-    public Result<Boolean> deleteUser(@RequestBody IdRequest idRequest) {
+    public Result<Boolean> deleteUser(@RequestBody @Validated IdRequest idRequest) {
         return Result.success(userService.removeById(idRequest.getId()));
     }
 
     @Operation(summary = "更新用户")
     @PutMapping("update")
-    public Result<Boolean> updateUser(@RequestBody UserUpdateRequest updateRequest) {
+    public Result<Boolean> updateUser(@RequestBody @Validated UserUpdateRequest updateRequest) {
         User user = UserConvert.INSTANCE.toEntity(updateRequest);
         return Result.success(userService.updateById(user));
     }

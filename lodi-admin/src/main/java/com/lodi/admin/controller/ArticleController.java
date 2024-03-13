@@ -17,6 +17,7 @@ import com.lodi.xo.service.ArticleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.api.annotations.ParameterObject;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -36,13 +37,13 @@ public class ArticleController {
 
     @Operation(summary = "获取文章分页")
     @GetMapping("page")
-    public Result<Page<ArticleVO>> getArticlePage(@ParameterObject ArticlePageRequest pageRequest) {
+    public Result<Page<ArticleVO>> getArticlePage(@ParameterObject @Validated ArticlePageRequest pageRequest) {
         return Result.success(articleService.getArticlePage(pageRequest));
     }
 
     @Operation(summary = "获取文章信息")
     @GetMapping("get")
-    public Result<ArticleVO> getArticle(@ParameterObject IdRequest idRequest) {
+    public Result<ArticleVO> getArticle(@ParameterObject @Validated IdRequest idRequest) {
         Article article = articleService.getById(idRequest.getId());
         if (article == null) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
@@ -52,19 +53,19 @@ public class ArticleController {
 
     @Operation(summary = "新增文章")
     @PostMapping("add")
-    public Result<Boolean> addArticle(@RequestBody ArticleAddRequest addRequest) {
+    public Result<Boolean> addArticle(@RequestBody @Validated ArticleAddRequest addRequest) {
         return Result.success(articleService.insertArticle(addRequest));
     }
 
     @Operation(summary = "更新文章")
     @PutMapping("update")
-    public Result<Boolean> updateArticle(@RequestBody ArticleUpdateRequest updateRequest) {
+    public Result<Boolean> updateArticle(@RequestBody @Validated ArticleUpdateRequest updateRequest) {
         return Result.success(articleService.updateArticle(updateRequest));
     }
 
     @Operation(summary = "删除文章")
     @DeleteMapping("delete")
-    public Result<Boolean> deleteArticle(@RequestBody IdRequest request) {
+    public Result<Boolean> deleteArticle(@RequestBody @Validated IdRequest request) {
         return Result.success(articleService.deleteArticle(request.getId()));
     }
 
@@ -78,7 +79,7 @@ public class ArticleController {
     @RequiresRoles("admin")
     @Operation(summary = "审核")
     @PutMapping("audit")
-    public Result<Boolean> auditArticle(@RequestBody AuditArticleRequest auditRequest) {
+    public Result<Boolean> auditArticle(@RequestBody @Validated AuditArticleRequest auditRequest) {
         return Result.success(articleService.auditArticle(auditRequest));
     }
 

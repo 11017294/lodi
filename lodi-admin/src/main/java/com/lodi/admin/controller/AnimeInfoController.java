@@ -14,6 +14,7 @@ import com.lodi.xo.service.AnimeInfoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.api.annotations.ParameterObject;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -35,14 +36,14 @@ public class AnimeInfoController {
 
     @Operation(summary = "获取动漫信息分页")
     @GetMapping("page")
-    public Result<Page<AnimeInfoVO>> getAnimeInfoPage(@ParameterObject AnimeInfoPageRequest pageRequest) {
+    public Result<Page<AnimeInfoVO>> getAnimeInfoPage(@ParameterObject @Validated AnimeInfoPageRequest pageRequest) {
         Page<AnimeInfo> animeInfoPage = animeInfoService.getAnimeInfoPage(pageRequest);
         return Result.success(AnimeInfoConvert.INSTANCE.toVO(animeInfoPage));
     }
 
     @Operation(summary = "获取动漫信息")
     @GetMapping("get")
-    public Result<AnimeInfoVO> getAnimeInfo(@ParameterObject IdRequest request) {
+    public Result<AnimeInfoVO> getAnimeInfo(@ParameterObject @Validated IdRequest request) {
         AnimeInfo animeInfo = animeInfoService.getById(request.getId());
         if (animeInfo == null) {
             throw new BusinessException(NOT_FOUND_ERROR);
@@ -52,7 +53,7 @@ public class AnimeInfoController {
 
     @Operation(summary = "根据系列ID获取动漫信息")
     @GetMapping("getAnimeInfoBySeriesId")
-    public Result<List<AnimeInfoVO>> getAnimeInfoBySeriesId(@ParameterObject IdRequest request) {
+    public Result<List<AnimeInfoVO>> getAnimeInfoBySeriesId(@ParameterObject @Validated IdRequest request) {
         List<AnimeInfo> animeInfos = animeInfoService.getAnimeInfoBySeriesId(request.getId());
         if (animeInfos == null) {
             throw new BusinessException(NOT_FOUND_ERROR);
@@ -62,19 +63,19 @@ public class AnimeInfoController {
 
     @Operation(summary = "新增动漫信息")
     @PostMapping("add")
-    public Result<Boolean> addAnimeInfo(@RequestBody AnimeInfoAddRequest addRequest) {
+    public Result<Boolean> addAnimeInfo(@RequestBody @Validated AnimeInfoAddRequest addRequest) {
         return Result.success(animeInfoService.insertAnimeInfo(addRequest));
     }
 
     @Operation(summary = "更新动漫信息")
     @PutMapping("update")
-    public Result<Boolean> updateAnimeInfo(@RequestBody AnimeInfoUpdateRequest updateRequest) {
+    public Result<Boolean> updateAnimeInfo(@RequestBody @Validated AnimeInfoUpdateRequest updateRequest) {
         return Result.success(animeInfoService.updateAnimeInfo(updateRequest));
     }
 
     @Operation(summary = "删除动漫信息")
     @DeleteMapping("delete")
-    public Result<Boolean> deleteAnimeInfo(@RequestBody IdRequest request) {
+    public Result<Boolean> deleteAnimeInfo(@RequestBody @Validated IdRequest request) {
         return Result.success(animeInfoService.deleteAnimeInfo(request.getId()));
     }
 }

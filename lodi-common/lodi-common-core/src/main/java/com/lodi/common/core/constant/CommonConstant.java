@@ -31,4 +31,8 @@ public interface CommonConstant {
 
     String EMPTY = "";
 
+    String DELIMITER_TO = "@";
+
+    String SEPARATOR = ":";
+
 }

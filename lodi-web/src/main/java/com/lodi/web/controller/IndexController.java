@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springdoc.api.annotations.ParameterObject;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,7 +40,7 @@ public class IndexController {
 
     @Operation(summary = "获取文章信息")
     @GetMapping("get")
-    public Result<ArticleVO> getArticle(@ParameterObject IdRequest idRequest) {
+    public Result<ArticleVO> getArticle(@ParameterObject @Validated IdRequest idRequest) {
         log.info("获取文章信息");
         ArticleVO articleVO = articleService.getArticleById(idRequest.getId());
         return Result.success(articleVO);

@@ -3,6 +3,7 @@ package com.lodi.common.model.request.user;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -19,6 +20,7 @@ public class UserUpdateRequest implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Schema(title = "id", description = "id", requiredMode = Schema.RequiredMode.REQUIRED, example = "10000")
+    @NotNull(message = "id不能为空")
     private Long id;
 
     @Schema(title = "昵称", description = "昵称", example = "lodi")

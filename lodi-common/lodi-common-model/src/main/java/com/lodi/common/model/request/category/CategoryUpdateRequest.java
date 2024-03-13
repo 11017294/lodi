@@ -4,6 +4,9 @@ import java.io.Serializable;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
 /**
  * 文章类别更新 请求体
  *
@@ -16,6 +19,8 @@ public class CategoryUpdateRequest implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @NotNull(message = "Id 不能为空")
+    @Positive
     private Long id;
 
     @Schema(title = "类别名称", description = "类别名称")

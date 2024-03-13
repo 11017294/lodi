@@ -4,6 +4,9 @@ import java.io.Serializable;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+
 /**
  * 标签更新 请求体
  *
@@ -16,6 +19,8 @@ public class TagsUpdateRequest implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @NotNull(message = "Id 不能为空")
+    @Positive
     private Long id;
 
     @Schema(title = "标签名称", description = "标签名称")
