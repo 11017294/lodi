@@ -14,29 +14,15 @@
     <dependencies>
         <dependency>
             <groupId>com.lodi</groupId>
-            <artifactId>lodi-common-config</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-web</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.baomidou</groupId>
-                    <artifactId>mybatis-plus-boot-starter</artifactId>
-                </exclusion>
-            </exclusions>
+            <artifactId>lodi-common-redis</artifactId>
         </dependency>
         <dependency>
             <groupId>com.lodi</groupId>
-            <artifactId>lodi-common-model</artifactId>
+            <artifactId>lodi-common-core</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-web</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.baomidou</groupId>
-                    <artifactId>mybatis-plus-boot-starter</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>

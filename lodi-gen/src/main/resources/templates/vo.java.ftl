@@ -4,7 +4,7 @@ package ${VO.packageName};
     <#if pkg != 'com.baomidou.mybatisplus.annotation.IdType'
     && pkg != 'com.baomidou.mybatisplus.annotation.TableId'
     && pkg != 'com.baomidou.mybatisplus.annotation.TableName'
-    && pkg != 'com.lodi.common.core.web.domain.BaseEntity'>
+    && pkg != 'com.lodi.common.mybatis.domain.BaseEntity'>
 import ${pkg};
     </#if>
 </#list>

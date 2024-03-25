@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
-import com.lodi.common.core.service.impl.BaseServiceImpl;
+import com.lodi.common.mybatis.service.impl.BaseServiceImpl;
 import com.lodi.common.model.convert.tags.TagsConvert;
 import com.lodi.common.model.entity.Tags;
 import com.lodi.common.model.request.tags.TagsAddRequest;

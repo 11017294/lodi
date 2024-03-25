@@ -1,6 +1,6 @@
 package com.lodi.xo.mapper;
 
-import com.lodi.common.core.mapper.BaseMapper;
+import com.lodi.common.mybatis.mapper.BaseMapper;
 import com.lodi.common.model.entity.User;
 import org.apache.ibatis.annotations.Select;
 

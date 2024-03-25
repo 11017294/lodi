@@ -7,7 +7,7 @@ import com.lodi.common.core.constant.StatusConstant;
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
 import com.lodi.common.core.holder.SecurityContextHolder;
-import com.lodi.common.core.service.impl.BaseServiceImpl;
+import com.lodi.common.mybatis.service.impl.BaseServiceImpl;
 import com.lodi.common.core.utils.SecurityUtils;
 import com.lodi.common.model.convert.article.ArticleConvert;
 import com.lodi.common.model.entity.Article;

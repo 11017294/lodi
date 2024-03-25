@@ -2,7 +2,7 @@ package com.lodi.xo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lodi.common.core.service.impl.BaseServiceImpl;
+import com.lodi.common.mybatis.service.impl.BaseServiceImpl;
 import com.lodi.common.model.entity.User;
 import com.lodi.common.model.request.user.UserPageRequest;
 import com.lodi.common.model.request.user.UserQueryRequest;

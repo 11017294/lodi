@@ -14,11 +14,19 @@
     <dependencies>
         <dependency>
             <groupId>com.lodi</groupId>
+            <artifactId>lodi-common-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lodi</groupId>
             <artifactId>lodi-common-model</artifactId>
         </dependency>
         <dependency>
             <groupId>com.lodi</groupId>
-            <artifactId>lodi-common-core</artifactId>
+            <artifactId>lodi-common-doc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lodi</groupId>
+            <artifactId>lodi-common-redis</artifactId>
         </dependency>
 
         <dependency>
@@ -32,10 +40,6 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.lodi</groupId>
-            <artifactId>lodi-common-config</artifactId>
         </dependency>
         <!-- mail -->
         <dependency>

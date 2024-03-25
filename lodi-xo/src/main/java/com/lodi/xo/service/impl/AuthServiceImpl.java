@@ -1,6 +1,6 @@
 package com.lodi.xo.service.impl;
 
-import com.lodi.common.config.redis.RedisService;
+import com.lodi.common.redis.RedisService;
 import com.lodi.common.core.exception.BusinessException;
 import com.lodi.common.core.holder.SecurityContextHolder;
 import com.lodi.common.core.utils.StrUtils;

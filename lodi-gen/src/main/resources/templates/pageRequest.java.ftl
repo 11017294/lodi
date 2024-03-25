@@ -4,12 +4,12 @@ package ${PageRequest.packageName};
     <#if pkg != 'com.baomidou.mybatisplus.annotation.IdType'
     && pkg != 'com.baomidou.mybatisplus.annotation.TableId'
     && pkg != 'com.baomidou.mybatisplus.annotation.TableName'
-    && pkg != 'com.lodi.common.core.web.domain.BaseEntity'
+    && pkg != 'com.lodi.common.mybatis.domain.BaseEntity'
     && pkg != 'java.io.Serializable'>
 import ${pkg};
     </#if>
 </#list>
-import com.lodi.common.core.web.page.PageRequest;
+import com.lodi.common.mybatis.page.PageRequest;
 <#if springdoc>
 import io.swagger.v3.oas.annotations.media.Schema;
 <#elseif swagger>

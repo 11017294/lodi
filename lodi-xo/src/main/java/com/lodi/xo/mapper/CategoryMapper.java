@@ -1,7 +1,7 @@
 package com.lodi.xo.mapper;
 
 import com.lodi.common.model.entity.Category;
-import com.lodi.common.core.mapper.BaseMapper;
+import com.lodi.common.mybatis.mapper.BaseMapper;
 
 /**
  * 文章类别 数据层

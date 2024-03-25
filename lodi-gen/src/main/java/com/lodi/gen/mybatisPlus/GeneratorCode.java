@@ -5,10 +5,10 @@ import com.baomidou.mybatisplus.generator.config.OutputFile;
 import com.baomidou.mybatisplus.generator.config.TemplateType;
 import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
-import com.lodi.common.core.mapper.BaseMapper;
-import com.lodi.common.core.service.BaseService;
-import com.lodi.common.core.service.impl.BaseServiceImpl;
-import com.lodi.common.core.web.domain.BaseEntity;
+import com.lodi.common.mybatis.mapper.BaseMapper;
+import com.lodi.common.mybatis.service.BaseService;
+import com.lodi.common.mybatis.service.impl.BaseServiceImpl;
+import com.lodi.common.mybatis.domain.BaseEntity;
 
 import java.sql.Types;
 import java.util.ArrayList;

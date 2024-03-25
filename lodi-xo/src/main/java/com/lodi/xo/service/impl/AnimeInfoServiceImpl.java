@@ -2,7 +2,7 @@ package com.lodi.xo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lodi.common.core.service.impl.BaseServiceImpl;
+import com.lodi.common.mybatis.service.impl.BaseServiceImpl;
 import com.lodi.common.model.convert.animeInfo.AnimeInfoConvert;
 import com.lodi.common.model.entity.AnimeInfo;
 import com.lodi.common.model.request.animeInfo.AnimeInfoAddRequest;

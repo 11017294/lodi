@@ -1,7 +1,7 @@
 package com.lodi.xo.service;
 
 import com.lodi.common.model.entity.AnimeInfo;
-import com.lodi.common.core.service.BaseService;
+import com.lodi.common.mybatis.service.BaseService;
 import com.lodi.common.model.request.animeInfo.AnimeInfoAddRequest;
 import com.lodi.common.model.request.animeInfo.AnimeInfoUpdateRequest;
 import com.lodi.common.model.request.animeInfo.AnimeInfoPageRequest;

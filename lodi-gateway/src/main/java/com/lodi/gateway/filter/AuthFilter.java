@@ -1,7 +1,7 @@
 package com.lodi.gateway.filter;
 
 import com.google.gson.Gson;
-import com.lodi.common.config.redis.RedisService;
+import com.lodi.common.redis.RedisService;
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.system.LoginUser;
 import com.lodi.common.core.utils.JwtUtils;

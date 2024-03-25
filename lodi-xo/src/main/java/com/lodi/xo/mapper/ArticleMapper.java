@@ -1,8 +1,7 @@
 package com.lodi.xo.mapper;
 
-
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lodi.common.model.entity.Article;
+import com.lodi.common.mybatis.mapper.BaseMapper;
 
 /**
  * 文章表 数据层

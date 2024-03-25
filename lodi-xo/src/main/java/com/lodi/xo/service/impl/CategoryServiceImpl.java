@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
-import com.lodi.common.core.service.impl.BaseServiceImpl;
+import com.lodi.common.mybatis.service.impl.BaseServiceImpl;
 import com.lodi.common.model.convert.category.CategoryConvert;
 import com.lodi.common.model.entity.Category;
 import com.lodi.common.model.request.category.CategoryAddRequest;

@@ -3,7 +3,7 @@ package com.lodi.common.model.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.lodi.common.core.web.domain.BaseEntity;
+import com.lodi.common.mybatis.domain.BaseEntity;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

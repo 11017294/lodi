@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>com.lodi</groupId>
-            <artifactId>lodi-common-config</artifactId>
+            <artifactId>lodi-common-doc</artifactId>
         </dependency>
         <dependency>
             <groupId>com.lodi</groupId>

@@ -1,6 +1,6 @@
 package com.lodi.common.model.request.animeInfo;
 
-import com.lodi.common.core.web.page.PageRequest;
+import com.lodi.common.mybatis.page.PageRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 

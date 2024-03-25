@@ -1,7 +1,7 @@
 package com.lodi.xo.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lodi.common.core.service.BaseService;
+import com.lodi.common.mybatis.service.BaseService;
 import com.lodi.common.model.entity.User;
 import com.lodi.common.model.request.user.UserPageRequest;
 import com.lodi.common.model.request.user.UserQueryRequest;

@@ -1,7 +1,7 @@
 package com.lodi.xo.mapper;
 
 import com.lodi.common.model.entity.AnimeInfo;
-import com.lodi.common.core.mapper.BaseMapper;
+import com.lodi.common.mybatis.mapper.BaseMapper;
 
 /**
  * 动漫信息 数据层

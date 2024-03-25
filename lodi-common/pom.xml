@@ -14,10 +14,12 @@
 
     <modules>
         <module>lodi-common-log</module>
-        <module>lodi-common-config</module>
         <module>lodi-common-model</module>
         <module>lodi-common-core</module>
         <module>lodi-common-security</module>
+        <module>lodi-common-redis</module>
+        <module>lodi-common-doc</module>
+        <module>lodi-common-mybatis</module>
     </modules>
 
 </project>

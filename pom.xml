@@ -172,7 +172,17 @@
             </dependency>
             <dependency>
                 <groupId>com.lodi</groupId>
-                <artifactId>lodi-common-config</artifactId>
+                <artifactId>lodi-common-doc</artifactId>
+                <version>${lodi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lodi</groupId>
+                <artifactId>lodi-common-redis</artifactId>
+                <version>${lodi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lodi</groupId>
+                <artifactId>lodi-common-mybatis</artifactId>
                 <version>${lodi.version}</version>
             </dependency>
             <dependency>

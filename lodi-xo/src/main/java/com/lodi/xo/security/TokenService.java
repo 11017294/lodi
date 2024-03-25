@@ -1,6 +1,6 @@
 package com.lodi.xo.security;
 
-import com.lodi.common.config.redis.RedisService;
+import com.lodi.common.redis.RedisService;
 import com.lodi.common.core.system.LoginUser;
 import com.lodi.common.core.utils.JwtUtils;
 import com.lodi.common.model.entity.User;
