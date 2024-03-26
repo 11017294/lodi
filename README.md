@@ -5,10 +5,13 @@
 lodi-blog
 ├── lodi-common                     -- 公共模块
 │   ├──	lodi-common-core            -- 核心模块
+│   ├──	lodi-common-doc             -- 文档模块
 │   ├──	lodi-common-log             -- 日志模块
 │   ├──	lodi-common-model           -- 模型模块
+│   ├──	lodi-common-mybatis         -- mybatis模块
+│   ├──	lodi-common-redis           -- redis模块
 │   ├──	lodi-common-security	    -- 安全模块
-│   └──	lodi-common-config          -- 配置模块
+│   └──	lodi-common-web             -- web模块
 ├── lodi-common-api                 -- 接口模块
 ├── lodi-gateway                    -- 网关模块
 ├── lodi-web                        -- web模块

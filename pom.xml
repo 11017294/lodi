@@ -177,6 +177,11 @@
             </dependency>
             <dependency>
                 <groupId>com.lodi</groupId>
+                <artifactId>lodi-common-web</artifactId>
+                <version>${lodi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lodi</groupId>
                 <artifactId>lodi-common-redis</artifactId>
                 <version>${lodi.version}</version>
             </dependency>

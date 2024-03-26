@@ -5,9 +5,9 @@ import com.lodi.common.redis.RedisService;
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.system.LoginUser;
 import com.lodi.common.core.utils.JwtUtils;
-import com.lodi.common.core.utils.ServletUtils;
 import com.lodi.common.core.utils.StrUtils;
 import com.lodi.gateway.config.IgnoreWhiteProperties;
+import com.lodi.gateway.utils.WebFluxUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -88,7 +88,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
         }
         Gson gson = new Gson();
         String valueStr = gson.toJson(value);
-        mutate.header(name, ServletUtils.urlEncode(valueStr));
+        mutate.header(name, WebFluxUtils.urlEncode(valueStr));
     }
 
     /**
@@ -120,7 +120,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
 
     private Mono<Void> unauthorizedResponse(ServerWebExchange exchange, String msg) {
         log.error("[鉴权异常处理]请求路径:{}", exchange.getRequest().getPath());
-        return ServletUtils.webFluxResponseWriter(exchange.getResponse(), msg, ErrorCode.NO_AUTH_ERROR.getCode());
+        return WebFluxUtils.webFluxResponseWriter(exchange.getResponse(), msg, ErrorCode.NO_AUTH_ERROR.getCode());
     }
 
     private String getTokenKey(String userId) {

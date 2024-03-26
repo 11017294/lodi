@@ -1,6 +1,6 @@
 package com.lodi.web.controller;
 
-import com.lodi.common.core.web.domain.Result;
+import com.lodi.common.core.domain.Result;
 import com.lodi.common.model.request.IdRequest;
 import com.lodi.common.model.request.article.ArticleAddRequest;
 import com.lodi.common.model.request.article.ArticleUpdateRequest;

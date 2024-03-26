@@ -3,7 +3,7 @@ package com.lodi.admin.controller;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
-import com.lodi.common.core.web.domain.Result;
+import com.lodi.common.core.domain.Result;
 import com.lodi.common.model.convert.article.ArticleConvert;
 import com.lodi.common.model.entity.Article;
 import com.lodi.common.model.request.IdRequest;

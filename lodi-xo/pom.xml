@@ -18,15 +18,19 @@
         </dependency>
         <dependency>
             <groupId>com.lodi</groupId>
+            <artifactId>lodi-common-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lodi</groupId>
             <artifactId>lodi-common-model</artifactId>
         </dependency>
         <dependency>
             <groupId>com.lodi</groupId>
-            <artifactId>lodi-common-doc</artifactId>
+            <artifactId>lodi-common-redis</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.lodi</groupId>
-            <artifactId>lodi-common-redis</artifactId>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
 
         <dependency>

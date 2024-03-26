@@ -1,6 +1,6 @@
 package com.lodi.admin.controller;
 
-import com.lodi.common.core.web.domain.Result;
+import com.lodi.common.core.domain.Result;
 import com.lodi.common.model.request.user.UserRegisterRequest;
 import com.lodi.common.model.request.userAuth.LoginRequest;
 import com.lodi.common.model.vo.UserVO;

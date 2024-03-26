@@ -3,7 +3,7 @@ package com.lodi.common.security.interceptor;
 import com.google.gson.Gson;
 import com.lodi.common.core.holder.SecurityContextHolder;
 import com.lodi.common.core.system.LoginUser;
-import com.lodi.common.core.utils.ServletUtils;
+import com.lodi.common.web.utils.ServletUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
 

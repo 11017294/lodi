@@ -1,7 +1,7 @@
 package com.lodi.api;
 
 import com.lodi.common.core.constant.ServiceNameConstants;
-import com.lodi.common.core.web.domain.Result;
+import com.lodi.common.core.domain.Result;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;

@@ -76,7 +76,7 @@ public class EnhanceFreemarkerTemplateEngine extends FreemarkerTemplateEngine {
         Map<String, Object> objectMap = super.getObjectMap(config, tableInfo);
 
         // 返回结果封装
-        objectMap.put("result", "com.lodi.common.core.web.domain.Result");
+        objectMap.put("result", "com.lodi.common.core.domain.Result");
         objectMap.put("page", "com.baomidou.mybatisplus.extension.plugins.pagination.Page");
         objectMap.putAll(hashMap);
         return objectMap;

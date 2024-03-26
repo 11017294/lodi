@@ -4,7 +4,7 @@ import com.lodi.api.RemoteFileService;
 import com.lodi.common.core.constant.FileDirectoryConstant;
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
-import com.lodi.common.core.web.domain.Result;
+import com.lodi.common.core.domain.Result;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;

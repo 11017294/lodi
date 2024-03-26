@@ -1,8 +1,8 @@
-package com.lodi.common.core.handler;
+package com.lodi.common.web.handler;
 
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
-import com.lodi.common.core.web.domain.Result;
+import com.lodi.common.core.domain.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.BadCredentialsException;

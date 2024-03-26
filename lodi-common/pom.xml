@@ -20,6 +20,7 @@
         <module>lodi-common-redis</module>
         <module>lodi-common-doc</module>
         <module>lodi-common-mybatis</module>
+        <module>lodi-common-web</module>
     </modules>
 
 </project>

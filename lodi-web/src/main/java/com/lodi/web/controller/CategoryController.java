@@ -1,7 +1,7 @@
 package com.lodi.web.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lodi.common.core.web.domain.Result;
+import com.lodi.common.core.domain.Result;
 import com.lodi.common.model.convert.category.CategoryConvert;
 import com.lodi.common.model.entity.Category;
 import com.lodi.common.model.vo.ArticleVO;

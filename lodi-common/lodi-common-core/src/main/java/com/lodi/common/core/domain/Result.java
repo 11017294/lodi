@@ -1,4 +1,4 @@
-package com.lodi.common.core.web.domain;
+package com.lodi.common.core.domain;
 
 import com.lodi.common.core.enums.ErrorCode;
 import lombok.Data;
