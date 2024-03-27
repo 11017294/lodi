@@ -151,4 +151,12 @@ public interface ArticleService extends BaseService<Article> {
      * @param id
      */
     void incrementClickCount(Long id);
+
+    /**
+     * 获取文章总数
+     *
+     * @return 文章总数
+     */
+    long getArticleCount();
+
 }

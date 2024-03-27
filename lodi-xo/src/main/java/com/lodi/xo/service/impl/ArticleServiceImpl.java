@@ -329,4 +329,13 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
         baseMapper.update(updateWrapper);
     }
 
+    @Override
+    public long getArticleCount() {
+        LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
+        // 文章为公开状态
+        queryWrapper.eq(Article::getIsPublish, StatusConstant.ON)
+                .eq(Article::getAuditStatus, StatusConstant.ON);
+        return baseMapper.selectCount(queryWrapper);
+    }
+
 }

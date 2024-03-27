@@ -6,12 +6,15 @@ import com.lodi.common.core.domain.Result;
 import com.lodi.common.model.convert.tags.TagsConvert;
 import com.lodi.common.model.entity.Tags;
 import com.lodi.common.model.request.IdRequest;
+import com.lodi.common.model.system.WebsiteBasic;
 import com.lodi.common.model.vo.ArticleVO;
 import com.lodi.common.model.vo.TagsVO;
 import com.lodi.xo.service.ArticleService;
+import com.lodi.xo.service.CategoryService;
 import com.lodi.xo.service.TagsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.validation.annotation.Validated;
@@ -30,13 +33,13 @@ import java.util.List;
 @Slf4j
 @Tag(name = "首页相关接口")
 @RestController
+@AllArgsConstructor
 @RequestMapping("index")
 public class IndexController {
 
-    @Resource
-    private ArticleService articleService;
-    @Resource
-    private TagsService tagsService;
+    private final ArticleService articleService;
+    private final TagsService tagsService;
+    private final CategoryService categoryService;
 
     @Operation(summary = "获取文章信息")
     @GetMapping("get")
@@ -84,5 +87,20 @@ public class IndexController {
         log.info("获取最热标签");
         List<Tags> tagsList = tagsService.getHotTag();
         return Result.success(TagsConvert.INSTANCE.toVO(tagsList));
+    }
+
+    @Operation(summary = "获取站点信息")
+    @GetMapping("findShowBasic")
+    public Result<WebsiteBasic> findShowBasic() {
+        log.info("获取站点信息");
+        long articleCount = articleService.getArticleCount();
+        long tagCount =  tagsService.count();
+        long categoryCount = categoryService.count();
+        WebsiteBasic websiteBasic = WebsiteBasic.builder()
+                .articleCount(articleCount)
+                .tagCount(tagCount)
+                .categoryCount(categoryCount)
+                .build();
+        return Result.success(websiteBasic);
     }
 }
