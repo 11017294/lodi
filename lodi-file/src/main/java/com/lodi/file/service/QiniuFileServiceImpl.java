@@ -38,7 +38,6 @@ public class QiniuFileServiceImpl implements FileService {
 
     @Override
     public int delete(String fileName, String fileDirectory) {
-        int a  = 1/0;
         return qiniuUtil.deleteFileFromQiniu(fileDirectory + fileName);
     }
 }
