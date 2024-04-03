@@ -110,3 +110,21 @@ CREATE TABLE IF NOT EXISTS lodi.t_anime_info
     update_time        DATETIME      DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     is_delete          TINYINT       DEFAULT 0                 NOT NULL COMMENT '是否删除：0-未删 1-已删'
 ) comment '动漫信息';
+
+-- 评论
+create table t_comment
+(
+    id               bigint auto_increment
+        primary key,
+
+    first_comment_id bigint                             null comment '该条评论下的一级评论ID',
+    to_id            bigint                             null comment '回复某条评论的id',
+    article_id       bigint                             null comment '文章id',
+    user_id          bigint                             not null comment '用户uid',
+    to_user_id       bigint                             null comment '回复某个人的id',
+    content          varchar(2048)                      not null comment '评论内容',
+    source           varchar(255)                       not null comment '评论来源: ARTICLE, MESSAGE_BOARD, ABOUT',
+    create_time      datetime default CURRENT_TIMESTAMP not null comment '创建时间',
+    update_time      datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '更新时间',
+    is_delete        tinyint  default 0                 not null comment '是否删除：0-未删 1-已删'
+) comment '评论';
