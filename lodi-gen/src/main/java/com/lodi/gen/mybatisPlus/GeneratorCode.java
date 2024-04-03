@@ -77,11 +77,10 @@ public class GeneratorCode {
                 })
                 // 模板配置
                 .templateConfig(builder -> {
-                    builder.disable(TemplateType.XML, TemplateType.MAPPER,
-                            TemplateType.SERVICE, TemplateType.SERVICE_IMPL
-//                            ,
+//                    builder.disable(TemplateType.XML, TemplateType.MAPPER,
+//                            TemplateType.SERVICE, TemplateType.SERVICE_IMPL,
 //                            TemplateType.CONTROLLER
-                    );
+//                    );
                 })
                 .strategyConfig(builder -> {
                     builder.addInclude(tableName) // 设置需要生成的表名

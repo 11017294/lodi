@@ -5,6 +5,8 @@ import com.lodi.common.model.entity.${entity};
 import com.lodi.common.model.vo.${entity}VO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+import ${AddRequest.packageName}.${entity}${AddRequest.postfix};
+import ${AddRequest.packageName}.${entity}${UpdateRequest.postfix};
 
 import java.util.List;
 

@@ -28,7 +28,7 @@ import lombok.Data;
 @Data
 </#if>
 <#if springdoc>
-@Schema(title = "添加${table.comment!} 请求体")
+@Schema(description = "添加${table.comment!} 请求体")
 <#elseif swagger>
 @ApiModel(value = "${entity}", description = "添加${table.comment!} 请求体")
 </#if>
@@ -45,7 +45,7 @@ public class ${entity}AddRequest implements Serializable {
 
     <#if field.comment!?length gt 0>
         <#if springdoc>
-    @Schema(title = "${field.comment}", description = "${field.comment}")
+    @Schema(description = "${field.comment}")
         <#elseif swagger>
     @ApiModelProperty("${field.comment}")
         <#else>

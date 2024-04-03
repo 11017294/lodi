@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import ${AddRequest.packageName}.${entity}${AddRequest.postfix};
 import ${AddRequest.packageName}.${entity}${UpdateRequest.postfix};
 import ${AddRequest.packageName}.${entity}${PageRequest.postfix};
+import ${Convert.packageName}.${entity}Convert;
 import ${page};
 <#if table.serviceInterface>
 import ${package.Service}.${table.serviceName};
@@ -46,7 +47,7 @@ public class ${table.serviceImplName} extends ${superServiceImplClass}<${table.m
 
     @Override
     public Page<${entity}> get${entity}Page(${entity}PageRequest pageRequest) {
-        Page<${entity}> page = new Page<>(pageRequest.getCurrent(), pageRequest.getPageSize());
+        Page<${entity}> page = new Page<>(pageRequest.getCurrentPage(), pageRequest.getPageSize());
         LambdaQueryWrapper<${entity}> queryWrapper = buildQueryWrapper(pageRequest);
         return baseMapper.selectPage(page, queryWrapper);
     }

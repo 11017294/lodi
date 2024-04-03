@@ -64,7 +64,7 @@ public class ${table.controllerName} {
         if (${entityHump} == null) {
             throw new BusinessException(NOT_FOUND_ERROR);
         }
-        return Result.success(${entity}Convert.INSTANCE.toVO(${entityHump});
+        return Result.success(${entity}Convert.INSTANCE.toVO(${entityHump}));
     }
 
     @Operation(summary = "新增${table.comment}")
