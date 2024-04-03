@@ -13,20 +13,20 @@ import javax.validation.constraints.NotBlank;
  * @createDate 2023-11-27
  */
 @Data
-@Schema(title = "添加标签 请求体")
+@Schema(description = "添加标签 请求体")
 public class TagsAddRequest implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(title = "标签名称", description = "标签名称")
+    @Schema(description = "标签名称")
     @NotBlank(message = "标签名称不能为空")
     private String name;
 
-    @Schema(title = "标签简介", description = "标签简介")
+    @Schema(description = "标签简介")
     @NotBlank(message = "标签简介不能为空")
     private String content;
 
-    @Schema(title = "排序字段，越大越靠前", description = "排序字段，越大越靠前")
+    @Schema(description = "排序字段，越大越靠前")
     private Integer sort;
 
 }

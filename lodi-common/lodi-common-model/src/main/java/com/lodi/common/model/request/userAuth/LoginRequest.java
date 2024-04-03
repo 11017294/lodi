@@ -13,20 +13,20 @@ import java.io.Serializable;
  * @createDate 2023-10-24
  */
 @Data
-@Schema(title = "登录请求体")
+@Schema(description = "登录请求体")
 public class LoginRequest implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(title = "用户名", description = "用户名", requiredMode = Schema.RequiredMode.REQUIRED, example = "admin")
+    @Schema(description = "用户名", requiredMode = Schema.RequiredMode.REQUIRED, example = "admin")
     @NotBlank(message = "用户名不能为空")
     private String username;
 
-    @Schema(title = "密码", description = "密码", requiredMode = Schema.RequiredMode.REQUIRED, example = "123456")
+    @Schema(description = "密码", requiredMode = Schema.RequiredMode.REQUIRED, example = "123456")
     @NotBlank(message = "密码不能为空")
     private String password;
 
-    @Schema(title = "登录类型", description = "登录类型", requiredMode = Schema.RequiredMode.REQUIRED, example = "password")
+    @Schema(description = "登录类型", requiredMode = Schema.RequiredMode.REQUIRED, example = "password")
     @NotBlank(message = "登录类型不能为空")
     private String loginType;
 

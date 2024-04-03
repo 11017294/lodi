@@ -14,25 +14,25 @@ import java.util.Date;
  * @createDate 2023-10-26
  */
 @Data
-@Schema(title = "用户更新 请求体")
+@Schema(description = "用户更新 请求体")
 public class UserUpdateRequest implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(title = "id", description = "id", requiredMode = Schema.RequiredMode.REQUIRED, example = "10000")
+    @Schema(description = "id", requiredMode = Schema.RequiredMode.REQUIRED, example = "10000")
     @NotNull(message = "id不能为空")
     private Long id;
 
-    @Schema(title = "昵称", description = "昵称", example = "lodi")
+    @Schema(description = "昵称", example = "lodi")
     private String nickname;
 
-    @Schema(title = "用户头像", description = "用户头像", example = "")
+    @Schema(description = "用户头像", example = "")
     private String userAvatar;
 
-    @Schema(title = "自我简介", description = "自我简介", example = "这个家伙很懒，什么都没留下", maxLength = 150)
+    @Schema(description = "自我简介", example = "这个家伙很懒，什么都没留下", maxLength = 150)
     private String summary;
 
-    @Schema(title = "出生年月日", description = "出生年月日", format = "yyyy-MM-dd", example = "1999-01-01")
+    @Schema(description = "出生年月日", format = "yyyy-MM-dd", example = "1999-01-01")
     private Date birthday;
 
     /**
@@ -40,10 +40,10 @@ public class UserUpdateRequest implements Serializable {
      */
     private Integer gender;
 
-    @Schema(title = "出生年月日", description = "出生年月日", format = "email", example = "lodi@lodi.com")
+    @Schema(description = "出生年月日", format = "email", example = "lodi@lodi.com")
     private String email;
 
-    @Schema(title = "用户角色", description = "用户角色", example = "admin")
+    @Schema(description = "用户角色", example = "admin")
     private String userRole;
 
     /**

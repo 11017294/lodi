@@ -14,12 +14,12 @@ import java.io.Serializable;
  * @createDate 2023-11-01
  */
 @Data
-@Schema(title = "文章审核 请求体")
+@Schema(description = "文章审核 请求体")
 public class AuditArticleRequest implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(title = "id", description = "id", example = "10000")
+    @Schema(description = "id", example = "10000")
     @NotNull(message = "Id 不能为空")
     @Positive
     private Long id;
@@ -27,7 +27,7 @@ public class AuditArticleRequest implements Serializable {
     /**
      * 0-未审核 1-审核通过 2-审核不通过
      */
-    @Schema(title = "审核状态", description = "审核状态", example = "1")
+    @Schema(description = "审核状态", example = "1")
     @NotNull(message = "审核状态不能为空")
     private Integer auditStatus;
 

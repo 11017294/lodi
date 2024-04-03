@@ -14,7 +14,7 @@ import javax.validation.constraints.Positive;
  * @createDate 2023-11-27
  */
 @Data
-@Schema(title = "标签更新 请求体")
+@Schema(description = "标签更新 请求体")
 public class TagsUpdateRequest implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -23,15 +23,15 @@ public class TagsUpdateRequest implements Serializable {
     @Positive
     private Long id;
 
-    @Schema(title = "标签名称", description = "标签名称")
+    @Schema(description = "标签名称")
     private String name;
 
-    @Schema(title = "标签简介", description = "标签简介")
+    @Schema(description = "标签简介")
     private String content;
 
-    @Schema(title = "排序字段，越大越靠前", description = "排序字段，越大越靠前")
+    @Schema(description = "排序字段，越大越靠前")
     private Integer sort;
 
-    @Schema(title = "点击数", description = "点击数")
+    @Schema(description = "点击数")
     private Integer clickCount;
 }
