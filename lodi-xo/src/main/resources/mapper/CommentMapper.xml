@@ -25,4 +25,20 @@
         id, first_comment_id, to_id, article_id, user_id, to_user_id, content, source
     </sql>
 
+    <update id="deleteCommentAndChildren">
+        WITH RECURSIVE CommentHierarchy AS (
+            SELECT id
+            FROM t_comment
+            WHERE id = #{id}
+            UNION ALL
+            SELECT c.id
+            FROM t_comment c
+            INNER JOIN CommentHierarchy ch
+            ON c.to_id = ch.id
+        )
+        update t_comment
+        set is_delete = 1
+        WHERE id IN (SELECT id FROM CommentHierarchy)
+    </update>
+
 </mapper>

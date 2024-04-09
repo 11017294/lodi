@@ -120,7 +120,7 @@ create table t_comment
     first_comment_id bigint                             null comment '该条评论下的一级评论ID',
     to_id            bigint                             null comment '回复某条评论的id',
     article_id       bigint                             null comment '文章id',
-    user_id          bigint                             not null comment '用户uid',
+    user_id          bigint                             not null comment '用户id',
     to_user_id       bigint                             null comment '回复某个人的id',
     content          varchar(2048)                      not null comment '评论内容',
     source           varchar(255)                       not null comment '评论来源: ARTICLE, MESSAGE_BOARD, ABOUT',

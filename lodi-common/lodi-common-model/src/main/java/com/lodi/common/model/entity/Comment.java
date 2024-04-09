@@ -40,7 +40,7 @@ public class Comment extends BaseEntity<Comment> {
     private Long articleId;
 
     /**
-    * 用户uid
+    * 用户id
     */
     private Long userId;
 

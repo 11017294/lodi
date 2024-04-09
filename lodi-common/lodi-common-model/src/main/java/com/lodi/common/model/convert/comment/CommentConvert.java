@@ -2,6 +2,7 @@ package com.lodi.common.model.convert.comment;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.model.entity.Comment;
+import com.lodi.common.model.vo.CommentTreeVO;
 import com.lodi.common.model.vo.CommentVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -30,4 +31,8 @@ public interface CommentConvert {
     List<CommentVO> toVO(List<Comment> commentList); 
     
     Page<CommentVO> toVO(Page<Comment> commentPage);
+
+    List<CommentTreeVO> toTreeVO(List<Comment> commentList);
+
+    Page<CommentTreeVO> toTreeVO(Page<Comment> commentPage);
 }

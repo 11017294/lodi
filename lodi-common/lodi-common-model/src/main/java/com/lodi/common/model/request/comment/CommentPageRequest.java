@@ -27,7 +27,7 @@ public class CommentPageRequest extends PageRequest {
     @Schema(description = "文章id")
     private Long articleId;
 
-    @Schema(description = "用户uid")
+    @Schema(description = "用户id")
     private Long userId;
 
     @Schema(description = "回复某个人的id")

@@ -11,4 +11,11 @@ import com.lodi.common.mybatis.mapper.BaseMapper;
  */
 public interface CommentMapper extends BaseMapper<Comment> {
 
+    /**
+     * 删除评论及其子评论
+     *
+     * @param id 评论id
+     * @return 删除的记录数
+     */
+    int deleteCommentAndChildren(Long id);
 }

@@ -24,7 +24,7 @@ import static com.lodi.common.core.enums.ErrorCode.NOT_FOUND_ERROR;
  */
 @Tag(name = "评论", description = "评论")
 @RestController
-@RequestMapping("/comment")
+@RequestMapping("comment")
 public class CommentController {
 
     @Resource
