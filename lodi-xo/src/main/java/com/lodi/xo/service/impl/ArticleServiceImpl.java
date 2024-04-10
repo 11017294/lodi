@@ -310,6 +310,9 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
     @Override
     public ArticleVO getArticleById(Long id) {
         Article article = baseMapper.selectById(id);
+        if(Objects.isNull(article)){
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
         ArticleVO articleVO = ArticleConvert.INSTANCE.toVO(article);
         // 设置分类、标签和用户信息
         setCategoryByArticleVO(articleVO);

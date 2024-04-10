@@ -2,25 +2,17 @@ package com.lodi.web.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.core.domain.Result;
-import com.lodi.common.core.exception.BusinessException;
-import com.lodi.common.model.convert.comment.CommentConvert;
-import com.lodi.common.model.entity.Comment;
 import com.lodi.common.model.request.IdRequest;
 import com.lodi.common.model.request.comment.CommentAddRequest;
-import com.lodi.common.model.request.comment.CommentPageRequest;
-import com.lodi.common.model.request.comment.CommentUpdateRequest;
+import com.lodi.common.model.request.comment.CommentQueryRequest;
 import com.lodi.common.model.vo.CommentTreeVO;
-import com.lodi.common.model.vo.CommentVO;
 import com.lodi.xo.service.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-
-import static com.lodi.common.core.enums.ErrorCode.NOT_FOUND_ERROR;
 
 /**
  * @author MaybeBin
@@ -35,11 +27,9 @@ public class CommentController {
     private CommentService commentService;
 
     @Operation(summary = "获取评论分页")
-    @GetMapping("getByArticleId")
-    public Result<Page<CommentTreeVO>> getByArticleId(@RequestParam("articleId") Long articleId,
-                                                      @RequestParam("currentPage") Long currentPage,
-                                                      @RequestParam("pageSize") Long pageSize) {
-        Page<CommentTreeVO> commentTreeVOPage = commentService.getByArticleId(articleId, currentPage, pageSize);
+    @GetMapping("getCommentTree")
+    public Result<Page<CommentTreeVO>> getCommentTree(@Validated CommentQueryRequest queryRequest) {
+        Page<CommentTreeVO> commentTreeVOPage = commentService.getCommentTreeVOPage(queryRequest);
         return Result.success(commentTreeVOPage);
     }
 

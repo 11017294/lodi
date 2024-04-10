@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.model.entity.Comment;
 import com.lodi.common.model.request.comment.CommentAddRequest;
 import com.lodi.common.model.request.comment.CommentPageRequest;
+import com.lodi.common.model.request.comment.CommentQueryRequest;
 import com.lodi.common.model.request.comment.CommentUpdateRequest;
 import com.lodi.common.model.vo.CommentTreeVO;
 import com.lodi.common.mybatis.service.BaseService;
@@ -49,12 +50,10 @@ public interface CommentService extends BaseService<Comment> {
     Page<Comment> getCommentPage(CommentPageRequest pageRequest);
 
     /**
-     * 按文章ID获取评论
+     * 获取评论
      *
-     * @param articleId   文章id
-     * @param currentPage 当前页
-     * @param pageSize    每页显示条数
+     * @param queryRequest
      * @return
      */
-    Page<CommentTreeVO> getByArticleId(Long articleId, Long currentPage, Long pageSize);
+    Page<CommentTreeVO> getCommentTreeVOPage(CommentQueryRequest queryRequest);
 }

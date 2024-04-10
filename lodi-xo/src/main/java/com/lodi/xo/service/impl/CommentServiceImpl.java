@@ -11,6 +11,7 @@ import com.lodi.common.model.entity.Comment;
 import com.lodi.common.model.entity.User;
 import com.lodi.common.model.request.comment.CommentAddRequest;
 import com.lodi.common.model.request.comment.CommentPageRequest;
+import com.lodi.common.model.request.comment.CommentQueryRequest;
 import com.lodi.common.model.request.comment.CommentUpdateRequest;
 import com.lodi.common.model.vo.CommentTreeVO;
 import com.lodi.common.mybatis.service.impl.BaseServiceImpl;
@@ -22,9 +23,11 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static com.lodi.common.core.constant.StatusConstant.OFF;
 
@@ -113,14 +116,17 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, Comment> 
     }
 
     @Override
-    public Page<CommentTreeVO> getByArticleId(Long articleId, Long currentPage, Long pageSize) {
+    public Page<CommentTreeVO> getCommentTreeVOPage(CommentQueryRequest queryRequest) {
+        Long articleId = queryRequest.getArticleId();
         LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Comment::getArticleId, articleId)
+        queryWrapper.eq(Objects.nonNull(articleId), Comment::getArticleId, articleId)
+                .eq(Comment::getSource, queryRequest.getSource())
                 .orderByDesc(Comment::getCreateTime)
                 .isNull(Comment::getFirstCommentId);
         // 得到一级评论
-        Page<Comment> commentPage = baseMapper.selectPage(new Page<>(currentPage, pageSize), queryWrapper);
-        List<Comment>  commentList = commentPage.getRecords();
+        Page<Comment> queryPage = new Page<>(queryRequest.getCurrentPage(), queryRequest.getPageSize());
+        Page<Comment> commentPage = baseMapper.selectPage(queryPage, queryWrapper);
+        List<Comment> commentList = commentPage.getRecords();
         // 没有评论直接返回
         if (commentList.isEmpty()) {
             return CommentConvert.INSTANCE.toTreeVO(commentPage);
