@@ -32,6 +32,11 @@ public class PageRequest implements Serializable {
     private long pageSize = 10;
 
     /**
+     * 关键字
+     */
+    private String keyword;
+
+    /**
      * 排序字段
      */
     private String sortField;

@@ -1,18 +1,16 @@
 package com.lodi.common.model.request.animeInfo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 
 /**
  * 动漫信息更新 请求体
  *
  * @author MaybeBin
- * @createDate 2023-11-20
+ * @createDate 2024-04-11
  */
 @Data
 @Schema(description = "动漫信息更新 请求体")
@@ -20,9 +18,10 @@ public class AnimeInfoUpdateRequest implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @NotNull(message = "Id 不能为空")
-    @Positive
     private Long id;
+
+    @Schema(description = "系列ID")
+    private Long seriesId;
 
     @Schema(description = "番名")
     private String animeName;
@@ -72,4 +71,9 @@ public class AnimeInfoUpdateRequest implements Serializable {
     @Schema(description = "当前集数")
     private Integer currentEpisode;
 
+    @Schema(description = "追番人数")
+    private Integer followersCount;
+
+    @Schema(description = "评分")
+    private BigDecimal rating;
 }

@@ -10,7 +10,7 @@ import lombok.Data;
  * 动漫信息 视图
  *
  * @author MaybeBin
- * @createDate 2023-11-20
+ * @createDate 2024-04-11
  */
 @Data
 @Schema(description = "动漫信息 视图")

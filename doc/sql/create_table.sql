@@ -128,3 +128,36 @@ create table t_comment
     update_time      datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '更新时间',
     is_delete        tinyint  default 0                 not null comment '是否删除：0-未删 1-已删'
 ) comment '评论';
+
+
+-- 导航
+CREATE TABLE IF NOT EXISTS lodi.t_navigate
+(
+    id               bigint auto_increment
+    primary key,
+    title           varchar(200)                       not null comment '标题',
+    summary         varchar(200)                       null comment '简介',
+    content         VARCHAR(2048)                      null comment '内容',
+    url             varchar(512)                       not null comment 'url',
+    favicon_url     varchar(255)                       null comment '网站图标路径',
+    nav_category_id bigint                             not null comment '导航类型id',
+    click_count     int      default 0                 not null comment '点击数',
+    sort            int      default 0                 not null comment '排序字段',
+    create_time     datetime default CURRENT_TIMESTAMP not null comment '创建时间',
+    update_time     datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '更新时间',
+    is_delete       tinyint  default 0                 not null comment '是否删除：0-未删 1-已删'
+) COMMENT '导航';
+
+-- 导航分类
+CREATE TABLE IF NOT EXISTS lodi.t_nav_category
+(
+    id               bigint auto_increment
+    primary key,
+    name        varchar(255)                       null comment '分类名',
+    content     varchar(255)                       null comment '分类简介',
+    click_count int      default 0                 not null comment '点击数',
+    sort        int      default 0                 not null comment '排序字段',
+    create_time datetime default CURRENT_TIMESTAMP not null comment '创建时间',
+    update_time datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '更新时间',
+    is_delete   tinyint  default 0                 not null comment '是否删除：0-未删 1-已删'
+) COMMENT '导航分类表';
