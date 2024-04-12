@@ -16,5 +16,6 @@ public class WebsiteBasic {
     private Long articleCount;
     private Long tagCount;
     private Long categoryCount;
+    private Long commentCount;
 
 }

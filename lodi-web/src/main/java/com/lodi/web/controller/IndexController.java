@@ -13,10 +13,7 @@ import com.lodi.common.model.vo.ArticleVO;
 import com.lodi.common.model.vo.NavigateVO;
 import com.lodi.common.model.vo.TagsVO;
 import com.lodi.common.mybatis.page.PageRequest;
-import com.lodi.xo.service.ArticleService;
-import com.lodi.xo.service.CategoryService;
-import com.lodi.xo.service.NavigateService;
-import com.lodi.xo.service.TagsService;
+import com.lodi.xo.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -25,7 +22,6 @@ import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -45,6 +41,7 @@ public class IndexController {
     private final TagsService tagsService;
     private final CategoryService categoryService;
     private final NavigateService navigateService;
+    private final CommentService commentService;
 
     @Operation(summary = "获取文章信息")
     @GetMapping("get")
@@ -111,10 +108,13 @@ public class IndexController {
         long articleCount = articleService.getArticleCount();
         long tagCount = tagsService.count();
         long categoryCount = categoryService.count();
+        long commentCount = commentService.count();
+
         WebsiteBasic websiteBasic = WebsiteBasic.builder()
                 .articleCount(articleCount)
                 .tagCount(tagCount)
                 .categoryCount(categoryCount)
+                .commentCount(commentCount)
                 .build();
         return Result.success(websiteBasic);
     }
