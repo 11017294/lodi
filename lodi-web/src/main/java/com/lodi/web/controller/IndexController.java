@@ -56,33 +56,36 @@ public class IndexController {
 
     @Operation(summary = "首页搜索文章")
     @GetMapping("getArticleBySearch")
-    public Result<Page<ArticleVO>> getArticleBySearch(@RequestParam("currentPage") Long currentPage, @RequestParam("keywords") String keyword) {
+    public Result<Page<ArticleVO>> getArticleBySearch(@ParameterObject @Validated PageRequest request) {
         log.info("首页搜索文章");
-        Page<ArticleVO> articlePage = articleService.getArticleBySearch(currentPage, keyword);
+        Page<ArticleVO> articlePage = articleService.getArticleBySearchDesc(request);
         return Result.success(articlePage);
     }
 
     @Operation(summary = "获取首页最新的文章")
     @GetMapping("getNewArticle")
-    public Result<Page<ArticleVO>> getNewArticle(@RequestParam("currentPage") Long currentPage) {
+    public Result<Page<ArticleVO>> getNewArticle(@ParameterObject @Validated PageRequest request) {
         log.info("获取首页最新的文章");
-        Page<ArticleVO> articles = articleService.getArticleByOrderDesc(currentPage, ArticleConstant.CREATE_TIME);
+        request.setSortField(ArticleConstant.CREATE_TIME);
+        Page<ArticleVO> articles = articleService.getArticleByOrderDesc(request);
         return Result.success(articles);
     }
 
     @Operation(summary = "获取首页最热门的文章")
     @GetMapping("getHotArticle")
-    public Result<Page<ArticleVO>> getHotArticle(@RequestParam("currentPage") Long currentPage) {
+    public Result<Page<ArticleVO>> getHotArticle(@ParameterObject @Validated PageRequest request) {
         log.info("获取首页最热门的文章");
-        Page<ArticleVO> articles = articleService.getArticleByOrderDesc(currentPage, ArticleConstant.CLICK_COUNT);
+        request.setSortField(ArticleConstant.CLICK_COUNT);
+        Page<ArticleVO> articles = articleService.getArticleByOrderDesc(request);
         return Result.success(articles);
     }
 
     @Operation(summary = "获取首页推荐的文章")
     @GetMapping("getRecommendedArticle")
-    public Result<Page<ArticleVO>> getRecommendedArticle(@RequestParam("currentPage") Long currentPage) {
+    public Result<Page<ArticleVO>> getRecommendedArticle(@ParameterObject @Validated PageRequest request) {
         log.info("获取首页推荐的文章");
-        Page<ArticleVO> articles = articleService.getArticleByOrderDesc(currentPage, ArticleConstant.SORT);
+        request.setSortField(ArticleConstant.SORT);
+        Page<ArticleVO> articles = articleService.getArticleByOrderDesc(request);
         return Result.success(articles);
     }
 

@@ -7,6 +7,7 @@ import com.lodi.common.core.constant.StatusConstant;
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
 import com.lodi.common.core.holder.SecurityContextHolder;
+import com.lodi.common.mybatis.page.PageRequest;
 import com.lodi.common.mybatis.service.impl.BaseServiceImpl;
 import com.lodi.common.core.utils.SecurityUtils;
 import com.lodi.common.model.convert.article.ArticleConvert;
@@ -36,6 +37,7 @@ import java.util.stream.Collectors;
 
 import static com.lodi.common.core.constant.ArticleConstant.CONTENT;
 import static com.lodi.common.core.constant.ArticleConstant.PAGE_SIZE;
+import static com.lodi.common.core.constant.CommonConstant.SORT_ORDER_DESC;
 
 /**
  * 文章 服务层实现
@@ -156,12 +158,12 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
     }
 
     @Override
-    public Page<ArticleVO> getArticleByOrderDesc(Long currentPage, String column) {
+    public Page<ArticleVO> getArticleByOrderDesc(PageRequest request) {
         LambdaQueryWrapper<Article> queryWrapper = buildCommonQueryWrapper();
 
         // 排序字段，排序相同时则再根据user_id和文章id排序
-        queryWrapper.last(String.format("order by %s desc, user_id, id ", column));
-        Page<Article> wherePage = new Page<>(currentPage, PAGE_SIZE);
+        queryWrapper.last(String.format("order by %s desc, user_id, id ", request.getSortField()));
+        Page<Article> wherePage = new Page<>(request.getCurrentPage(), request.getPageSize());
 
         // 分页查询
         Page<Article> articlePage = baseMapper.selectPage(wherePage, queryWrapper);
@@ -169,15 +171,18 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
     }
 
     @Override
-    public Page<ArticleVO> getArticleBySearch(Long currentPage, String keyword) {
-        LambdaQueryWrapper<Article> queryWrapper = buildCommonQueryWrapper();
+    public Page<ArticleVO> getArticleBySearchDesc(PageRequest request) {
+        String keyword = request.getKeyword();
+        Boolean haveKeyword = StringUtils.isBlank(keyword);
 
-        // 不获取内容字段值
-        queryWrapper.like(Article::getTitle, keyword).or().like(Article::getSummary, keyword).or().like(Article::getContent, keyword);
+        LambdaQueryWrapper<Article> queryWrapper = buildCommonQueryWrapper();
+        queryWrapper.like(haveKeyword, Article::getTitle, keyword)
+                .or().like(haveKeyword, Article::getSummary, keyword)
+                .or().like(haveKeyword, Article::getContent, keyword);
 
         // 按文章创建时间、用户id、文章id排序（倒序）
         queryWrapper.orderByDesc(Article::getId);
-        Page<Article> wherePage = new Page<>(currentPage, PAGE_SIZE);
+        Page<Article> wherePage = new Page<>(request.getCurrentPage(), request.getPageSize());
 
         // 分页查询
         Page<Article> articlePage = baseMapper.selectPage(wherePage, queryWrapper);

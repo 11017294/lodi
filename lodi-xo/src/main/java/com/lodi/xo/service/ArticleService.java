@@ -1,6 +1,7 @@
 package com.lodi.xo.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lodi.common.mybatis.page.PageRequest;
 import com.lodi.common.mybatis.service.BaseService;
 import com.lodi.common.model.entity.Article;
 import com.lodi.common.model.request.article.ArticleAddRequest;
@@ -60,22 +61,20 @@ public interface ArticleService extends BaseService<Article> {
     Boolean auditArticle(AuditArticleRequest auditRequest);
 
     /**
-     * 按字段排序获取文章（倒序）
+     * 按字段排序获取文章
      *
-     * @param currentPage 当前页号
-     * @param column      字段名
+     * @param pageRequest
      * @return
      */
-    Page<ArticleVO> getArticleByOrderDesc(Long currentPage, String column);
+    Page<ArticleVO> getArticleByOrderDesc(PageRequest pageRequest);
 
     /**
      * 按搜索获取文章
      *
-     * @param currentPage 当前页号
-     * @param keyword     搜索关键字
+     * @param pageRequest
      * @return
      */
-    Page<ArticleVO> getArticleBySearch(Long currentPage, String keyword);
+    Page<ArticleVO> getArticleBySearchDesc(PageRequest pageRequest);
 
     /**
      * 根据标签ID获取文章列表
