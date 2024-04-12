@@ -11,12 +11,12 @@ import com.lodi.common.model.request.navigate.NavigateQueryRequest;
 import com.lodi.common.model.request.navigate.NavigateUpdateRequest;
 import com.lodi.common.mybatis.service.impl.BaseServiceImpl;
 import com.lodi.xo.mapper.NavigateMapper;
-import com.lodi.xo.service.NavCategoryService;
 import com.lodi.xo.service.NavigateService;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,10 +29,11 @@ import static com.lodi.common.core.constant.CommonConstant.FRIEND_LINK;
  * @createDate 2024-04-11
  */
 @Service
+@Slf4j
+@AllArgsConstructor
 public class NavigateServiceImpl extends BaseServiceImpl<NavigateMapper, Navigate> implements NavigateService {
 
-    @Resource
-    private NavCategoryService navCategoryService;
+    private final NavigateServiceCoordinator navigateServiceCoordinator;
 
     @Override
     public Boolean insertNavigate(NavigateAddRequest addRequest) {
@@ -75,7 +76,7 @@ public class NavigateServiceImpl extends BaseServiceImpl<NavigateMapper, Navigat
 
     @Override
     public List<Navigate> getFriendLinkList() {
-        NavCategory navCategory = navCategoryService.getCategoryByName(FRIEND_LINK);
+        NavCategory navCategory = navigateServiceCoordinator.getCategoryByName(FRIEND_LINK);
 
         LambdaQueryWrapper<Navigate> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(Navigate::getNavCategoryId, navCategory.getId());

@@ -47,11 +47,4 @@ public interface NavCategoryService extends BaseService<NavCategory> {
      */
     Page<NavCategory> getNavCategoryPage(NavCategoryPageRequest pageRequest);
 
-    /**
-     * 根据名称获取导航分类表
-     *
-     * @param name 导航分类名称
-     * @return
-     */
-    NavCategory getCategoryByName(String name);
 }

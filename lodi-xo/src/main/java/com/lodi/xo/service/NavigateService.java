@@ -6,7 +6,6 @@ import com.lodi.common.model.request.navigate.NavigateAddRequest;
 import com.lodi.common.model.request.navigate.NavigatePageRequest;
 import com.lodi.common.model.request.navigate.NavigateQueryRequest;
 import com.lodi.common.model.request.navigate.NavigateUpdateRequest;
-import com.lodi.common.model.vo.NavigateVO;
 import com.lodi.common.mybatis.service.BaseService;
 
 import java.util.List;

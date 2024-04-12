@@ -1,16 +1,19 @@
 package com.lodi.xo.service.impl;
 
-import com.lodi.common.model.entity.NavCategory;
-import com.lodi.xo.mapper.NavCategoryMapper;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.lodi.common.model.request.navCategory.NavCategoryAddRequest;
-import com.lodi.common.model.request.navCategory.NavCategoryUpdateRequest;
-import com.lodi.common.model.request.navCategory.NavCategoryPageRequest;
-import com.lodi.common.model.convert.navCategory.NavCategoryConvert;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lodi.xo.service.NavCategoryService;
+import com.lodi.common.model.convert.navCategory.NavCategoryConvert;
+import com.lodi.common.model.entity.NavCategory;
+import com.lodi.common.model.request.navCategory.NavCategoryAddRequest;
+import com.lodi.common.model.request.navCategory.NavCategoryPageRequest;
+import com.lodi.common.model.request.navCategory.NavCategoryUpdateRequest;
 import com.lodi.common.mybatis.service.impl.BaseServiceImpl;
+import com.lodi.xo.mapper.NavCategoryMapper;
+import com.lodi.xo.service.NavCategoryService;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 导航分类表 服务层实现
@@ -19,7 +22,11 @@ import org.springframework.stereotype.Service;
  * @createDate 2024-04-11
  */
 @Service
+@Slf4j
+@AllArgsConstructor
 public class NavCategoryServiceImpl extends BaseServiceImpl<NavCategoryMapper, NavCategory> implements NavCategoryService {
+
+    private final NavigateServiceCoordinator navigateServiceCoordinator;
 
     @Override
     public Boolean insertNavCategory(NavCategoryAddRequest addRequest) {
@@ -34,8 +41,12 @@ public class NavCategoryServiceImpl extends BaseServiceImpl<NavCategoryMapper, N
     }
 
     @Override
+    @Transactional
     public Boolean deleteNavCategory(Long id) {
-        return removeById(id);
+        Boolean flag = removeById(id);
+        navigateServiceCoordinator.deleteNavigateByCategoryId(id);
+        log.info("删除导航分类成功");
+        return flag;
     }
 
     @Override
@@ -43,13 +54,6 @@ public class NavCategoryServiceImpl extends BaseServiceImpl<NavCategoryMapper, N
         Page<NavCategory> page = new Page<>(pageRequest.getCurrentPage(), pageRequest.getPageSize());
         LambdaQueryWrapper<NavCategory> queryWrapper = buildQueryWrapper(pageRequest);
         return baseMapper.selectPage(page, queryWrapper);
-    }
-
-    @Override
-    public NavCategory getCategoryByName(String name) {
-        LambdaQueryWrapper<NavCategory> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(NavCategory::getName, name);
-        return baseMapper.selectOne(wrapper);
     }
 
     private LambdaQueryWrapper<NavCategory> buildQueryWrapper(NavCategoryPageRequest pageRequest) {
