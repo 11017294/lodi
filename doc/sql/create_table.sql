@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS lodi.t_anime_info
 ) comment '动漫信息';
 
 -- 评论
-create table t_comment
+CREATE TABLE IF NOT EXISTS lodi.t_comment
 (
     id               bigint auto_increment
         primary key,

@@ -45,6 +45,13 @@ public class NavCategoryServiceImpl extends BaseServiceImpl<NavCategoryMapper, N
         return baseMapper.selectPage(page, queryWrapper);
     }
 
+    @Override
+    public NavCategory getCategoryByName(String name) {
+        LambdaQueryWrapper<NavCategory> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(NavCategory::getName, name);
+        return baseMapper.selectOne(wrapper);
+    }
+
     private LambdaQueryWrapper<NavCategory> buildQueryWrapper(NavCategoryPageRequest pageRequest) {
         return new LambdaQueryWrapper<NavCategory>();
     }

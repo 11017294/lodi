@@ -3,20 +3,24 @@ package com.lodi.xo.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.model.convert.navigate.NavigateConvert;
+import com.lodi.common.model.entity.NavCategory;
 import com.lodi.common.model.entity.Navigate;
 import com.lodi.common.model.request.navigate.NavigateAddRequest;
 import com.lodi.common.model.request.navigate.NavigatePageRequest;
 import com.lodi.common.model.request.navigate.NavigateQueryRequest;
 import com.lodi.common.model.request.navigate.NavigateUpdateRequest;
-import com.lodi.common.model.vo.NavigateVO;
 import com.lodi.common.mybatis.service.impl.BaseServiceImpl;
 import com.lodi.xo.mapper.NavigateMapper;
+import com.lodi.xo.service.NavCategoryService;
 import com.lodi.xo.service.NavigateService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
+
+import static com.lodi.common.core.constant.CommonConstant.FRIEND_LINK;
 
 /**
  * 导航 服务层实现
@@ -26,6 +30,9 @@ import java.util.Objects;
  */
 @Service
 public class NavigateServiceImpl extends BaseServiceImpl<NavigateMapper, Navigate> implements NavigateService {
+
+    @Resource
+    private NavCategoryService navCategoryService;
 
     @Override
     public Boolean insertNavigate(NavigateAddRequest addRequest) {
@@ -61,6 +68,17 @@ public class NavigateServiceImpl extends BaseServiceImpl<NavigateMapper, Navigat
                             .like(Navigate::getContent, queryRequest.getKeyword()).or()
                             .like(Navigate::getSummary, queryRequest.getKeyword());
                 });
+
+        wrapper.orderByAsc(Navigate::getSort);
+        return baseMapper.selectList(wrapper);
+    }
+
+    @Override
+    public List<Navigate> getFriendLinkList() {
+        NavCategory navCategory = navCategoryService.getCategoryByName(FRIEND_LINK);
+
+        LambdaQueryWrapper<Navigate> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Navigate::getNavCategoryId, navCategory.getId());
 
         wrapper.orderByAsc(Navigate::getSort);
         return baseMapper.selectList(wrapper);

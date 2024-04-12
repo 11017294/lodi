@@ -58,4 +58,11 @@ public interface NavigateService extends BaseService<Navigate> {
      * @return
      */
     List<Navigate> getList(NavigateQueryRequest queryRequest);
+
+    /**
+     * 获取友链列表
+     *
+     * @return
+     */
+    List<Navigate> getFriendLinkList();
 }

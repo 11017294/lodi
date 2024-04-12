@@ -29,6 +29,8 @@ public interface CommonConstant {
 
     String UTF8 = "UTF-8";
 
+    String FRIEND_LINK = "友链";
+
     String EMPTY = "";
 
     String DELIMITER_TO = "@";
