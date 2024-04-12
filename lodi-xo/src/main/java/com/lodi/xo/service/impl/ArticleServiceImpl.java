@@ -7,28 +7,27 @@ import com.lodi.common.core.constant.StatusConstant;
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
 import com.lodi.common.core.holder.SecurityContextHolder;
-import com.lodi.common.mybatis.page.PageRequest;
-import com.lodi.common.mybatis.service.impl.BaseServiceImpl;
 import com.lodi.common.core.utils.SecurityUtils;
 import com.lodi.common.model.convert.article.ArticleConvert;
-import com.lodi.common.model.entity.Article;
-import com.lodi.common.model.entity.Category;
-import com.lodi.common.model.entity.Tags;
-import com.lodi.common.model.entity.User;
+import com.lodi.common.model.entity.*;
 import com.lodi.common.model.request.article.ArticleAddRequest;
 import com.lodi.common.model.request.article.ArticlePageRequest;
 import com.lodi.common.model.request.article.ArticleUpdateRequest;
 import com.lodi.common.model.request.article.AuditArticleRequest;
 import com.lodi.common.model.vo.ArticleVO;
+import com.lodi.common.mybatis.page.PageRequest;
+import com.lodi.common.mybatis.service.impl.BaseServiceImpl;
 import com.lodi.xo.mapper.ArticleMapper;
+import com.lodi.xo.mapper.CommentMapper;
 import com.lodi.xo.service.ArticleService;
 import com.lodi.xo.service.CategoryService;
 import com.lodi.xo.service.TagsService;
 import com.lodi.xo.service.UserService;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -37,7 +36,6 @@ import java.util.stream.Collectors;
 
 import static com.lodi.common.core.constant.ArticleConstant.CONTENT;
 import static com.lodi.common.core.constant.ArticleConstant.PAGE_SIZE;
-import static com.lodi.common.core.constant.CommonConstant.SORT_ORDER_DESC;
 
 /**
  * 文章 服务层实现
@@ -45,15 +43,15 @@ import static com.lodi.common.core.constant.CommonConstant.SORT_ORDER_DESC;
  * @author MaybeBin
  * @createDate 2023-11-01
  */
+@Slf4j
 @Service
+@AllArgsConstructor
 public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> implements ArticleService {
 
-    @Resource
     private TagsService tagsService;
-    @Resource
     private CategoryService categoryService;
-    @Resource
     private UserService userService;
+    private CommentMapper commentsMapper;
 
     @Override
     public Boolean insertArticle(ArticleAddRequest addRequest) {
@@ -233,6 +231,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
         setCategoryByArticleVOList(list);
         setTagByArticleVOList(list);
         setUserInfoByArticleVOList(list);
+        setCommentCountByArticleVOList(list);
 
         return articleVOPage;
     }
@@ -292,6 +291,14 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
     }
 
     @Override
+    public void setCommentCountByArticleVO(ArticleVO articleVO) {
+        LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Comment::getArticleId, articleVO.getId());
+        Long commentCount = commentsMapper.selectCount(queryWrapper);
+        articleVO.setCommentCount(commentCount);
+    }
+
+    @Override
     public void setTagByArticleVOList(List<ArticleVO> articleVOList) {
         for (ArticleVO articleVO : articleVOList) {
             setTagByArticleVO(articleVO);
@@ -313,9 +320,16 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
     }
 
     @Override
+    public void setCommentCountByArticleVOList(List<ArticleVO> articleVOList) {
+        for (ArticleVO articleVO : articleVOList) {
+            setCommentCountByArticleVO(articleVO);
+        }
+    }
+
+    @Override
     public ArticleVO getArticleById(Long id) {
         Article article = baseMapper.selectById(id);
-        if(Objects.isNull(article)){
+        if (Objects.isNull(article)) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
         ArticleVO articleVO = ArticleConvert.INSTANCE.toVO(article);
@@ -323,6 +337,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
         setCategoryByArticleVO(articleVO);
         setTagByArticleVO(articleVO);
         setUserInfoByArticleVO(articleVO);
+        setCommentCountByArticleVO(articleVO);
 
         // 修改文章点击次数
         incrementClickCount(id);

@@ -73,6 +73,9 @@ public class ArticleVO implements Serializable {
     @Schema(description = "点赞次数")
     private Integer upvoteCount;
 
+    @Schema(description = "评论数")
+    private Long commentCount;
+
     @Schema(description = "vip文章：0-普通文章 1-vip文章")
     private Integer vipArticle;
 

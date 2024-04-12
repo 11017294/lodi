@@ -1,14 +1,14 @@
 package com.lodi.xo.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lodi.common.mybatis.page.PageRequest;
-import com.lodi.common.mybatis.service.BaseService;
 import com.lodi.common.model.entity.Article;
 import com.lodi.common.model.request.article.ArticleAddRequest;
 import com.lodi.common.model.request.article.ArticlePageRequest;
 import com.lodi.common.model.request.article.ArticleUpdateRequest;
 import com.lodi.common.model.request.article.AuditArticleRequest;
 import com.lodi.common.model.vo.ArticleVO;
+import com.lodi.common.mybatis.page.PageRequest;
+import com.lodi.common.mybatis.service.BaseService;
 
 import java.util.List;
 
@@ -102,6 +102,13 @@ public interface ArticleService extends BaseService<Article> {
     void setTagByArticleVO(ArticleVO articleVO);
 
     /**
+     * 给文章设置评论数
+     *
+     * @param articleVO
+     */
+    void setCommentCountByArticleVO(ArticleVO articleVO);
+
+    /**
      * 给文章列表设置标签
      *
      * @param articleVOList
@@ -135,6 +142,13 @@ public interface ArticleService extends BaseService<Article> {
      * @param articleVOList
      */
     void setUserInfoByArticleVOList(List<ArticleVO> articleVOList);
+
+    /**
+     * 给文章列表设置评论数
+     *
+     * @param articleVOList
+     */
+    void setCommentCountByArticleVOList(List<ArticleVO> articleVOList);
 
     /**
      * 根据id获取文章

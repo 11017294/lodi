@@ -15,8 +15,8 @@ import com.lodi.common.model.request.comment.CommentQueryRequest;
 import com.lodi.common.model.request.comment.CommentUpdateRequest;
 import com.lodi.common.model.vo.CommentTreeVO;
 import com.lodi.common.mybatis.service.impl.BaseServiceImpl;
+import com.lodi.xo.mapper.ArticleMapper;
 import com.lodi.xo.mapper.CommentMapper;
-import com.lodi.xo.service.ArticleService;
 import com.lodi.xo.service.CommentService;
 import com.lodi.xo.service.UserService;
 import lombok.AllArgsConstructor;
@@ -43,7 +43,7 @@ import static com.lodi.common.core.constant.StatusConstant.OFF;
 public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, Comment> implements CommentService {
 
     private final UserService userService;
-    private final ArticleService articleService;
+    private final ArticleMapper articleMapper;
 
     @Override
     public Boolean insertComment(CommentAddRequest addRequest) {
@@ -57,7 +57,7 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, Comment> 
         // 2.是文章评论
         if ("ARTICLE".equals(comment.getSource())) {
             Long articleId = comment.getArticleId();
-            Article article = articleService.getById(articleId);
+            Article article = articleMapper.selectById(articleId);
             // 2.1文章不存在
             if (Objects.isNull(article)) {
                 throw new BusinessException(ErrorCode.PARAMS_ERROR, "文章不存在");
