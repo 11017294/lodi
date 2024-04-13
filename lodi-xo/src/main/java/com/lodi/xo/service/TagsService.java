@@ -1,11 +1,12 @@
 package com.lodi.xo.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lodi.common.mybatis.service.BaseService;
 import com.lodi.common.model.entity.Tags;
 import com.lodi.common.model.request.tags.TagsAddRequest;
 import com.lodi.common.model.request.tags.TagsPageRequest;
 import com.lodi.common.model.request.tags.TagsUpdateRequest;
+import com.lodi.common.model.vo.TagsVO;
+import com.lodi.common.mybatis.service.BaseService;
 
 import java.util.List;
 
@@ -69,4 +70,12 @@ public interface TagsService extends BaseService<Tags> {
      * @param tags
      */
     void validateTagsId(Long[] tags);
+
+    /**
+     * 获取标签文章数
+     *
+     * @return
+     */
+    List<TagsVO> getTagsArticleCount();
+
 }

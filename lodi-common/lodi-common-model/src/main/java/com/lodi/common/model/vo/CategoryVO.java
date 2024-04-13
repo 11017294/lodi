@@ -29,4 +29,7 @@ public class CategoryVO implements Serializable {
 
     @Schema(description = "点击数")
     private Integer clickCount;
+
+    @Schema(description = "分类对应的文章数")
+    private Long articleCount;
 }
