@@ -2,8 +2,6 @@ package com.lodi.web.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.core.domain.Result;
-import com.lodi.common.model.convert.category.CategoryConvert;
-import com.lodi.common.model.entity.Category;
 import com.lodi.common.model.vo.ArticleVO;
 import com.lodi.common.model.vo.CategoryVO;
 import com.lodi.xo.service.ArticleService;
@@ -39,8 +37,7 @@ public class CategoryController {
     //获取文章类别列表
     public Result<List<CategoryVO>> getCategoryList() {
         log.info("获取文章类别信息");
-        List<Category> tagsList = categoryService.list();
-        return Result.success(CategoryConvert.INSTANCE.toVO(tagsList));
+        return Result.success(categoryService.getCategoryArticleCount());
     }
 
     @Operation(summary = "根据分类获取文章列表")

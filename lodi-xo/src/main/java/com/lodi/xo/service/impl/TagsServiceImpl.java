@@ -4,19 +4,25 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lodi.common.core.constant.StatusConstant;
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
-import com.lodi.common.mybatis.service.impl.BaseServiceImpl;
 import com.lodi.common.model.convert.tags.TagsConvert;
+import com.lodi.common.model.entity.Article;
 import com.lodi.common.model.entity.Tags;
 import com.lodi.common.model.request.tags.TagsAddRequest;
 import com.lodi.common.model.request.tags.TagsPageRequest;
 import com.lodi.common.model.request.tags.TagsUpdateRequest;
+import com.lodi.common.model.vo.TagsVO;
+import com.lodi.common.mybatis.service.impl.BaseServiceImpl;
+import com.lodi.xo.mapper.ArticleMapper;
 import com.lodi.xo.mapper.TagsMapper;
 import com.lodi.xo.service.TagsService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.lodi.common.core.constant.ArticleConstant.PAGE_SIZE;
 
@@ -27,7 +33,10 @@ import static com.lodi.common.core.constant.ArticleConstant.PAGE_SIZE;
  * @createDate 2023-11-27
  */
 @Service
+@AllArgsConstructor
 public class TagsServiceImpl extends BaseServiceImpl<TagsMapper, Tags> implements TagsService {
+
+    private final ArticleMapper articleMapper;
 
     @Override
     public Boolean insertTags(TagsAddRequest addRequest) {
@@ -86,5 +95,22 @@ public class TagsServiceImpl extends BaseServiceImpl<TagsMapper, Tags> implement
         if (count != tags.length) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "标签不存在");
         }
+    }
+
+    @Override
+    public List<TagsVO> getTagsArticleCount() {
+        return list().stream().map(tags -> {
+            // 查询文章数
+            LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.like(Article::getTagsId, tags.getId());
+            queryWrapper.eq(Article::getIsPublish, StatusConstant.ON);
+            queryWrapper.eq(Article::getAuditStatus, StatusConstant.ON);
+
+            Long articleCount = articleMapper.selectCount(queryWrapper);
+            // 设置文章数
+            TagsVO vo = TagsConvert.INSTANCE.toVO(tags);
+            vo.setArticleCount(articleCount);
+            return vo;
+        }).collect(Collectors.toList());
     }
 }

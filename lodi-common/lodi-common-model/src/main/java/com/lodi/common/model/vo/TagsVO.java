@@ -29,4 +29,7 @@ public class TagsVO implements Serializable {
 
     @Schema(description = "点击数")
     private Integer clickCount;
+
+    @Schema(description = "标签对应的文章数")
+    private Long articleCount;
 }

@@ -1,11 +1,14 @@
 package com.lodi.xo.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lodi.common.mybatis.service.BaseService;
 import com.lodi.common.model.entity.Category;
 import com.lodi.common.model.request.category.CategoryAddRequest;
 import com.lodi.common.model.request.category.CategoryPageRequest;
 import com.lodi.common.model.request.category.CategoryUpdateRequest;
+import com.lodi.common.model.vo.CategoryVO;
+import com.lodi.common.mybatis.service.BaseService;
+
+import java.util.List;
 
 /**
  * 文章类别 服务层
@@ -56,7 +59,15 @@ public interface CategoryService extends BaseService<Category> {
 
     /**
      * 验证类别id
+     *
      * @param categoryId
      */
     void validateCategoryId(Long categoryId);
+
+    /**
+     * 获取分类对应的文章数
+     *
+     * @return
+     */
+    List<CategoryVO> getCategoryArticleCount();
 }

@@ -2,8 +2,6 @@ package com.lodi.web.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.core.domain.Result;
-import com.lodi.common.model.convert.tags.TagsConvert;
-import com.lodi.common.model.entity.Tags;
 import com.lodi.common.model.vo.ArticleVO;
 import com.lodi.common.model.vo.TagsVO;
 import com.lodi.xo.service.ArticleService;
@@ -38,8 +36,7 @@ public class TagsController {
     @GetMapping("getTagList")
     public Result<List<TagsVO>> getTagList() {
         log.info("获取标签信息");
-        List<Tags> tagsList = tagsService.list();
-        return Result.success(TagsConvert.INSTANCE.toVO(tagsList));
+        return Result.success(tagsService.getTagsArticleCount());
     }
 
     @Operation(summary = "根据标签获取文章列表")

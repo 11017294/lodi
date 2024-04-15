@@ -3,17 +3,26 @@ package com.lodi.xo.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lodi.common.core.constant.StatusConstant;
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
+import com.lodi.common.model.entity.Article;
+import com.lodi.common.model.vo.CategoryVO;
 import com.lodi.common.mybatis.service.impl.BaseServiceImpl;
 import com.lodi.common.model.convert.category.CategoryConvert;
 import com.lodi.common.model.entity.Category;
 import com.lodi.common.model.request.category.CategoryAddRequest;
 import com.lodi.common.model.request.category.CategoryPageRequest;
 import com.lodi.common.model.request.category.CategoryUpdateRequest;
+import com.lodi.xo.mapper.ArticleMapper;
 import com.lodi.xo.mapper.CategoryMapper;
 import com.lodi.xo.service.CategoryService;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 文章类别 服务层实现
@@ -21,8 +30,12 @@ import org.springframework.stereotype.Service;
  * @author MaybeBin
  * @createDate 2023-11-27
  */
+@Slf4j
 @Service
+@AllArgsConstructor
 public class CategoryServiceImpl extends BaseServiceImpl<CategoryMapper, Category> implements CategoryService {
+
+    private final ArticleMapper articleMapper;
 
     @Override
     public Boolean insertCategory(CategoryAddRequest addRequest) {
@@ -73,5 +86,22 @@ public class CategoryServiceImpl extends BaseServiceImpl<CategoryMapper, Categor
         if(count == 0){
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "文章类别不存在");
         }
+    }
+
+    @Override
+    public List<CategoryVO> getCategoryArticleCount() {
+        return list().stream().map(category -> {
+            // 查询文章数
+            LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.like(Article::getCategoryId, category.getId());
+            queryWrapper.eq(Article::getIsPublish, StatusConstant.ON);
+            queryWrapper.eq(Article::getAuditStatus, StatusConstant.ON);
+
+            Long articleCount = articleMapper.selectCount(queryWrapper);
+            // 设置文章数
+            CategoryVO vo = CategoryConvert.INSTANCE.toVO(category);
+            vo.setArticleCount(articleCount);
+            return vo;
+        }).collect(Collectors.toList());
     }
 }
