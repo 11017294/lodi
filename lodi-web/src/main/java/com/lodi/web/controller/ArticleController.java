@@ -1,13 +1,19 @@
 package com.lodi.web.controller;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.core.domain.Result;
+import com.lodi.common.model.convert.article.ArticleConvert;
+import com.lodi.common.model.entity.Article;
 import com.lodi.common.model.request.IdRequest;
 import com.lodi.common.model.request.article.ArticleAddRequest;
+import com.lodi.common.model.request.article.ArticleByUserIdRequest;
 import com.lodi.common.model.request.article.ArticleUpdateRequest;
+import com.lodi.common.model.vo.ArticleVO;
 import com.lodi.xo.service.ArticleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,6 +48,12 @@ public class ArticleController {
     @DeleteMapping("delete")
     public Result<Boolean> deleteArticle(@RequestBody @Validated IdRequest request) {
         return Result.success(articleService.deleteArticle(request.getId()));
+    }
+
+    @Operation(summary = "按用户id获取文章列表")
+    @GetMapping("getArticleByUserId")
+    public Result<Page<ArticleVO>> getArticleByUserId(@ParameterObject @Validated ArticleByUserIdRequest request) {
+        return Result.success(articleService.getArticleByUserId(request));
     }
 
 }

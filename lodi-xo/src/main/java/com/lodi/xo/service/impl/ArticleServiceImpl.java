@@ -10,10 +10,7 @@ import com.lodi.common.core.holder.SecurityContextHolder;
 import com.lodi.common.core.utils.SecurityUtils;
 import com.lodi.common.model.convert.article.ArticleConvert;
 import com.lodi.common.model.entity.*;
-import com.lodi.common.model.request.article.ArticleAddRequest;
-import com.lodi.common.model.request.article.ArticlePageRequest;
-import com.lodi.common.model.request.article.ArticleUpdateRequest;
-import com.lodi.common.model.request.article.AuditArticleRequest;
+import com.lodi.common.model.request.article.*;
 import com.lodi.common.model.vo.ArticleVO;
 import com.lodi.common.mybatis.page.PageRequest;
 import com.lodi.common.mybatis.service.impl.BaseServiceImpl;
@@ -359,6 +356,29 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
         queryWrapper.eq(Article::getIsPublish, StatusConstant.ON)
                 .eq(Article::getAuditStatus, StatusConstant.ON);
         return baseMapper.selectCount(queryWrapper);
+    }
+
+    @Override
+    public Page<ArticleVO> getArticleByUserId(ArticleByUserIdRequest request) {
+        Long userId = request.getId();
+        LambdaQueryWrapper<Article> queryWrapper = buildCommonQueryWrapper();
+        // 排除内容字段
+        queryWrapper.select(Article.class, i -> !i.getProperty().equals(CONTENT));
+        // 按用户id查询 公开文章、审核
+        queryWrapper.like(Article::getUserId, userId);
+        // 非本人只能看到公开且审核通过的文章
+        if (!SecurityUtils.isCurrentUser(userId)) {
+            queryWrapper.eq(Article::getIsPublish, StatusConstant.ON);
+            queryWrapper.eq(Article::getAuditStatus, StatusConstant.ON);
+        }
+
+        // 按文章创建时间（倒序）
+        queryWrapper.orderByDesc(Article::getCreateTime);
+        Page<Article> wherePage = new Page<>(request.getCurrentPage(), request.getPageSize());
+
+        // 分页查询
+        Page<Article> articlePage = baseMapper.selectPage(wherePage, queryWrapper);
+        return convertToArticleVOPage(articlePage);
     }
 
 }

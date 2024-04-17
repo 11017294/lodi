@@ -2,10 +2,7 @@ package com.lodi.xo.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.model.entity.Article;
-import com.lodi.common.model.request.article.ArticleAddRequest;
-import com.lodi.common.model.request.article.ArticlePageRequest;
-import com.lodi.common.model.request.article.ArticleUpdateRequest;
-import com.lodi.common.model.request.article.AuditArticleRequest;
+import com.lodi.common.model.request.article.*;
 import com.lodi.common.model.vo.ArticleVO;
 import com.lodi.common.mybatis.page.PageRequest;
 import com.lodi.common.mybatis.service.BaseService;
@@ -172,4 +169,11 @@ public interface ArticleService extends BaseService<Article> {
      */
     long getArticleCount();
 
+    /**
+     * 按userId获取文章
+     *
+     * @param request
+     * @return
+     */
+    Page<ArticleVO> getArticleByUserId(ArticleByUserIdRequest request);
 }

@@ -1,21 +1,21 @@
-package com.lodi.common.model.request;
+package com.lodi.common.model.request.article;
 
+import com.lodi.common.mybatis.page.PageRequest;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
-import java.io.Serializable;
 
 /**
- * Id 请求体
+ * 按userId查询 请求体
  *
  * @author MaybeBin
- * @createDate 2023-10-26
+ * @since 2024-04-17
  */
 @Data
-@Schema(description = "Id 请求体")
-public class IdRequest implements Serializable {
+@Schema(description = "按userId查询 请求体")
+public class ArticleByUserIdRequest extends PageRequest {
 
     private static final long serialVersionUID = 1L;
 
