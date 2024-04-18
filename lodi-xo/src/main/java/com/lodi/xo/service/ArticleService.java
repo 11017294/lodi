@@ -176,4 +176,20 @@ public interface ArticleService extends BaseService<Article> {
      * @return
      */
     Page<ArticleVO> getArticleByUserId(ArticleByUserIdRequest request);
+
+    /**
+     * 发布文章
+     *
+     * @param id
+     * @return
+     */
+    Boolean publishArticle(Long id);
+
+    /**
+     * 取消发布文章
+     *
+     * @param id
+     * @return
+     */
+    Boolean cancelPublishArticle(Long id);
 }

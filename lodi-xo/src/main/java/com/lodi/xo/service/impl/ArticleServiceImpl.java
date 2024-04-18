@@ -33,6 +33,8 @@ import java.util.stream.Collectors;
 
 import static com.lodi.common.core.constant.ArticleConstant.CONTENT;
 import static com.lodi.common.core.constant.ArticleConstant.PAGE_SIZE;
+import static com.lodi.common.core.constant.StatusConstant.OFF;
+import static com.lodi.common.core.constant.StatusConstant.ON;
 
 /**
  * 文章 服务层实现
@@ -246,8 +248,8 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
         LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
         // 不获取内容字段值
         queryWrapper.select(Article.class, i -> !i.getProperty().equals(CONTENT));
-        queryWrapper.eq(Article::getIsPublish, StatusConstant.ON);
-        queryWrapper.eq(Article::getAuditStatus, StatusConstant.ON);
+        queryWrapper.eq(Article::getIsPublish, ON);
+        queryWrapper.eq(Article::getAuditStatus, ON);
         return queryWrapper;
     }
 
@@ -355,8 +357,8 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
     public long getArticleCount() {
         LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
         // 文章为公开状态
-        queryWrapper.eq(Article::getIsPublish, StatusConstant.ON)
-                .eq(Article::getAuditStatus, StatusConstant.ON);
+        queryWrapper.eq(Article::getIsPublish, ON)
+                .eq(Article::getAuditStatus, ON);
         return baseMapper.selectCount(queryWrapper);
     }
 
@@ -370,8 +372,8 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
         queryWrapper.eq(Article::getUserId, userId);
         // 非本人只能看到公开且审核通过的文章
         if (!SecurityUtils.isCurrentUser(userId)) {
-            queryWrapper.eq(Article::getIsPublish, StatusConstant.ON);
-            queryWrapper.eq(Article::getAuditStatus, StatusConstant.ON);
+            queryWrapper.eq(Article::getIsPublish, ON);
+            queryWrapper.eq(Article::getAuditStatus, ON);
         }
 
         // 按文章创建时间（倒序）
@@ -383,4 +385,23 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
         return convertToArticleVOPage(articlePage);
     }
 
+    @Override
+    public Boolean publishArticle(Long id) {
+        // 判断是否当前用户或管理员
+        isCurrentUserOrAdmin(id);
+        LambdaUpdateWrapper<Article> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.set(Article::getIsPublish, ON)
+                .eq(Article::getId, id);
+        return update(updateWrapper);
+    }
+
+    @Override
+    public Boolean cancelPublishArticle(Long id) {
+        // 判断是否当前用户或管理员
+        isCurrentUserOrAdmin(id);
+        LambdaUpdateWrapper<Article> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper.set(Article::getIsPublish, OFF)
+                .eq(Article::getId, id);
+        return update(updateWrapper);
+    }
 }

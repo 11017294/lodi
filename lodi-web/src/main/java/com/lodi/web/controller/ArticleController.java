@@ -2,8 +2,6 @@ package com.lodi.web.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.core.domain.Result;
-import com.lodi.common.model.convert.article.ArticleConvert;
-import com.lodi.common.model.entity.Article;
 import com.lodi.common.model.request.IdRequest;
 import com.lodi.common.model.request.article.ArticleAddRequest;
 import com.lodi.common.model.request.article.ArticleByUserIdRequest;
@@ -54,6 +52,18 @@ public class ArticleController {
     @GetMapping("getArticleByUserId")
     public Result<Page<ArticleVO>> getArticleByUserId(@ParameterObject @Validated ArticleByUserIdRequest request) {
         return Result.success(articleService.getArticleByUserId(request));
+    }
+
+    @Operation(summary = "发布文章")
+    @PostMapping("publish")
+    public Result<Boolean> publishArticle(@RequestBody @Validated IdRequest request) {
+        return Result.success(articleService.publishArticle(request.getId()));
+    }
+
+    @Operation(summary = "取消发布文章")
+    @PostMapping("cancelPublish")
+    public Result<Boolean> cancelPublishArticle(@RequestBody @Validated IdRequest request) {
+        return Result.success(articleService.cancelPublishArticle(request.getId()));
     }
 
 }
