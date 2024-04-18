@@ -361,11 +361,11 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
     @Override
     public Page<ArticleVO> getArticleByUserId(ArticleByUserIdRequest request) {
         Long userId = request.getId();
-        LambdaQueryWrapper<Article> queryWrapper = buildCommonQueryWrapper();
+        LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
         // 排除内容字段
         queryWrapper.select(Article.class, i -> !i.getProperty().equals(CONTENT));
         // 按用户id查询 公开文章、审核
-        queryWrapper.like(Article::getUserId, userId);
+        queryWrapper.eq(Article::getUserId, userId);
         // 非本人只能看到公开且审核通过的文章
         if (!SecurityUtils.isCurrentUser(userId)) {
             queryWrapper.eq(Article::getIsPublish, StatusConstant.ON);
