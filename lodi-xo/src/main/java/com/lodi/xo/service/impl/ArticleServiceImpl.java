@@ -74,6 +74,8 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
         categoryService.validateCategoryId(categoryId);
 
         Article article = ArticleConvert.INSTANCE.toEntity(updateRequest);
+        // 编辑后重置审核状态
+        article.setAuditStatus(OFF);
         // 判断是否当前用户或管理员
         isCurrentUserOrAdmin(article.getId());
         return updateById(article);
