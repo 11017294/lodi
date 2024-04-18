@@ -7,15 +7,22 @@ import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
 import com.lodi.common.model.convert.user.UserConvert;
 import com.lodi.common.model.entity.User;
+import com.lodi.common.model.request.IdRequest;
 import com.lodi.common.model.request.user.UserSelfUpdateRequest;
+import com.lodi.common.model.vo.UserInfoVO;
 import com.lodi.xo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springdoc.api.annotations.ParameterObject;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+
+import static com.lodi.common.core.constant.StatusConstant.DELETE;
+import static com.lodi.common.core.constant.StatusConstant.OFF;
 
 /**
  * @author MaybeBin
@@ -47,4 +54,19 @@ public class UserController {
         return remoteFileService.upload(file, FileDirectoryConstant.DEFAULT);
     }
 
+    @Operation(summary = "获取用户信息")
+    @GetMapping("get")
+    public Result<UserInfoVO> getUser(@ParameterObject @Validated IdRequest idRequest) {
+        User user = userService.getById(idRequest.getId());
+        if (user == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+        if (user.getStatus() == OFF) {
+            throw new BusinessException("用户已禁用", ErrorCode.SYSTEM_ERROR.getCode());
+        }
+        if (user.getIsDelete() == DELETE) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+        return Result.success(UserConvert.INSTANCE.toInfoVO(user));
+    }
 }

@@ -5,6 +5,7 @@ import com.lodi.common.model.entity.User;
 import com.lodi.common.model.request.user.UserRegisterRequest;
 import com.lodi.common.model.request.user.UserSelfUpdateRequest;
 import com.lodi.common.model.request.user.UserUpdateRequest;
+import com.lodi.common.model.vo.UserInfoVO;
 import com.lodi.common.model.vo.UserVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -29,6 +30,8 @@ public interface UserConvert {
     User toEntity(UserRegisterRequest registerRequest);
 
     UserVO toVO(User user);
+
+    UserInfoVO toInfoVO(User user);
 
     List<UserVO> toVO(List<User> users);
 
