@@ -24,6 +24,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -84,9 +85,15 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
     }
 
     @Override
+    @Transactional
     public Boolean deleteArticle(Long id) {
         // 判断是否当前用户或管理员
         isCurrentUserOrAdmin(id);
+        // 删除评论
+        LambdaQueryWrapper<Comment> deleteCommentWrapper = new LambdaQueryWrapper<>();
+        deleteCommentWrapper.eq(Comment::getArticleId, id);
+        commentsMapper.delete(deleteCommentWrapper);
+        // 删除文章
         return removeById(id);
     }
 
