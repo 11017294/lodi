@@ -3,7 +3,6 @@ package com.lodi.xo.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lodi.common.core.constant.StatusConstant;
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
 import com.lodi.common.core.holder.SecurityContextHolder;
@@ -263,14 +262,11 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
     @Override
     public void setTagByArticleVO(ArticleVO articleVO) {
         // 获取标签id
-        String tagsId = articleVO.getTagsId();
-        if (StringUtils.isBlank(tagsId)) {
+        Long[] tags = articleVO.getTags();
+        if (tags == null || tags.length == 0) {
             return;
         }
-        String[] tagsIdArray = tagsId.split(",");
-        List<String> tagsIdList = Arrays.stream(tagsIdArray).collect(Collectors.toList());
-        // 查询标签信息
-        List<Tags> tagsList = tagsService.listByIds(tagsIdList);
+        List<Tags> tagsList = tagsService.listByIds(Arrays.asList(tags));
 
         // 得到标签名列表
         List<String> tagsNameList = tagsList.stream().map(Tags::getName).collect(Collectors.toList());

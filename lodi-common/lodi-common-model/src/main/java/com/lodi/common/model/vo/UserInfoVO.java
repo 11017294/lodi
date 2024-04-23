@@ -43,6 +43,9 @@ public class UserInfoVO implements Serializable {
     @Schema(description = "邮箱")
     private String email;
 
+    @Schema(description = "是否开启邮件通知（0-关闭 1-开启）")
+    private Integer startEmailNotify;
+
     @Schema(description = "注册日期")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date createTime;

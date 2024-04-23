@@ -5,6 +5,7 @@ import com.lodi.common.model.entity.Article;
 import com.lodi.common.model.request.article.ArticleAddRequest;
 import com.lodi.common.model.request.article.ArticleUpdateRequest;
 import com.lodi.common.model.vo.ArticleVO;
+import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
@@ -30,6 +31,7 @@ public interface ArticleConvert {
     @Mapping(target = "tagsId", source = "tags")
     Article toEntity(ArticleUpdateRequest updateRequest);
 
+    @Mapping(target = "tags", source = "tagsId")
     ArticleVO toVO(Article article);
 
     List<ArticleVO> toVO(List<Article> articles);
@@ -44,6 +46,14 @@ public interface ArticleConvert {
         return Arrays.stream(tags)
                 .map(String::valueOf)
                 .collect(Collectors.joining(","));
+    }
+
+    default Long[] tagsIdToTags(String tagsId) {
+        if (StringUtils.isBlank(tagsId)) {
+            return null;
+        }
+        String[] tagsIdArray = tagsId.split(",");
+        return Arrays.stream(tagsIdArray).map(Long::valueOf).toArray(Long[]::new);
     }
 
 }
