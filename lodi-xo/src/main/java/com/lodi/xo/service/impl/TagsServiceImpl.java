@@ -20,6 +20,7 @@ import com.lodi.xo.mapper.TagsMapper;
 import com.lodi.xo.service.TagsService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -84,15 +85,15 @@ public class TagsServiceImpl extends BaseServiceImpl<TagsMapper, Tags> implement
     }
 
     @Override
-    public void validateTagsId(Long[] tags) {
-        if (tags == null || tags.length == 0) {
+    public void validateTagsId(List<Long> tags) {
+        if (CollectionUtils.isEmpty(tags)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
         LambdaQueryWrapper<Tags> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.in(Tags::getId, tags);
 
         long count = count(queryWrapper);
-        if (count != tags.length) {
+        if (count != tags.size()) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR, "标签不存在");
         }
     }

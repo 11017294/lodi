@@ -69,7 +69,7 @@ public interface TagsService extends BaseService<Tags> {
      *
      * @param tags
      */
-    void validateTagsId(Long[] tags);
+    void validateTagsId(List<Long> tags);
 
     /**
      * 获取标签文章数

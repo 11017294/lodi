@@ -6,6 +6,7 @@ import lombok.Data;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 文章更新 请求体
@@ -37,7 +38,7 @@ public class ArticleUpdateRequest implements Serializable {
     private String cover;
 
     @Schema(description = "标签ID")
-    private Long[] tags;
+    private List<Long> tags;
 
     @Schema(description = "文章类别ID")
     private Long categoryId;

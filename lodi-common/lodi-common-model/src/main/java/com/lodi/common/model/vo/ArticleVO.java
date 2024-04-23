@@ -47,7 +47,7 @@ public class ArticleVO implements Serializable {
     private String userAvatar;
 
     @Schema(description = "标签ID")
-    private Long[] tags;
+    private List<Long> tags;
 
     @Schema(description = "文章有多个标签")
     private List<String> tagsList;

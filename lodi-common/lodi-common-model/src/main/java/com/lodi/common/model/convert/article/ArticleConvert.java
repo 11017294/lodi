@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Arrays;
 import java.util.List;
@@ -38,22 +39,19 @@ public interface ArticleConvert {
 
     Page<ArticleVO> toVO(Page<Article> articlePage);
 
-    default String tagsToTagsId(Long[] tags) {
-        if (tags == null || tags.length == 0) {
-            return null;
+    default String tagsToTagsId(List<Long> tags) {
+        if (CollectionUtils.isEmpty(tags)) {
+            return new String();
         }
-
-        return Arrays.stream(tags)
-                .map(String::valueOf)
-                .collect(Collectors.joining(","));
+        return tags.stream().map(Object::toString).collect(Collectors.joining(","));
     }
 
-    default Long[] tagsIdToTags(String tagsId) {
+    default List<Long> tagsIdToTags(String tagsId) {
         if (StringUtils.isBlank(tagsId)) {
             return null;
         }
         String[] tagsIdArray = tagsId.split(",");
-        return Arrays.stream(tagsIdArray).map(Long::valueOf).toArray(Long[]::new);
+        return Arrays.stream(tagsIdArray).map(Long::valueOf).collect(Collectors.toList());
     }
 
 }

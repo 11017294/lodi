@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 添加文章 请求体
@@ -38,7 +39,7 @@ public class ArticleAddRequest implements Serializable {
 
     @Schema(description = "标签ID")
     @Size(min = 1, message = "标签数量必须大于等于1")
-    private Long[] tags;
+    private List<Long> tags;
 
     @Schema(description = "文章类别ID")
     @NotNull(message = "文章类别ID不能为空")

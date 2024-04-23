@@ -24,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -54,7 +55,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
 
     @Override
     public Boolean insertArticle(ArticleAddRequest addRequest) {
-        Long[] tags = addRequest.getTags();
+        List<Long> tags = addRequest.getTags();
         Long categoryId = addRequest.getCategoryId();
         // 判断标签id、类别id 是否存在
         tagsService.validateTagsId(tags);
@@ -69,7 +70,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
 
     @Override
     public Boolean updateArticle(ArticleUpdateRequest updateRequest) {
-        Long[] tags = updateRequest.getTags();
+        List<Long> tags = updateRequest.getTags();
         Long categoryId = updateRequest.getCategoryId();
         // 判断标签id、类别id 是否存在
         tagsService.validateTagsId(tags);
@@ -262,11 +263,11 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
     @Override
     public void setTagByArticleVO(ArticleVO articleVO) {
         // 获取标签id
-        Long[] tags = articleVO.getTags();
-        if (tags == null || tags.length == 0) {
+        List<Long> tags = articleVO.getTags();
+        if (CollectionUtils.isEmpty(tags)) {
             return;
         }
-        List<Tags> tagsList = tagsService.listByIds(Arrays.asList(tags));
+        List<Tags> tagsList = tagsService.listByIds(tags);
 
         // 得到标签名列表
         List<String> tagsNameList = tagsList.stream().map(Tags::getName).collect(Collectors.toList());
