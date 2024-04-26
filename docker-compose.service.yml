@@ -1,0 +1,70 @@
+version: '3'
+
+services:
+  lodi-gateway:
+    container_name: lodi-gateway
+    build: # 服务的 Docker 构建文件位置
+      context: ./lodi-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - JAVA_OPTS=-Xmx128m -Xms64m -Xss256k
+    volumes:
+      - /root/lodi/logs:/app/logs
+    networks:
+      - lodi-net # 指定网络
+
+  lodi-web:
+    container_name: lodi-web
+    build: # 服务的 Docker 构建文件位置
+      context: ./lodi-web
+      dockerfile: Dockerfile
+    ports:
+      - "9528:9528"
+    environment:
+      - JAVA_OPTS=-Xmx256m -Xms128m -Xss256k
+    volumes:
+      - /root/lodi/logs:/app/logs
+    networks:
+      - lodi-net # 指定网络
+    depends_on: # 本服务依赖的服务，控制启动先后顺序
+      - lodi-gateway
+
+  lodi-admin:
+    container_name: lodi-admin
+    build: # 服务的 Docker 构建文件位置
+      context: ./lodi-admin
+      dockerfile: Dockerfile
+    ports:
+      - "9527:9527"
+    environment:
+      - JAVA_OPTS=-Xmx128m -Xms64m -Xss256k
+    volumes:
+      - /root/lodi/logs:/app/logs
+    networks:
+      - lodi-net # 指定网络
+    depends_on: # 本服务依赖的服务，控制启动先后顺序
+      - lodi-gateway
+      - lodi-web
+
+  lodi-file:
+    container_name: lodi-file
+    build: # 服务的 Docker 构建文件位置
+      context: ./lodi-file
+      dockerfile: Dockerfile
+    ports:
+      - "9521:9521"
+    environment:
+      - JAVA_OPTS=-Xmx256m -Xms128m -Xss256k
+    volumes:
+      - /root/lodi/logs:/app/logs
+    networks:
+      - lodi-net # 指定网络
+    depends_on: # 本服务依赖的服务，控制启动先后顺序
+      - lodi-gateway
+      - lodi-web
+      - lodi-admin
+
+networks:
+  lodi-net:

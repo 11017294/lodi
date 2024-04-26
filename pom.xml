@@ -32,6 +32,8 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <properties>
+                <!--配置 地址-->
+                <config.addr>127.0.0.1:8848</config.addr>
                 <!--配置 空间-->
                 <config.namespace>dev</config.namespace>
                 <!--配置组-->
@@ -42,6 +44,8 @@
         <profile>
             <id>prod</id>
             <properties>
+                <!--配置 地址-->
+                <config.addr>lodi_nacos:8848</config.addr>
                 <!--配置 空间-->
                 <config.namespace>prod</config.namespace>
                 <!--配置组-->
