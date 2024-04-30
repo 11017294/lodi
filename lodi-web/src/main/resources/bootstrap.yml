@@ -1,12 +1,16 @@
 server:
   port: 9528
 
+# 注册中心相关配置
 spring:
   application:
     name: lodi-web
   cloud:
     nacos:
-      server-addr: @config.addr@
+      discovery:
+        server-addr: @config.addr@ # Nacos 服务器地址
+        namespace: public
+        group: public
       config:
         server-addr: @config.addr@ # Nacos 服务器地址
         namespace: @config.namespace@ # 命名空间 dev 的ID，不能直接使用 dev 名称。创建命名空间的时候需要指定ID为 dev，这里使用 dev 开发环境
