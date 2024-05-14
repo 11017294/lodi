@@ -1,7 +1,9 @@
 package com.lodi.common.model.system;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * 网站基本信息
@@ -11,6 +13,8 @@ import lombok.Data;
  */
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class WebsiteBasic {
 
     private Long articleCount;

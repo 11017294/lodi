@@ -2,6 +2,7 @@ package com.lodi.web.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.core.constant.ArticleConstant;
+import com.lodi.common.core.constant.RedisKeyConstants;
 import com.lodi.common.core.domain.Result;
 import com.lodi.common.model.convert.navigate.NavigateConvert;
 import com.lodi.common.model.convert.tags.TagsConvert;
@@ -19,6 +20,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springdoc.api.annotations.ParameterObject;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,6 +72,8 @@ public class IndexController {
 
     @Operation(summary = "获取首页最热门的文章")
     @GetMapping("getHotArticle")
+    @Cacheable(cacheNames = RedisKeyConstants.HOT_ARTICLE,
+            key = "'current=' + #request.currentPage + '&size=' + #request.pageSize")
     public Result<Page<ArticleVO>> getHotArticle(@ParameterObject @Validated PageRequest request) {
         log.info("获取首页最热门的文章");
         request.setSortField(ArticleConstant.CLICK_COUNT);
@@ -79,6 +83,9 @@ public class IndexController {
 
     @Operation(summary = "获取首页推荐的文章")
     @GetMapping("getRecommendedArticle")
+    @Cacheable(cacheNames = RedisKeyConstants.RECOMMENDED_ARTICLE,
+            key = "'current=' + #request.currentPage + '&size=' + #request.pageSize",
+            condition = "#request.currentPage == 1")
     public Result<Page<ArticleVO>> getRecommendedArticle(@ParameterObject @Validated PageRequest request) {
         log.info("获取首页推荐的文章");
         request.setSortField(ArticleConstant.SORT);
@@ -88,6 +95,7 @@ public class IndexController {
 
     @Operation(summary = "获取最热标签")
     @GetMapping("getHotTag")
+    @Cacheable(cacheNames = RedisKeyConstants.HOT_TAG)
     public Result<List<TagsVO>> getHotTag() {
         log.info("获取最热标签");
         List<Tags> tagsList = tagsService.getHotTag();
@@ -96,6 +104,7 @@ public class IndexController {
 
     @Operation(summary = "友链信息展示")
     @GetMapping("/friendLink")
+    @Cacheable(cacheNames = RedisKeyConstants.FRIEND_LINK)
     public Result<List<NavigateVO>> friendLink() {
         List<Navigate> friendLinkList = navigateService.getFriendLinkList();
         return Result.success(NavigateConvert.INSTANCE.toVO(friendLinkList));
@@ -103,6 +112,7 @@ public class IndexController {
 
     @Operation(summary = "获取站点信息")
     @GetMapping("findShowBasic")
+    @Cacheable(cacheNames = RedisKeyConstants.SHOW_BASIC)
     public Result<WebsiteBasic> findShowBasic() {
         log.info("获取站点信息");
         long articleCount = articleService.getArticleCount();

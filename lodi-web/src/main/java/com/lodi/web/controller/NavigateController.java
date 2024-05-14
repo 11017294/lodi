@@ -1,6 +1,6 @@
 package com.lodi.web.controller;
 
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lodi.common.core.constant.RedisKeyConstants;
 import com.lodi.common.core.domain.Result;
 import com.lodi.common.core.exception.BusinessException;
 import com.lodi.common.model.convert.navCategory.NavCategoryConvert;
@@ -8,10 +8,7 @@ import com.lodi.common.model.convert.navigate.NavigateConvert;
 import com.lodi.common.model.entity.NavCategory;
 import com.lodi.common.model.entity.Navigate;
 import com.lodi.common.model.request.IdRequest;
-import com.lodi.common.model.request.navigate.NavigateAddRequest;
-import com.lodi.common.model.request.navigate.NavigatePageRequest;
 import com.lodi.common.model.request.navigate.NavigateQueryRequest;
-import com.lodi.common.model.request.navigate.NavigateUpdateRequest;
 import com.lodi.common.model.vo.NavCategoryVO;
 import com.lodi.common.model.vo.NavigateVO;
 import com.lodi.xo.service.NavCategoryService;
@@ -19,10 +16,12 @@ import com.lodi.xo.service.NavigateService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springdoc.api.annotations.ParameterObject;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-
 import java.util.List;
 
 import static com.lodi.common.core.enums.ErrorCode.NOT_FOUND_ERROR;
@@ -60,6 +59,7 @@ public class NavigateController {
 
     @Operation(summary = "获取导航分类")
     @GetMapping("getCategoryList")
+    @Cacheable(cacheNames = RedisKeyConstants.NAV_CATEGORY_LIST)
     public Result<List<NavCategoryVO>> getCategoryList() {
         List<NavCategory> list = navCategoryService.list();
         return Result.success(NavCategoryConvert.INSTANCE.toVO(list));
