@@ -1,5 +1,6 @@
 package com.lodi.admin.controller;
 
+import cn.dev33.satoken.stp.SaTokenInfo;
 import com.lodi.common.core.domain.Result;
 import com.lodi.common.model.request.user.UserRegisterRequest;
 import com.lodi.common.model.request.userAuth.LoginRequest;
@@ -27,9 +28,9 @@ public class AuthController {
 
     @Operation(summary = "登录")
     @PostMapping("login")
-    public Result<String> login(@RequestBody @Validated LoginRequest loginRequest) {
-        String token = authService.login(loginRequest);
-        return Result.success(token);
+    public Result<SaTokenInfo> login(@RequestBody @Validated LoginRequest loginRequest) {
+        SaTokenInfo tokenInfo = authService.login(loginRequest);
+        return Result.success(tokenInfo);
     }
 
     @Operation(summary = "用户注册")
@@ -50,8 +51,8 @@ public class AuthController {
     @Operation(summary = "用户注销")
     @PostMapping("logout")
     public Result<Boolean> logout() {
-        Boolean flag = authService.logout();
-        return Result.success(flag);
+        authService.logout();
+        return Result.success(true);
     }
 
     @GetMapping("get")

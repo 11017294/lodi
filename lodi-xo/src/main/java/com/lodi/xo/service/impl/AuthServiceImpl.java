@@ -1,30 +1,33 @@
 package com.lodi.xo.service.impl;
 
-import com.lodi.common.redis.RedisService;
+import cn.dev33.satoken.secure.BCrypt;
+import cn.dev33.satoken.stp.SaTokenInfo;
+import cn.dev33.satoken.stp.StpUtil;
+import com.lodi.common.core.constant.ContextConstant;
 import com.lodi.common.core.exception.BusinessException;
-import com.lodi.common.core.holder.SecurityContextHolder;
+import com.lodi.common.core.system.LoginUser;
 import com.lodi.common.core.utils.StrUtils;
 import com.lodi.common.model.convert.user.UserConvert;
 import com.lodi.common.model.entity.User;
 import com.lodi.common.model.request.user.UserRegisterRequest;
 import com.lodi.common.model.request.userAuth.LoginRequest;
 import com.lodi.common.model.vo.UserVO;
-import com.lodi.xo.security.TokenService;
+import com.lodi.common.redis.RedisService;
+import com.lodi.common.satoken.utils.LoginHelper;
 import com.lodi.xo.service.AuthService;
 import com.lodi.xo.service.MailService;
 import com.lodi.xo.service.UserService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static com.lodi.common.core.constant.StatusConstant.DELETE;
 import static com.lodi.common.core.constant.StatusConstant.OFF;
-import static com.lodi.common.core.constant.TokenConstants.LOGIN_TOKEN_KEY;
 import static com.lodi.common.core.enums.ErrorCode.*;
 
 /**
@@ -37,48 +40,48 @@ import static com.lodi.common.core.enums.ErrorCode.*;
 public class AuthServiceImpl implements AuthService {
 
     @Resource
-    private PasswordEncoder passwordEncoder;
-    @Resource
     private UserService userService;
-    @Resource
-    private TokenService tokenService;
     @Resource
     private RedisService redisService;
     @Resource
     private MailService mailService;
 
-    public String login(LoginRequest loginRequest) {
+    public SaTokenInfo login(LoginRequest loginRequest) {
         String loginType = loginRequest.getLoginType();
-        User user = null;
+        LoginUser loginUser = null;
         // todo 后续优化
         if ("password".equals(loginType)) {
-            user = loginPassword(loginRequest);
+            loginUser = loginPassword(loginRequest);
         }
-        return tokenService.createToken(user);
+        StpUtil.login(loginUser.getId());
+        StpUtil.getTokenSession().set(ContextConstant.LOGIN_USER, loginUser);
+        return StpUtil.getTokenInfo();
     }
 
-    private User loginPassword(LoginRequest loginRequest) {
+    private LoginUser loginPassword(LoginRequest loginRequest) {
         String username = loginRequest.getUsername();
         String password = loginRequest.getPassword();
 
         // 获取用户信息
         User user = userService.getUserByUsername(username);
         if (user == null) {
-            throw new UsernameNotFoundException("用户不存在");
+            throw new BusinessException(PARAMS_ERROR, "用户不存在");
         }
         if (user.getStatus() == OFF) {
-            throw new UsernameNotFoundException("用户已禁用");
+            throw new BusinessException(SYSTEM_ERROR, "用户已禁用");
         }
         if (user.getIsDelete() == DELETE) {
-            throw new UsernameNotFoundException("用户已被删除");
+            throw new BusinessException(SYSTEM_ERROR, "用户已被删除");
         }
-        boolean matches = passwordEncoder.matches(password, user.getUserPassword());
+        boolean matches = BCrypt.checkpw(password, user.getUserPassword());
         if (!matches) {
-            throw new UsernameNotFoundException("账号或密码错误");
+            throw new BusinessException(SYSTEM_ERROR, "账号或密码错误");
         }
         // 验证通过，记录相应的登录成功日志
+        LoginUser login = UserConvert.INSTANCE.toLogin(user);
+        login.setRoles(new HashSet<>(Arrays.asList(user.getUserRole())));
 
-        return user;
+        return login;
     }
 
     public Boolean register(UserRegisterRequest registerRequest) {
@@ -110,14 +113,12 @@ public class AuthServiceImpl implements AuthService {
         return userService.save(user);
     }
 
-    public Boolean logout() {
-        Long userId = SecurityContextHolder.getUserId();
-        String redisKey = LOGIN_TOKEN_KEY + userId;
-        return redisService.deleteObject(redisKey);
+    public void logout() {
+        StpUtil.logout();
     }
 
-    private String encodePassword(String password) {
-        return passwordEncoder.encode(password);
+    private static String encodePassword(String password) {
+        return BCrypt.hashpw(password, BCrypt.gensalt(12));
     }
 
     @Override
@@ -149,16 +150,16 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public UserVO getUserInfo() {
-        Long userId = SecurityContextHolder.getUserId();
+        Long userId = LoginHelper.getUserId();
         User user = userService.getById(userId);
         if (user == null) {
-            throw new UsernameNotFoundException("用户不存在");
+            throw new BusinessException(SYSTEM_ERROR, "用户不存在");
         }
         if (user.getStatus() == OFF) {
-            throw new UsernameNotFoundException("用户已禁用");
+            throw new BusinessException(SYSTEM_ERROR, "用户已禁用");
         }
         if (user.getIsDelete() == DELETE) {
-            throw new UsernameNotFoundException("用户已被删除");
+            throw new BusinessException(SYSTEM_ERROR, "用户已被删除");
         }
         return UserConvert.INSTANCE.toVO(user);
     }

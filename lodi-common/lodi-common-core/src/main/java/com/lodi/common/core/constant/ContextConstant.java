@@ -13,4 +13,14 @@ public interface ContextConstant {
      */
     String LOGIN_USER = "loginUser";
 
+    /**
+     * 用户id
+     */
+    String USER_ID = "userId";
+
+    /**
+     * 用户名
+     */
+    String USERNAME = "username";
+
 }

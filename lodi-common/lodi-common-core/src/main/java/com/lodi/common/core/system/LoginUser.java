@@ -18,12 +18,25 @@ public class LoginUser implements Serializable {
 
     private Long id;
 
+    /**
+     * 用户名
+     */
     private String username;
+
+    /**
+     * 昵称
+     */
+    private String nickname;
 
     /**
      * 状态
      */
     private Integer status;
+
+    /**
+     * 评论状态：0-禁言 1-正常
+     */
+    private Integer commentStatus;
 
     /**
      * 角色
@@ -36,8 +49,28 @@ public class LoginUser implements Serializable {
     private Set<String> permissions;
 
     /**
-     * 到期时间
+     * 邮箱
      */
-    private Long expireTime;
+    private String email;
+
+    /**
+     * 是否开启邮件通知：0-关闭 1-开启
+     */
+    private Integer startEmailNotify;
+
+    /**
+     * ip来源
+     */
+    private String ipSource;
+
+    /**
+     * 浏览器
+     */
+    private String browser;
+
+    /**
+     * 操作系统
+     */
+    private String os;
 
 }

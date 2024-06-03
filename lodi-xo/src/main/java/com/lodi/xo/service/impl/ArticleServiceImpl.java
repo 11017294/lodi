@@ -5,14 +5,13 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
-import com.lodi.common.core.holder.SecurityContextHolder;
-import com.lodi.common.core.utils.SecurityUtils;
 import com.lodi.common.model.convert.article.ArticleConvert;
 import com.lodi.common.model.entity.*;
 import com.lodi.common.model.request.article.*;
 import com.lodi.common.model.vo.ArticleVO;
 import com.lodi.common.mybatis.page.PageRequest;
 import com.lodi.common.mybatis.service.impl.BaseServiceImpl;
+import com.lodi.common.satoken.utils.LoginHelper;
 import com.lodi.xo.mapper.ArticleMapper;
 import com.lodi.xo.mapper.CommentMapper;
 import com.lodi.xo.service.ArticleService;
@@ -63,7 +62,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
 
         Article article = ArticleConvert.INSTANCE.toEntity(addRequest);
         // 设置作者id
-        article.setUserId(SecurityContextHolder.getUserId());
+        article.setUserId(LoginHelper.getUserId());
 
         return save(article);
     }
@@ -80,7 +79,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
         // 编辑后重置审核状态
         article.setAuditStatus(OFF);
         // 判断是否当前用户或管理员
-        isCurrentUserOrAdmin(article.getId());
+        checkCurrentUserOrAdmin(article.getId());
         return updateById(article);
     }
 
@@ -88,7 +87,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
     @Transactional
     public Boolean deleteArticle(Long id) {
         // 判断是否当前用户或管理员
-        isCurrentUserOrAdmin(id);
+        checkCurrentUserOrAdmin(id);
         // 删除评论
         LambdaQueryWrapper<Comment> deleteCommentWrapper = new LambdaQueryWrapper<>();
         deleteCommentWrapper.eq(Comment::getArticleId, id);
@@ -98,11 +97,11 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
     }
 
     /**
-     * 判断是否当前用户或管理员
+     * 检查是否当前用户或管理员
      *
      * @param articleId 文章id
      */
-    private void isCurrentUserOrAdmin(Long articleId) {
+    private void checkCurrentUserOrAdmin(Long articleId) {
         if (articleId == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
@@ -114,7 +113,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
         if (article == null) {
             throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
         }
-        SecurityUtils.isCurrentUserOrAdmin(article.getUserId());
+        LoginHelper.checkLoginUserOrAdmin(article.getUserId());
     }
 
     private LambdaQueryWrapper<Article> buildQueryWrapper(ArticlePageRequest pageRequest) {
@@ -375,7 +374,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
         // 按用户id查询 公开文章、审核
         queryWrapper.eq(Article::getUserId, userId);
         // 非本人只能看到公开且审核通过的文章
-        if (!SecurityUtils.isCurrentUser(userId)) {
+        if (!LoginHelper.isLoginUser(userId)) {
             queryWrapper.eq(Article::getIsPublish, ON);
             queryWrapper.eq(Article::getAuditStatus, ON);
         }
@@ -392,7 +391,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
     @Override
     public Boolean publishArticle(Long id) {
         // 判断是否当前用户或管理员
-        isCurrentUserOrAdmin(id);
+        checkCurrentUserOrAdmin(id);
         LambdaUpdateWrapper<Article> updateWrapper = new LambdaUpdateWrapper<>();
         updateWrapper.set(Article::getIsPublish, ON)
                 .eq(Article::getId, id);
@@ -402,7 +401,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
     @Override
     public Boolean cancelPublishArticle(Long id) {
         // 判断是否当前用户或管理员
-        isCurrentUserOrAdmin(id);
+        checkCurrentUserOrAdmin(id);
         LambdaUpdateWrapper<Article> updateWrapper = new LambdaUpdateWrapper<>();
         updateWrapper.set(Article::getIsPublish, OFF)
                 .eq(Article::getId, id);

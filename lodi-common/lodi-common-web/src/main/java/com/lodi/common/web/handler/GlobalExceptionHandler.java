@@ -1,12 +1,13 @@
 package com.lodi.common.web.handler;
 
+import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.exception.NotPermissionException;
+import cn.dev33.satoken.exception.NotRoleException;
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
 import com.lodi.common.core.domain.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
@@ -36,7 +37,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BusinessException.class)
     public Result<String> handleBusinessException(HttpServletRequest request, BusinessException e) {
-        log.error("[{}] {} [BusinessException] {}", request.getMethod(), getUrl(request), e.getMessage());
+        log.error("[{}] {}", request.getMethod(), getUrl(request), e);
         return Result.error(e.getCode(), e.getMessage());
     }
 
@@ -45,7 +46,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(RuntimeException.class)
     public Result<String> handleRuntimeException(HttpServletRequest request, RuntimeException e) {
-        log.error("[{}] {} [RuntimeException] {}", request.getMethod(), getUrl(request), e.getMessage());
+        log.error("[{}] {}", request.getMethod(), getUrl(request), e);
         return Result.error(ErrorCode.SYSTEM_ERROR.getCode(), ErrorCode.SYSTEM_ERROR.getMessage());
     }
 
@@ -54,10 +55,10 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Result validExceptionHandler(HttpServletRequest request, MethodArgumentNotValidException ex) {
-        FieldError firstFieldError = CollectionUtils.firstElement(ex.getBindingResult().getFieldErrors());
+    public Result validExceptionHandler(HttpServletRequest request, MethodArgumentNotValidException e) {
+        FieldError firstFieldError = CollectionUtils.firstElement(e.getBindingResult().getFieldErrors());
         String exceptionStr = Optional.ofNullable(firstFieldError).map(FieldError::getDefaultMessage).orElse(EMPTY);
-        log.error("[{}] {} [MethodArgumentNotValidException] {}", request.getMethod(), getUrl(request), exceptionStr);
+        log.error("[{}] {} {}", request.getMethod(), getUrl(request), exceptionStr, e);
         return Result.error(ErrorCode.PARAMS_ERROR.getCode(), exceptionStr);
     }
 
@@ -66,32 +67,38 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(BindException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Result handleBindException(HttpServletRequest request, BindException ex) {
-        FieldError firstFieldError = CollectionUtils.firstElement(ex.getBindingResult().getFieldErrors());
+    public Result handleBindException(HttpServletRequest request, BindException e) {
+        FieldError firstFieldError = CollectionUtils.firstElement(e.getBindingResult().getFieldErrors());
         String exceptionStr = Optional.ofNullable(firstFieldError).map(FieldError::getDefaultMessage).orElse(EMPTY);
-        log.error("[{}] {} [BindException] {}", request.getMethod(), getUrl(request), exceptionStr);
+        log.error("[{}] {} {}", request.getMethod(), getUrl(request), exceptionStr, e);
         return Result.error(ErrorCode.PARAMS_ERROR.getCode(), exceptionStr);
     }
 
     /**
-     * 用户不存在异常
+     * 凭证无效异常
      */
-    @ExceptionHandler(UsernameNotFoundException.class)
-    public Result<String> handleUsernameNotFoundException(HttpServletRequest request, UsernameNotFoundException e) {
-        log.error("[{}] {} [UsernameNotFoundException] {}", request.getMethod(), getUrl(request), e.getMessage());
-        return Result.error(ErrorCode.SYSTEM_ERROR.getCode(), e.getMessage());
+    @ExceptionHandler(NotLoginException.class)
+    public Result handleNotLoginException(HttpServletRequest request, NotLoginException e) {
+        log.error("[{}] {}", request.getMethod(), getUrl(request), e);
+        return Result.error(ErrorCode.NOT_LOGIN_ERROR.getCode(), e.getMessage());
     }
 
     /**
-     * 凭证无效异常
-     *
-     * @param e
-     * @return
+     * 无角色异常
      */
-    @ExceptionHandler(BadCredentialsException.class)
-    public Result<String> handleBadCredentialsException(HttpServletRequest request, BadCredentialsException e) {
-        log.error("[{}] {} [BadCredentialsException] {}", request.getMethod(), getUrl(request), e.getMessage());
-        return Result.error(ErrorCode.SYSTEM_ERROR.getCode(), e.getMessage());
+    @ExceptionHandler(NotRoleException.class)
+    public Result handleNotRoleException(HttpServletRequest request, NotRoleException e) {
+        log.error("[{}] {}", request.getMethod(), getUrl(request), e);
+        return Result.error(ErrorCode.NO_AUTH_ERROR.getCode(), e.getMessage());
+    }
+
+    /**
+     * 无权限异常
+     */
+    @ExceptionHandler(NotPermissionException.class)
+    public Result handleNotPermissionException(HttpServletRequest request, NotPermissionException e) {
+        log.error("[{}] {}", request.getMethod(), getUrl(request), e);
+        return Result.error(ErrorCode.NO_AUTH_ERROR.getCode(), e.getMessage());
     }
 
     private String getUrl(HttpServletRequest request) {

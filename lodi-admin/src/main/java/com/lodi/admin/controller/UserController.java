@@ -1,5 +1,7 @@
 package com.lodi.admin.controller;
 
+import cn.dev33.satoken.annotation.SaCheckRole;
+import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.api.RemoteFileService;
 import com.lodi.common.core.constant.FileDirectoryConstant;
@@ -13,7 +15,6 @@ import com.lodi.common.model.request.user.UserPageRequest;
 import com.lodi.common.model.request.user.UserQueryRequest;
 import com.lodi.common.model.request.user.UserUpdateRequest;
 import com.lodi.common.model.vo.UserVO;
-import com.lodi.common.security.annotation.RequiresRoles;
 import com.lodi.xo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -39,7 +40,7 @@ public class UserController {
     @Resource
     private RemoteFileService remoteFileService;
 
-    @RequiresRoles("admin")
+    @SaCheckRole("admin")
     @Operation(summary = "获取用户列表")
     @GetMapping("list")
     public Result<List<UserVO>> getUserList(@ParameterObject @Validated UserQueryRequest queryRequest) {
@@ -64,7 +65,7 @@ public class UserController {
         return Result.success(UserConvert.INSTANCE.toVO(user));
     }
 
-    @RequiresRoles("admin")
+    @SaCheckRole("admin")
     @Operation(summary = "删除用户")
     @DeleteMapping("delete")
     public Result<Boolean> deleteUser(@RequestBody @Validated IdRequest idRequest) {

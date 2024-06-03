@@ -1,5 +1,6 @@
 package com.lodi.xo.service;
 
+import cn.dev33.satoken.stp.SaTokenInfo;
 import com.lodi.common.model.request.user.UserRegisterRequest;
 import com.lodi.common.model.request.userAuth.LoginRequest;
 import com.lodi.common.model.vo.UserVO;
@@ -18,7 +19,7 @@ public interface AuthService {
      * @param loginRequest
      * @return
      */
-    String login(LoginRequest loginRequest);
+    SaTokenInfo login(LoginRequest loginRequest);
 
     /**
      * 注册
@@ -33,7 +34,7 @@ public interface AuthService {
      *
      * @return
      */
-    Boolean logout();
+    void logout();
 
     /**
      * 发送邮箱验证码

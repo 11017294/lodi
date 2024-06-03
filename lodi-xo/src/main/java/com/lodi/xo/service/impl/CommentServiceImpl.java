@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
-import com.lodi.common.core.holder.SecurityContextHolder;
 import com.lodi.common.model.convert.comment.CommentConvert;
 import com.lodi.common.model.entity.Article;
 import com.lodi.common.model.entity.Comment;
@@ -15,6 +14,7 @@ import com.lodi.common.model.request.comment.CommentQueryRequest;
 import com.lodi.common.model.request.comment.CommentUpdateRequest;
 import com.lodi.common.model.vo.CommentTreeVO;
 import com.lodi.common.mybatis.service.impl.BaseServiceImpl;
+import com.lodi.common.satoken.utils.LoginHelper;
 import com.lodi.xo.mapper.ArticleMapper;
 import com.lodi.xo.mapper.CommentMapper;
 import com.lodi.xo.service.CommentService;
@@ -48,7 +48,7 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, Comment> 
     @Override
     public Boolean insertComment(CommentAddRequest addRequest) {
         Comment comment = CommentConvert.INSTANCE.toEntity(addRequest);
-        Long userId = SecurityContextHolder.getUserId();
+        Long userId = LoginHelper.getUserId();
         // 1.用户是否开启评论
         User user = userService.getById(userId);
         if (user.getCommentStatus().equals(OFF)) {

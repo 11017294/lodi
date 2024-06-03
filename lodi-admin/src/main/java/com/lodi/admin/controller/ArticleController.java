@@ -1,5 +1,6 @@
 package com.lodi.admin.controller;
 
+import cn.dev33.satoken.annotation.SaCheckRole;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
@@ -12,7 +13,6 @@ import com.lodi.common.model.request.article.ArticlePageRequest;
 import com.lodi.common.model.request.article.ArticleUpdateRequest;
 import com.lodi.common.model.request.article.AuditArticleRequest;
 import com.lodi.common.model.vo.ArticleVO;
-import com.lodi.common.security.annotation.RequiresRoles;
 import com.lodi.xo.service.ArticleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -69,14 +69,14 @@ public class ArticleController {
         return Result.success(articleService.deleteArticle(request.getId()));
     }
 
-    @RequiresRoles("admin")
+    @SaCheckRole("admin")
     @Operation(summary = "批量删除文章")
     @DeleteMapping("deleteBatch")
     public Result<Boolean> deleteBatchArticle(@RequestBody Long[] ids) {
         return Result.success(articleService.removeByIds(Arrays.asList(ids)));
     }
 
-    @RequiresRoles("admin")
+    @SaCheckRole("admin")
     @Operation(summary = "审核")
     @PutMapping("audit")
     public Result<Boolean> auditArticle(@RequestBody @Validated AuditArticleRequest auditRequest) {

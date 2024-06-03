@@ -1,6 +1,7 @@
 package com.lodi.common.model.convert.user;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lodi.common.core.system.LoginUser;
 import com.lodi.common.model.entity.User;
 import com.lodi.common.model.request.user.UserRegisterRequest;
 import com.lodi.common.model.request.user.UserSelfUpdateRequest;
@@ -30,6 +31,8 @@ public interface UserConvert {
     User toEntity(UserRegisterRequest registerRequest);
 
     UserVO toVO(User user);
+
+    LoginUser toLogin(User user);
 
     UserInfoVO toInfoVO(User user);
 
