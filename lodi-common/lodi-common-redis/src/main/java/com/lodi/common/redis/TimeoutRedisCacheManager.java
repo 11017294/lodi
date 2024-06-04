@@ -9,8 +9,8 @@ import org.springframework.util.StringUtils;
 
 import java.time.Duration;
 
-import static com.lodi.common.redis.CacheAutoConfiguration.SEPARATOR;
-import static com.lodi.common.redis.CacheAutoConfiguration.SPLIT;
+import static com.lodi.common.core.constant.CommonConstant.SEPARATOR;
+import static com.lodi.common.core.constant.CommonConstant.SPLIT;
 
 /**
  * 支持自定义过期时间的 {@link RedisCacheManager} 实现类

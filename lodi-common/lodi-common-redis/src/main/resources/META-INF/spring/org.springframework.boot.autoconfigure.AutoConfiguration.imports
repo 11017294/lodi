@@ -1,3 +1,2 @@
-com.lodi.common.redis.RedisConfig
-com.lodi.common.redis.CacheAutoConfiguration
-com.lodi.common.redis.RedisService
+com.lodi.common.redis.config.RedisConfig
+com.lodi.common.redis.config.CacheAutoConfiguration

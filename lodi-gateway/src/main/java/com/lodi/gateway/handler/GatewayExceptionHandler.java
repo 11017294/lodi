@@ -2,7 +2,6 @@ package com.lodi.gateway.handler;
 
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.gateway.utils.WebFluxUtils;
-import io.jsonwebtoken.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler;
 import org.springframework.cloud.gateway.support.NotFoundException;
@@ -23,6 +22,7 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @Configuration
 public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
+
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
         ServerHttpResponse response = exchange.getResponse();
@@ -39,12 +39,10 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
         } else if (ex instanceof ResponseStatusException) {
             ResponseStatusException responseStatusException = (ResponseStatusException) ex;
             msg = responseStatusException.getMessage();
-        } else if (ex instanceof SignatureException) {
-            code = ErrorCode.NOT_LOGIN_ERROR.getCode();
-            msg = "凭证无效";
         }
 
         log.error("[网关异常处理]请求路径:{},异常信息:{}", exchange.getRequest().getPath(), ex.getMessage());
         return WebFluxUtils.webFluxResponseWriter(response, msg, code);
     }
+
 }

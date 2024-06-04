@@ -1,5 +1,6 @@
-package com.lodi.common.redis;
+package com.lodi.common.redis.config;
 
+import com.lodi.common.redis.TimeoutRedisCacheManager;
 import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.cache.CacheProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -15,7 +16,8 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 
 import java.util.Objects;
 
-import static com.lodi.common.redis.RedisConfig.buildRedisSerializer;
+import static com.lodi.common.core.constant.CommonConstant.SEPARATOR;
+import static com.lodi.common.redis.config.RedisConfig.buildRedisSerializer;
 
 /**
  * Cache 配置类，基于 Redis 实现
@@ -27,10 +29,6 @@ import static com.lodi.common.redis.RedisConfig.buildRedisSerializer;
 @EnableConfigurationProperties({CacheProperties.class})
 @EnableCaching
 public class CacheAutoConfiguration {
-
-    protected static final String SPLIT = "#";
-
-    protected static final String SEPARATOR = ":";
 
     /**
      * RedisCacheConfiguration Bean

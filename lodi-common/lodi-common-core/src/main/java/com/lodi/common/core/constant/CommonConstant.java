@@ -37,4 +37,6 @@ public interface CommonConstant {
 
     String SEPARATOR = ":";
 
+    String SPLIT = "#";
+
 }

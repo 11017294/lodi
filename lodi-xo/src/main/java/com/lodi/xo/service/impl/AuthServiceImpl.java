@@ -12,7 +12,7 @@ import com.lodi.common.model.entity.User;
 import com.lodi.common.model.request.user.UserRegisterRequest;
 import com.lodi.common.model.request.userAuth.LoginRequest;
 import com.lodi.common.model.vo.UserVO;
-import com.lodi.common.redis.RedisService;
+import com.lodi.common.redis.utils.RedisUtils;
 import com.lodi.common.satoken.utils.LoginHelper;
 import com.lodi.xo.service.AuthService;
 import com.lodi.xo.service.MailService;
@@ -41,8 +41,6 @@ public class AuthServiceImpl implements AuthService {
 
     @Resource
     private UserService userService;
-    @Resource
-    private RedisService redisService;
     @Resource
     private MailService mailService;
 
@@ -127,7 +125,7 @@ public class AuthServiceImpl implements AuthService {
         // todo 后续将邮件模板放到数据库统一管理
         String msg = String.format("您的验证码是：%s，请在五分钟内使用。为了您的账号安全，请勿将验证码告诉他人！", randomCode);
         mailService.sendSimpleMail(email, "注册验证码", msg);
-        redisService.setCacheObject(String.format("emailCode:%s", email), randomCode, 300L, TimeUnit.SECONDS);
+        RedisUtils.setCacheObject(String.format("emailCode:%s", email), randomCode, 300L, TimeUnit.SECONDS);
     }
 
     public void useSmsCode(String email, String code) {
@@ -135,7 +133,7 @@ public class AuthServiceImpl implements AuthService {
             throw new BusinessException(PARAMS_ERROR);
         }
         String key = String.format("emailCode:%s", email);
-        String randomCode = redisService.getCacheObject(key);
+        String randomCode = RedisUtils.getCacheObject(key);
         // 缓存验证码不存在
         if (StringUtils.isBlank(randomCode)) {
             throw new BusinessException(EMAIL_CODE_NOT_FOUND);
@@ -145,7 +143,7 @@ public class AuthServiceImpl implements AuthService {
             throw new BusinessException(INVALID_EMAIL_CODE);
         }
         // 验证完清除掉code
-        redisService.deleteObject(key);
+        RedisUtils.deleteObject(key);
     }
 
     @Override
