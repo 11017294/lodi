@@ -93,7 +93,7 @@ public class CategoryServiceImpl extends BaseServiceImpl<CategoryMapper, Categor
         return list().stream().map(category -> {
             // 查询文章数
             LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
-            queryWrapper.like(Article::getCategoryId, category.getId());
+            queryWrapper.eq(Article::getCategoryId, category.getId());
             queryWrapper.eq(Article::getIsPublish, StatusConstant.ON);
             queryWrapper.eq(Article::getAuditStatus, StatusConstant.ON);
 
