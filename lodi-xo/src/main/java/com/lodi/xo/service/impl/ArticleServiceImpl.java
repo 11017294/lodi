@@ -63,23 +63,27 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
         Article article = ArticleConvert.INSTANCE.toEntity(addRequest);
         // 设置作者id
         article.setUserId(LoginHelper.getUserId());
+        // 若是管理员默认审核通过
+        article.setAuditStatus(LoginHelper.isAdmin() ? ON : OFF);
 
         return save(article);
     }
 
     @Override
     public Boolean updateArticle(ArticleUpdateRequest updateRequest) {
+        Article article = ArticleConvert.INSTANCE.toEntity(updateRequest);
+        // 检查是否当前用户或管理员
+        checkCurrentUserOrAdmin(article.getId());
+
         List<Long> tags = updateRequest.getTags();
         Long categoryId = updateRequest.getCategoryId();
         // 判断标签id、类别id 是否存在
         tagsService.validateTagsId(tags);
         categoryService.validateCategoryId(categoryId);
 
-        Article article = ArticleConvert.INSTANCE.toEntity(updateRequest);
-        // 编辑后重置审核状态
-        article.setAuditStatus(OFF);
-        // 检查是否当前用户或管理员
-        checkCurrentUserOrAdmin(article.getId());
+        // 编辑后重置审核状态，若是管理员默认审核通过
+        article.setAuditStatus(LoginHelper.isAdmin() ? ON : OFF);
+
         return updateById(article);
     }
 
