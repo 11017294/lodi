@@ -78,7 +78,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
         Article article = ArticleConvert.INSTANCE.toEntity(updateRequest);
         // 编辑后重置审核状态
         article.setAuditStatus(OFF);
-        // 判断是否当前用户或管理员
+        // 检查是否当前用户或管理员
         checkCurrentUserOrAdmin(article.getId());
         return updateById(article);
     }
@@ -86,7 +86,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
     @Override
     @Transactional
     public Boolean deleteArticle(Long id) {
-        // 判断是否当前用户或管理员
+        // 检查是否当前用户或管理员
         checkCurrentUserOrAdmin(id);
         // 删除评论
         LambdaQueryWrapper<Comment> deleteCommentWrapper = new LambdaQueryWrapper<>();
@@ -390,7 +390,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
 
     @Override
     public Boolean publishArticle(Long id) {
-        // 判断是否当前用户或管理员
+        // 检查是否当前用户或管理员
         checkCurrentUserOrAdmin(id);
         LambdaUpdateWrapper<Article> updateWrapper = new LambdaUpdateWrapper<>();
         updateWrapper.set(Article::getIsPublish, ON)
@@ -400,7 +400,7 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
 
     @Override
     public Boolean cancelPublishArticle(Long id) {
-        // 判断是否当前用户或管理员
+        // 检查是否当前用户或管理员
         checkCurrentUserOrAdmin(id);
         LambdaUpdateWrapper<Article> updateWrapper = new LambdaUpdateWrapper<>();
         updateWrapper.set(Article::getIsPublish, OFF)

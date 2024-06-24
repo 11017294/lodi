@@ -99,9 +99,27 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, Comment> 
 
     @Override
     public Boolean deleteComment(Long id) {
+        // 检查是否是当前用户或管理员
+        checkCurrentUserOrAdmin(id);
         int count = baseMapper.deleteCommentAndChildren(id);
         log.info("删除评论，id:{}，删除{}条", id, count);
         return true;
+    }
+
+    /**
+     * 检查是否当前用户或管理员
+     *
+     * @param commentId 评论id
+     */
+    private void checkCurrentUserOrAdmin(Long commentId) {
+        if (commentId == null) {
+            throw new BusinessException(ErrorCode.PARAMS_ERROR);
+        }
+        Comment comment = getById(commentId);
+        if (comment == null) {
+            throw new BusinessException(ErrorCode.NOT_FOUND_ERROR);
+        }
+        LoginHelper.checkLoginUserOrAdmin(comment.getUserId());
     }
 
     @Override

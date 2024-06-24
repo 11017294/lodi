@@ -24,6 +24,7 @@ public class LoginHelper {
 
     /**
      * 获取用户id
+     *
      * @return 用户id
      */
     public static Long getUserId() {
@@ -37,6 +38,7 @@ public class LoginHelper {
 
     /**
      * 获取用户名
+     *
      * @return 用户名
      */
     public static String getUsername() {
@@ -50,6 +52,7 @@ public class LoginHelper {
 
     /**
      * 基于 Token-Session 获取登录用户
+     *
      * @return 登录用户
      */
     public static LoginUser getLoginUser() {
@@ -63,6 +66,9 @@ public class LoginHelper {
 
     /**
      * 获取登录用户基于token
+     *
+     * @param token 令牌
+     * @return 登录用户
      */
     public static LoginUser getLoginUser(String token) {
         return (LoginUser) StpUtil.getTokenSessionByToken(token).get(LOGIN_USER);
@@ -70,10 +76,11 @@ public class LoginHelper {
 
     /**
      * 检查是否 登录用户或管理员
-     * @param id
+     *
+     * @param userId 用户id
      */
-    public static void checkLoginUserOrAdmin(Long id) {
-        if(isLoginUser(id) || isAdmin()){
+    public static void checkLoginUserOrAdmin(Long userId) {
+        if (isLoginUserOrAdmin(userId)) {
             return;
         }
         throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
@@ -81,24 +88,27 @@ public class LoginHelper {
 
     /**
      * 是否 登录用户或管理员
-     * @param id
+     *
+     * @param userId 用户id
      * @return 是：true，否：false
      */
-    public static boolean isLoginUserOrAdmin(Long id) {
-        return isLoginUser(id) || isAdmin();
+    public static boolean isLoginUserOrAdmin(Long userId) {
+        return isLoginUser(userId) || isAdmin();
     }
 
     /**
      * 是否 登录用户
-     * @param id
+     *
+     * @param userId 用户id
      * @return 是：true，否：false
      */
-    public static boolean isLoginUser(Long id) {
-        return Objects.equals(getUserId(), id);
+    public static boolean isLoginUser(Long userId) {
+        return Objects.equals(getUserId(), userId);
     }
 
     /**
      * 是否 管理员
+     *
      * @return 是：true，否：false
      */
     public static boolean isAdmin() {

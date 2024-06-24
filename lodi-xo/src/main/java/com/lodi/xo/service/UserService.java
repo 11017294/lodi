@@ -5,6 +5,7 @@ import com.lodi.common.mybatis.service.BaseService;
 import com.lodi.common.model.entity.User;
 import com.lodi.common.model.request.user.UserPageRequest;
 import com.lodi.common.model.request.user.UserQueryRequest;
+import com.lodi.common.model.request.user.UserSelfUpdateRequest;
 
 import java.util.List;
 
@@ -40,4 +41,11 @@ public interface UserService extends BaseService<User> {
      */
     User getUserByUsername(String username);
 
+    /**
+     * 修改用户信息
+     *
+     * @param updateRequest
+     * @return
+     */
+    Boolean updateUser(UserSelfUpdateRequest updateRequest);
 }

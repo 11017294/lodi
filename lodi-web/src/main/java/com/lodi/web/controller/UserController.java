@@ -10,6 +10,7 @@ import com.lodi.common.model.entity.User;
 import com.lodi.common.model.request.IdRequest;
 import com.lodi.common.model.request.user.UserSelfUpdateRequest;
 import com.lodi.common.model.vo.UserInfoVO;
+import com.lodi.common.satoken.utils.LoginHelper;
 import com.lodi.xo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -40,8 +41,7 @@ public class UserController {
     @Operation(summary = "更新用户个人信息")
     @PutMapping("updateUserInfo")
     public Result<Boolean> updateUser(@RequestBody @Validated UserSelfUpdateRequest updateRequest) {
-        User user = UserConvert.INSTANCE.toEntity(updateRequest);
-        return Result.success(userService.updateById(user));
+        return Result.success(userService.updateUser(updateRequest));
     }
 
     @Operation(summary = "上传头像")

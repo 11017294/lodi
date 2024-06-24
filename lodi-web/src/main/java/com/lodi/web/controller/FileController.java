@@ -44,6 +44,7 @@ public class FileController {
         if (StringUtils.isBlank(fileName)) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
+        // todo 判断是否当前用户或管理员
         Result<Integer> result = remoteFileService.delete(fileName, FileDirectoryConstant.DEFAULT);
         if(result.getData() == -1){
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "删除图片失败");
