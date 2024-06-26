@@ -5,7 +5,7 @@ import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * 用户更新 请求体
@@ -33,7 +33,7 @@ public class UserUpdateRequest implements Serializable {
     private String summary;
 
     @Schema(description = "出生年月日", format = "yyyy-MM-dd")
-    private Date birthday;
+    private LocalDate birthday;
 
     @Schema(description = "性别（0-默认 1-男 2-女）")
     private Integer gender;

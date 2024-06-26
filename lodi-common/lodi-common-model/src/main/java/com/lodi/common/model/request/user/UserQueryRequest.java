@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * 用户查询 请求体
@@ -31,7 +31,7 @@ public class UserQueryRequest implements Serializable {
     private String summary;
 
     @Schema(description = "出生年月日", format = "yyyy-MM-dd", example = "1999-01-01")
-    private Date birthday;
+    private LocalDate birthday;
 
     /**
      * 性别：0-默认 1-男 2-女

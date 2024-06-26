@@ -6,7 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.lodi.common.mybatis.domain.BaseEntity;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * 用户
@@ -52,7 +53,7 @@ public class User extends BaseEntity<User> {
     /**
      * 出生年月日
      */
-    private Date birthday;
+    private LocalDate birthday;
 
     /**
      * 性别：0-默认 1-男 2-女
@@ -92,7 +93,7 @@ public class User extends BaseEntity<User> {
     /**
      * 最后登录时间
      */
-    private Date lastLoginTime;
+    private LocalDateTime lastLoginTime;
 
     /**
      * 最后登录IP

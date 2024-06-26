@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * 用户信息 视图
@@ -35,7 +35,7 @@ public class UserInfoVO implements Serializable {
 
     @Schema(description = "出生年月日")
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date birthday;
+    private LocalDate birthday;
 
     @Schema(description = "性别（0-默认 1-男 2-女）")
     private Integer gender;
@@ -48,6 +48,6 @@ public class UserInfoVO implements Serializable {
 
     @Schema(description = "注册日期")
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date createTime;
+    private LocalDate createTime;
 
 }
