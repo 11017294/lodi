@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS lodi.t_user
 -- 文章
 CREATE TABLE IF NOT EXISTS lodi.t_article
 (
-    id            BIGINT                             NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id            BIGINT                             NOT NULL AUTO_INCREMENT COMMENT 'ID' PRIMARY KEY,
     title         VARCHAR(128)                       NOT NULL COMMENT '标题',
     summary       VARCHAR(256)                       NULL COMMENT '文章简介',
     content       LONGTEXT                           NOT NULL COMMENT '内容',
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS lodi.t_article
 -- 文章类别
 CREATE TABLE IF NOT EXISTS lodi.t_category
 (
-    id            BIGINT                             NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id            BIGINT                             NOT NULL AUTO_INCREMENT COMMENT 'ID' PRIMARY KEY,
     name          VARCHAR(255)                       NULL COMMENT '类别名称',
     content       VARCHAR(255)                       NULL COMMENT '类别简介',
     sort          INT(10)                            NOT NULL DEFAULT 0 COMMENT '排序字段，越大越靠前',
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS lodi.t_category
 -- 标签
 CREATE TABLE IF NOT EXISTS lodi.t_tags
 (
-    id          BIGINT                             NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id          BIGINT                             NOT NULL AUTO_INCREMENT COMMENT 'ID' PRIMARY KEY,
     name        VARCHAR(255)                       NULL COMMENT '标签名称',
     content     VARCHAR(255)                       NULL COMMENT '标签简介',
     sort        INT(10)                            NOT NULL DEFAULT 0 COMMENT '排序字段，越大越靠前',
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS lodi.t_tags
 -- 动漫信息     # 主要角色
 CREATE TABLE IF NOT EXISTS lodi.t_anime_info
 (
-    id                 BIGINT                                  NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id                 BIGINT                                  NOT NULL AUTO_INCREMENT COMMENT 'ID' PRIMARY KEY,
     series_id          BIGINT                                  NOT NULL COMMENT '系列ID',
     anime_name         VARCHAR(256)                            NOT NULL COMMENT '番名',
     region             VARCHAR(255)                            NULL COMMENT '地区',
@@ -114,50 +114,63 @@ CREATE TABLE IF NOT EXISTS lodi.t_anime_info
 -- 评论
 CREATE TABLE IF NOT EXISTS lodi.t_comment
 (
-    id               bigint auto_increment
-        primary key,
-
-    first_comment_id bigint                             null comment '该条评论下的一级评论ID',
-    to_id            bigint                             null comment '回复某条评论的id',
-    article_id       bigint                             null comment '文章id',
-    user_id          bigint                             not null comment '用户id',
-    to_user_id       bigint                             null comment '回复某个人的id',
-    content          varchar(2048)                      not null comment '评论内容',
-    source           varchar(255)                       not null comment '评论来源: ARTICLE, MESSAGE_BOARD, ABOUT',
-    create_time      datetime default CURRENT_TIMESTAMP not null comment '创建时间',
-    update_time      datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '更新时间',
-    is_delete        tinyint  default 0                 not null comment '是否删除：0-未删 1-已删'
+    id               BIGINT                             NOT NULL AUTO_INCREMENT COMMENT 'ID' PRIMARY KEY,
+    first_comment_id BIGINT                             NULL COMMENT '该条评论下的一级评论ID',
+    to_id            BIGINT                             NULL COMMENT '回复某条评论的ID',
+    article_id       BIGINT                             NULL COMMENT '文章ID',
+    user_id          BIGINT                             NOT NULL COMMENT '用户ID',
+    to_user_id       BIGINT                             NULL COMMENT '回复某个人的ID',
+    content          VARCHAR(2048)                      NOT NULL COMMENT '评论内容',
+    source           VARCHAR(255)                       NOT NULL COMMENT '评论来源: ARTICLE, MESSAGE_BOARD, ABOUT',
+    create_time      DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '创建时间',
+    update_time      DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    is_delete        TINYINT  DEFAULT 0                 NOT NULL COMMENT '是否删除：0-未删 1-已删'
 ) comment '评论';
 
 
 -- 导航
 CREATE TABLE IF NOT EXISTS lodi.t_navigate
 (
-    id               bigint auto_increment
-    primary key,
-    title           varchar(200)                       not null comment '标题',
-    summary         varchar(200)                       null comment '简介',
-    content         VARCHAR(2048)                      null comment '内容',
-    url             varchar(512)                       not null comment 'url',
-    favicon_url     varchar(255)                       null comment '网站图标路径',
-    nav_category_id bigint                             not null comment '导航类型id',
-    click_count     int      default 0                 not null comment '点击数',
-    sort            int      default 0                 not null comment '排序字段',
-    create_time     datetime default CURRENT_TIMESTAMP not null comment '创建时间',
-    update_time     datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '更新时间',
-    is_delete       tinyint  default 0                 not null comment '是否删除：0-未删 1-已删'
+    id              BIGINT                             NOT NULL AUTO_INCREMENT COMMENT 'ID' PRIMARY KEY,
+    title           VARCHAR(200)                       NOT NULL COMMENT '标题',
+    summary         VARCHAR(200)                       NULL COMMENT '简介',
+    content         VARCHAR(2048)                      NULL COMMENT '内容',
+    url             VARCHAR(512)                       NOT NULL COMMENT 'URL',
+    favicon_url     VARCHAR(255)                       NULL COMMENT '网站图标路径',
+    nav_category_id BIGINT                             NOT NULL COMMENT '导航类型ID',
+    click_count     INT      DEFAULT 0                 NOT NULL COMMENT '点击数',
+    sort            INT      DEFAULT 0                 NOT NULL COMMENT '排序字段',
+    create_time     DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '创建时间',
+    update_time     DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    is_delete       TINYINT  DEFAULT 0                 NOT NULL COMMENT '是否删除：0-未删 1-已删'
 ) COMMENT '导航';
 
 -- 导航分类
 CREATE TABLE IF NOT EXISTS lodi.t_nav_category
 (
-    id               bigint auto_increment
-    primary key,
-    name        varchar(255)                       null comment '分类名',
-    content     varchar(255)                       null comment '分类简介',
-    click_count int      default 0                 not null comment '点击数',
-    sort        int      default 0                 not null comment '排序字段',
-    create_time datetime default CURRENT_TIMESTAMP not null comment '创建时间',
-    update_time datetime default CURRENT_TIMESTAMP not null on update CURRENT_TIMESTAMP comment '更新时间',
-    is_delete   tinyint  default 0                 not null comment '是否删除：0-未删 1-已删'
+    id          BIGINT                             NOT NULL AUTO_INCREMENT COMMENT 'ID' PRIMARY KEY,
+    name        VARCHAR(255)                       NULL COMMENT '分类名',
+    content     VARCHAR(255)                       NULL COMMENT '分类简介',
+    click_count INT      DEFAULT 0                 NOT NULL COMMENT '点击数',
+    sort        INT      DEFAULT 0                 NOT NULL COMMENT '排序字段',
+    create_time DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '创建时间',
+    update_time DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    is_delete   TINYINT  DEFAULT 0                 NOT NULL COMMENT '是否删除：0-未删 1-已删'
 ) COMMENT '导航分类表';
+
+-- 文件管理
+CREATE TABLE IF NOT EXISTS lodi.t_file_manager
+(
+    id            BIGINT                             NOT NULL AUTO_INCREMENT COMMENT 'ID' PRIMARY KEY,
+    parent_id     BIGINT DEFAULT 0                   NOT NULL COMMENT '父ID目录关联',
+    file_name     VARCHAR(100)                       NOT NULL COMMENT '文件名称',
+    file_path     VARCHAR(255)                       NOT NULL COMMENT '文件地址',
+    file_type     TINYINT DEFAULT 0                  NOT NULL COMMENT '文件类型：0-目录 1-文件',
+    file_size     BIGINT DEFAULT 0                   NULL COMMENT '文件大小',
+    file_hash     CHAR(64)                           NULL COMMENT '文件内容哈希',
+    created_by    TINYINT                            NOT NULL COMMENT '创建人',
+    updated_by    TINYINT                            NOT NULL COMMENT '更新人',
+    create_time   DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL COMMENT '创建时间',
+    update_time   DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    is_delete     TINYINT  DEFAULT 0                 NOT NULL COMMENT '是否删除：0-未删 1-已删'
+) comment '文件管理';

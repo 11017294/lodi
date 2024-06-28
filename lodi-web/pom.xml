@@ -22,10 +22,6 @@
         </dependency>
         <dependency>
             <groupId>com.lodi</groupId>
-            <artifactId>lodi-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.lodi</groupId>
             <artifactId>lodi-common-web</artifactId>
         </dependency>
 

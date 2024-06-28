@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 
+import static com.lodi.common.core.constant.FileConstant.FILE_BASE_PATH;
+
 /**
  * 七牛云文件 服务层实现
  *
@@ -28,8 +30,7 @@ public class QiniuFileServiceImpl implements FileService {
             throw new BusinessException(ErrorCode.FILE_IS_EMPTY);
         }
         try {
-            String basePath = "http://picture.bigchen.icu/";
-            return basePath + qiniuUtil.uploadQiniu(file, fileDirectory);
+            return FILE_BASE_PATH + qiniuUtil.uploadQiniu(file, fileDirectory);
         } catch (QiniuException e) {
             log.error("上传文件到七牛云失败", e);
             throw new BusinessException(ErrorCode.SYSTEM_ERROR, "文件服务异常");

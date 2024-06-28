@@ -18,6 +18,10 @@
         </dependency>
         <dependency>
             <groupId>com.lodi</groupId>
+            <artifactId>lodi-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lodi</groupId>
             <artifactId>lodi-common-security</artifactId>
         </dependency>
         <dependency>
