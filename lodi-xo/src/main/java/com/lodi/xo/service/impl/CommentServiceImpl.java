@@ -13,6 +13,8 @@ import com.lodi.common.model.request.comment.CommentPageRequest;
 import com.lodi.common.model.request.comment.CommentQueryRequest;
 import com.lodi.common.model.request.comment.CommentUpdateRequest;
 import com.lodi.common.model.vo.CommentTreeVO;
+import com.lodi.common.model.vo.CommentVO;
+import com.lodi.common.mybatis.page.PageRequest;
 import com.lodi.common.mybatis.service.impl.BaseServiceImpl;
 import com.lodi.common.satoken.utils.LoginHelper;
 import com.lodi.xo.mapper.ArticleMapper;
@@ -89,6 +91,29 @@ public class CommentServiceImpl extends BaseServiceImpl<CommentMapper, Comment> 
         // 4.设置评论人id
         comment.setUserId(userId);
         return save(comment);
+    }
+
+    @Override
+    public Page<CommentVO> getCommentByCurrentUser(PageRequest pageRequest) {
+        Long userId = LoginHelper.getUserId();
+        // 构建分页
+        Page<Comment> page = new Page<>(pageRequest.getCurrentPage(), pageRequest.getPageSize());
+        // 构建条件
+        LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Comment::getUserId, userId);
+        // 获取用户评论
+        Page<Comment> commentPage = baseMapper.selectPage(page, queryWrapper);
+        Page<CommentVO> commentVOPage = CommentConvert.INSTANCE.toVO(commentPage);
+        List<CommentVO> commentVOList = commentVOPage.getRecords();
+
+        // 设置基本信息
+        String username = LoginHelper.getUsername();
+        String userAvatar = LoginHelper.getLoginUser().getUserAvatar();
+        for (CommentVO commentVO : commentVOList) {
+            commentVO.setUsername(username);
+            commentVO.setUserAvatar(userAvatar);
+        }
+        return commentVOPage;
     }
 
     @Override

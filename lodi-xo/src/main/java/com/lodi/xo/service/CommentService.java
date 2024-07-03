@@ -7,6 +7,8 @@ import com.lodi.common.model.request.comment.CommentPageRequest;
 import com.lodi.common.model.request.comment.CommentQueryRequest;
 import com.lodi.common.model.request.comment.CommentUpdateRequest;
 import com.lodi.common.model.vo.CommentTreeVO;
+import com.lodi.common.model.vo.CommentVO;
+import com.lodi.common.mybatis.page.PageRequest;
 import com.lodi.common.mybatis.service.BaseService;
 
 /**
@@ -24,6 +26,14 @@ public interface CommentService extends BaseService<Comment> {
      * @return
      */
     Boolean insertComment(CommentAddRequest addRequest);
+
+    /**
+     * 获取当前用户的评论
+     *
+     * @param pageRequest 分页请求体
+     * @return
+     */
+    Page<CommentVO> getCommentByCurrentUser(PageRequest pageRequest);
 
     /**
      * 更新评论

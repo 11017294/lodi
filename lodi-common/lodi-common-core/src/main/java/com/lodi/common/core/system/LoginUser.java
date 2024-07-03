@@ -29,6 +29,11 @@ public class LoginUser implements Serializable {
     private String nickname;
 
     /**
+     * 头像
+     */
+    private String userAvatar;
+
+    /**
      * 状态
      */
     private Integer status;
