@@ -30,6 +30,10 @@
         </dependency>
         <dependency>
             <groupId>com.lodi</groupId>
+            <artifactId>lodi-common-mybatis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.lodi</groupId>
             <artifactId>lodi-common-redis</artifactId>
         </dependency>
         <dependency>

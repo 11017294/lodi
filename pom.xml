@@ -21,6 +21,7 @@
         <module>lodi-job</module>
         <module>lodi-gen</module>
         <module>lodi-file</module>
+        <module>lodi-sms</module>
     </modules>
 
     <!--环境配置-->
@@ -243,6 +244,11 @@
             <dependency>
                 <groupId>com.lodi</groupId>
                 <artifactId>lodi-api</artifactId>
+                <version>${lodi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lodi</groupId>
+                <artifactId>lodi-common-mq</artifactId>
                 <version>${lodi.version}</version>
             </dependency>
         </dependencies>

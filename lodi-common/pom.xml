@@ -22,6 +22,7 @@
         <module>lodi-common-mybatis</module>
         <module>lodi-common-web</module>
         <module>lodi-common-satoken</module>
+        <module>lodi-common-mq</module>
     </modules>
 
 </project>
