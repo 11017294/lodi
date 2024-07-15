@@ -15,8 +15,8 @@ import com.lodi.common.model.vo.UserVO;
 import com.lodi.common.redis.utils.RedisUtils;
 import com.lodi.common.satoken.utils.LoginHelper;
 import com.lodi.xo.service.AuthService;
-import com.lodi.xo.service.MailService;
 import com.lodi.xo.service.UserService;
+import com.lodi.xo.utils.RabbitMQUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +42,7 @@ public class AuthServiceImpl implements AuthService {
     @Resource
     private UserService userService;
     @Resource
-    private MailService mailService;
+    private RabbitMQUtils rabbitMQUtils;
 
     public SaTokenInfo login(LoginRequest loginRequest) {
         String loginType = loginRequest.getLoginType();
@@ -122,9 +122,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public void sendEmailCode(String email) {
         String randomCode = StrUtils.randomCode();
-        // todo 后续将邮件模板放到数据库统一管理
-        String msg = String.format("您的验证码是：%s，请在五分钟内使用。为了您的账号安全，请勿将验证码告诉他人！", randomCode);
-        mailService.sendSimpleMail(email, "注册验证码", msg);
+        rabbitMQUtils.sendAuthCodeEmail(email, randomCode);
         RedisUtils.setCacheObject(String.format("emailCode:%s", email), randomCode, 300L, TimeUnit.SECONDS);
     }
 
