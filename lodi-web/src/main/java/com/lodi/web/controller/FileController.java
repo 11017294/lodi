@@ -7,12 +7,11 @@ import com.lodi.xo.service.FileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.annotation.Resource;
 
 /**
  * @author MaybeBin
@@ -21,11 +20,11 @@ import javax.annotation.Resource;
 @Slf4j
 @Tag(name = "文件相关接口")
 @RestController
+@AllArgsConstructor
 @RequestMapping("file")
 public class FileController {
 
-    @Resource
-    private FileService fileService;
+    private final FileService fileService;
 
     @Operation(summary = "头像上传")
     @PostMapping(value = "avatar")

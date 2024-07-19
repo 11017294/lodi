@@ -2,12 +2,11 @@ package com.lodi.xo.utils;
 
 import com.lodi.common.core.constant.MQConstant;
 import com.lodi.common.model.dto.MailDTO;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
 
 import static com.lodi.common.core.constant.EmailTemplateConstant.AUTH_CODE_TEMPLATE;
 
@@ -20,10 +19,10 @@ import static com.lodi.common.core.constant.EmailTemplateConstant.AUTH_CODE_TEMP
 @Slf4j
 @Component
 @RefreshScope
+@AllArgsConstructor
 public class RabbitMQUtils {
 
-    @Resource
-    private RabbitTemplate rabbitTemplate;
+    private final RabbitTemplate rabbitTemplate;
 
     /**
      * 发送邮件

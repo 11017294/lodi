@@ -47,10 +47,10 @@ import static com.lodi.common.core.constant.StatusConstant.ON;
 @AllArgsConstructor
 public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> implements ArticleService {
 
-    private TagsService tagsService;
-    private CategoryService categoryService;
-    private UserService userService;
-    private CommentMapper commentsMapper;
+    private final TagsService tagsService;
+    private final CategoryService categoryService;
+    private final UserService userService;
+    private final CommentMapper commentsMapper;
 
     @Override
     public Boolean insertArticle(ArticleAddRequest addRequest) {

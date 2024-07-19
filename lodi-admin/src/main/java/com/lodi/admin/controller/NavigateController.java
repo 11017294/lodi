@@ -1,21 +1,22 @@
 package com.lodi.admin.controller;
 
-import com.lodi.common.model.entity.Navigate;
-import com.lodi.xo.service.NavigateService;
-import com.lodi.common.model.request.navigate.NavigateAddRequest;
-import com.lodi.common.model.request.navigate.NavigateUpdateRequest;
-import com.lodi.common.model.request.navigate.NavigatePageRequest;
-import com.lodi.common.model.convert.navigate.NavigateConvert;
-import com.lodi.common.model.vo.NavigateVO;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.Operation;
-import org.springdoc.api.annotations.ParameterObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.core.domain.Result;
 import com.lodi.common.core.exception.BusinessException;
+import com.lodi.common.model.convert.navigate.NavigateConvert;
+import com.lodi.common.model.entity.Navigate;
 import com.lodi.common.model.request.IdRequest;
+import com.lodi.common.model.request.navigate.NavigateAddRequest;
+import com.lodi.common.model.request.navigate.NavigatePageRequest;
+import com.lodi.common.model.request.navigate.NavigateUpdateRequest;
+import com.lodi.common.model.vo.NavigateVO;
+import com.lodi.xo.service.NavigateService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.*;
-import javax.annotation.Resource;
+
 import static com.lodi.common.core.enums.ErrorCode.NOT_FOUND_ERROR;
 
 /**
@@ -24,11 +25,11 @@ import static com.lodi.common.core.enums.ErrorCode.NOT_FOUND_ERROR;
  */
 @Tag(name = "导航", description = "导航")
 @RestController
+@AllArgsConstructor
 @RequestMapping("navigate")
 public class NavigateController {
 
-    @Resource
-    private NavigateService navigateService;
+    private final NavigateService navigateService;
 
     @Operation(summary = "获取导航分页")
     @GetMapping("page")

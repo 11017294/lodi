@@ -1,21 +1,22 @@
 package com.lodi.admin.controller;
 
-import com.lodi.common.model.entity.NavCategory;
-import com.lodi.xo.service.NavCategoryService;
-import com.lodi.common.model.request.navCategory.NavCategoryAddRequest;
-import com.lodi.common.model.request.navCategory.NavCategoryUpdateRequest;
-import com.lodi.common.model.request.navCategory.NavCategoryPageRequest;
-import com.lodi.common.model.convert.navCategory.NavCategoryConvert;
-import com.lodi.common.model.vo.NavCategoryVO;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.Operation;
-import org.springdoc.api.annotations.ParameterObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.core.domain.Result;
 import com.lodi.common.core.exception.BusinessException;
+import com.lodi.common.model.convert.navCategory.NavCategoryConvert;
+import com.lodi.common.model.entity.NavCategory;
 import com.lodi.common.model.request.IdRequest;
+import com.lodi.common.model.request.navCategory.NavCategoryAddRequest;
+import com.lodi.common.model.request.navCategory.NavCategoryPageRequest;
+import com.lodi.common.model.request.navCategory.NavCategoryUpdateRequest;
+import com.lodi.common.model.vo.NavCategoryVO;
+import com.lodi.xo.service.NavCategoryService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.*;
-import javax.annotation.Resource;
+
 import static com.lodi.common.core.enums.ErrorCode.NOT_FOUND_ERROR;
 
 /**
@@ -24,11 +25,11 @@ import static com.lodi.common.core.enums.ErrorCode.NOT_FOUND_ERROR;
  */
 @Tag(name = "导航分类表", description = "导航分类表")
 @RestController
+@AllArgsConstructor
 @RequestMapping("navCategory")
 public class NavCategoryController {
 
-    @Resource
-    private NavCategoryService navCategoryService;
+    private final NavCategoryService navCategoryService;
 
     @Operation(summary = "获取导航分类表分页")
     @GetMapping("page")

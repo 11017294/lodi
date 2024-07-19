@@ -9,6 +9,7 @@ import com.lodi.xo.service.ArticleService;
 import com.lodi.xo.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -26,13 +26,12 @@ import java.util.List;
 @Slf4j
 @Tag(name = "文章类别相关接口")
 @RestController
+@AllArgsConstructor
 @RequestMapping("category")
 public class CategoryController {
 
-    @Resource
-    private ArticleService articleService;
-    @Resource
-    private CategoryService categoryService;
+    private final ArticleService articleService;
+    private final CategoryService categoryService;
 
     @Operation(summary = "获取文章类别信息")
     @GetMapping("getCategoryList")

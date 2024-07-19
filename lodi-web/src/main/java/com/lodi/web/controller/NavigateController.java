@@ -15,13 +15,13 @@ import com.lodi.xo.service.NavCategoryService;
 import com.lodi.xo.service.NavigateService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 import static com.lodi.common.core.enums.ErrorCode.NOT_FOUND_ERROR;
@@ -32,13 +32,12 @@ import static com.lodi.common.core.enums.ErrorCode.NOT_FOUND_ERROR;
  */
 @Tag(name = "导航")
 @RestController
+@AllArgsConstructor
 @RequestMapping("navigate")
 public class NavigateController {
 
-    @Resource
-    private NavigateService navigateService;
-    @Resource
-    private NavCategoryService navCategoryService;
+    private final NavigateService navigateService;
+    private final NavCategoryService navCategoryService;
 
     @Operation(summary = "获取导航")
     @GetMapping("list")

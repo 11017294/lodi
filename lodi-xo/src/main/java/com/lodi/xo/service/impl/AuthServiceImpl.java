@@ -17,10 +17,10 @@ import com.lodi.common.satoken.utils.LoginHelper;
 import com.lodi.xo.service.AuthService;
 import com.lodi.xo.service.UserService;
 import com.lodi.xo.utils.RabbitMQUtils;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
@@ -37,12 +37,11 @@ import static com.lodi.common.core.enums.ErrorCode.*;
  * @createDate 2023-10-31
  */
 @Service
+@AllArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-    @Resource
-    private UserService userService;
-    @Resource
-    private RabbitMQUtils rabbitMQUtils;
+    private final UserService userService;
+    private final RabbitMQUtils rabbitMQUtils;
 
     public SaTokenInfo login(LoginRequest loginRequest) {
         String loginType = loginRequest.getLoginType();

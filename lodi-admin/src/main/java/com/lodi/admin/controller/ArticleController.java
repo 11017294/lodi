@@ -2,9 +2,9 @@ package com.lodi.admin.controller;
 
 import cn.dev33.satoken.annotation.SaCheckRole;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.lodi.common.core.domain.Result;
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
-import com.lodi.common.core.domain.Result;
 import com.lodi.common.model.convert.article.ArticleConvert;
 import com.lodi.common.model.entity.Article;
 import com.lodi.common.model.request.IdRequest;
@@ -16,11 +16,11 @@ import com.lodi.common.model.vo.ArticleVO;
 import com.lodi.xo.service.ArticleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.Arrays;
 
 /**
@@ -29,11 +29,11 @@ import java.util.Arrays;
  */
 @Tag(name = "文章管理", description = "文章管理")
 @RestController
+@AllArgsConstructor
 @RequestMapping("article")
 public class ArticleController {
 
-    @Resource
-    private ArticleService articleService;
+    private final ArticleService articleService;
 
     @Operation(summary = "获取文章分页")
     @GetMapping("page")

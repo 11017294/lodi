@@ -3,11 +3,11 @@ package com.lodi.sms.listener;
 import com.lodi.common.core.constant.MQConstant;
 import com.lodi.common.model.dto.MailDTO;
 import com.lodi.sms.util.SendMailUtils;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.Objects;
 
 /**
@@ -18,10 +18,10 @@ import java.util.Objects;
  */
 @Slf4j
 @Component
+@AllArgsConstructor
 public class EmailListener {
 
-    @Resource
-    private SendMailUtils sendMailUtils;
+    private final SendMailUtils sendMailUtils;
 
     @RabbitListener(queues = MQConstant.LODI_EMAIL)
     public void sendMail(MailDTO mailDTO) {

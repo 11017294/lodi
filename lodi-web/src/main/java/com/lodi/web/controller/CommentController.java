@@ -11,11 +11,10 @@ import com.lodi.common.mybatis.page.PageRequest;
 import com.lodi.xo.service.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
 
 /**
  * @author MaybeBin
@@ -23,11 +22,11 @@ import javax.annotation.Resource;
  */
 @Tag(name = "评论", description = "评论")
 @RestController
+@AllArgsConstructor
 @RequestMapping("comment")
 public class CommentController {
 
-    @Resource
-    private CommentService commentService;
+    private final CommentService commentService;
 
     @Operation(summary = "获取登录用户评论")
     @GetMapping("getCommentByCurrentUser")

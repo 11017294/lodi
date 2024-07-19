@@ -10,11 +10,11 @@ import com.lodi.common.model.entity.FileManager;
 import com.lodi.common.satoken.utils.LoginHelper;
 import com.lodi.xo.service.FileManagerService;
 import com.lodi.xo.service.FileService;
+import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
 import java.util.Objects;
 
 import static com.lodi.common.core.constant.FileConstant.FILE_BASE_PATH;
@@ -26,12 +26,11 @@ import static com.lodi.common.core.constant.FileConstant.FILE_BASE_PATH;
  * @createDate 2024-06-27
  */
 @Service
+@AllArgsConstructor
 public class FileServiceImpl implements FileService {
 
-    @Resource
-    private FileManagerService fileManagerService;
-    @Resource
-    private RemoteFileService remoteFileService;
+    private final FileManagerService fileManagerService;
+    private final RemoteFileService remoteFileService;
 
     @Override
     public String uploadAvatar(MultipartFile avatarFile) {

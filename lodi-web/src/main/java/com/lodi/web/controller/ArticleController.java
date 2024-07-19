@@ -10,12 +10,11 @@ import com.lodi.common.model.vo.ArticleVO;
 import com.lodi.xo.service.ArticleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
 
 /**
  * @author MaybeBin
@@ -24,11 +23,11 @@ import javax.annotation.Resource;
 @Slf4j
 @Tag(name = "文章相关接口")
 @RestController
+@AllArgsConstructor
 @RequestMapping("article")
 public class ArticleController {
 
-    @Resource
-    private ArticleService articleService;
+    private final ArticleService articleService;
 
     @Operation(summary = "新增文章")
     @PostMapping("add")

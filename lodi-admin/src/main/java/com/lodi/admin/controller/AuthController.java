@@ -9,10 +9,9 @@ import com.lodi.xo.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.annotation.Resource;
 
 /**
  * @author MaybeBin
@@ -20,11 +19,11 @@ import javax.annotation.Resource;
  */
 @Tag(name = "用户认证")
 @RestController
+@AllArgsConstructor
 @RequestMapping("auth")
 public class AuthController {
 
-    @Resource
-    private AuthService authService;
+    private final AuthService authService;
 
     @Operation(summary = "登录")
     @PostMapping("login")

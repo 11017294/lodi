@@ -10,16 +10,14 @@ import com.lodi.common.model.entity.User;
 import com.lodi.common.model.request.IdRequest;
 import com.lodi.common.model.request.user.UserSelfUpdateRequest;
 import com.lodi.common.model.vo.UserInfoVO;
-import com.lodi.common.satoken.utils.LoginHelper;
 import com.lodi.xo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.annotation.Resource;
 
 import static com.lodi.common.core.constant.StatusConstant.DELETE;
 import static com.lodi.common.core.constant.StatusConstant.OFF;
@@ -30,13 +28,12 @@ import static com.lodi.common.core.constant.StatusConstant.OFF;
  */
 @Tag(name = "用户信息相关接口")
 @RestController
+@AllArgsConstructor
 @RequestMapping("user")
 public class UserController {
 
-    @Resource
-    private UserService userService;
-    @Resource
-    private RemoteFileService remoteFileService;
+    private final UserService userService;
+    private final RemoteFileService remoteFileService;
 
     @Operation(summary = "更新用户个人信息")
     @PutMapping("updateUserInfo")

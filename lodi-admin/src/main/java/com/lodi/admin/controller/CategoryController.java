@@ -1,8 +1,8 @@
 package com.lodi.admin.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lodi.common.core.exception.BusinessException;
 import com.lodi.common.core.domain.Result;
+import com.lodi.common.core.exception.BusinessException;
 import com.lodi.common.model.convert.category.CategoryConvert;
 import com.lodi.common.model.entity.Category;
 import com.lodi.common.model.request.IdRequest;
@@ -13,11 +13,11 @@ import com.lodi.common.model.vo.CategoryVO;
 import com.lodi.xo.service.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 import static com.lodi.common.core.enums.ErrorCode.NOT_FOUND_ERROR;
@@ -28,11 +28,11 @@ import static com.lodi.common.core.enums.ErrorCode.NOT_FOUND_ERROR;
  */
 @Tag(name = "文章类别", description = "文章类别")
 @RestController
+@AllArgsConstructor
 @RequestMapping("category")
 public class CategoryController {
 
-    @Resource
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
 
     @Operation(summary = "获取文章类别分页")
     @GetMapping("page")

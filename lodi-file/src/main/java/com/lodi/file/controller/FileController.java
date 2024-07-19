@@ -1,16 +1,16 @@
 package com.lodi.file.controller;
 
+import com.lodi.common.core.domain.Result;
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
-import com.lodi.common.core.domain.Result;
 import com.lodi.file.service.FileService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
 import java.io.IOException;
 
 /**
@@ -21,10 +21,10 @@ import java.io.IOException;
  */
 @Slf4j
 @RestController
+@AllArgsConstructor
 public class FileController {
 
-    @Resource
-    private FileService fileService;
+    private final FileService fileService;
 
     @PostMapping("upload")
     public Result<String> upload(MultipartFile file, String fileDirectory) {

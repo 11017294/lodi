@@ -1,13 +1,12 @@
 package com.lodi.admin.controller;
 
 import cn.dev33.satoken.annotation.SaCheckRole;
-import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.api.RemoteFileService;
 import com.lodi.common.core.constant.FileDirectoryConstant;
+import com.lodi.common.core.domain.Result;
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
-import com.lodi.common.core.domain.Result;
 import com.lodi.common.model.convert.user.UserConvert;
 import com.lodi.common.model.entity.User;
 import com.lodi.common.model.request.IdRequest;
@@ -18,12 +17,12 @@ import com.lodi.common.model.vo.UserVO;
 import com.lodi.xo.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -32,13 +31,12 @@ import java.util.List;
  */
 @Tag(name = "用户管理", description = "用户管理")
 @RestController
+@AllArgsConstructor
 @RequestMapping("user")
 public class UserController {
 
-    @Resource
-    private UserService userService;
-    @Resource
-    private RemoteFileService remoteFileService;
+    private final UserService userService;
+    private final RemoteFileService remoteFileService;
 
     @SaCheckRole("admin")
     @Operation(summary = "获取用户列表")

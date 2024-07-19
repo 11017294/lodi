@@ -4,10 +4,9 @@ import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
 import com.lodi.file.utils.QiniuUtil;
 import com.qiniu.common.QiniuException;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 import static com.lodi.common.core.constant.FileConstant.FILE_BASE_PATH;
 
@@ -19,10 +18,10 @@ import static com.lodi.common.core.constant.FileConstant.FILE_BASE_PATH;
  */
 @Slf4j
 @Service
+@AllArgsConstructor
 public class QiniuFileServiceImpl implements FileService {
 
-    @Resource
-    private QiniuUtil qiniuUtil;
+    private final QiniuUtil qiniuUtil;
 
     @Override
     public String upload(byte[] file, String fileDirectory) {

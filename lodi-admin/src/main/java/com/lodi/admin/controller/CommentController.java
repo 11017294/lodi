@@ -1,21 +1,22 @@
 package com.lodi.admin.controller;
 
-import com.lodi.common.model.entity.Comment;
-import com.lodi.xo.service.CommentService;
-import com.lodi.common.model.request.comment.CommentAddRequest;
-import com.lodi.common.model.request.comment.CommentUpdateRequest;
-import com.lodi.common.model.request.comment.CommentPageRequest;
-import com.lodi.common.model.convert.comment.CommentConvert;
-import com.lodi.common.model.vo.CommentVO;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import io.swagger.v3.oas.annotations.Operation;
-import org.springdoc.api.annotations.ParameterObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.core.domain.Result;
 import com.lodi.common.core.exception.BusinessException;
+import com.lodi.common.model.convert.comment.CommentConvert;
+import com.lodi.common.model.entity.Comment;
 import com.lodi.common.model.request.IdRequest;
+import com.lodi.common.model.request.comment.CommentAddRequest;
+import com.lodi.common.model.request.comment.CommentPageRequest;
+import com.lodi.common.model.request.comment.CommentUpdateRequest;
+import com.lodi.common.model.vo.CommentVO;
+import com.lodi.xo.service.CommentService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.web.bind.annotation.*;
-import javax.annotation.Resource;
+
 import static com.lodi.common.core.enums.ErrorCode.NOT_FOUND_ERROR;
 
 /**
@@ -24,11 +25,11 @@ import static com.lodi.common.core.enums.ErrorCode.NOT_FOUND_ERROR;
  */
 @Tag(name = "评论", description = "评论")
 @RestController
+@AllArgsConstructor
 @RequestMapping("comment")
 public class CommentController {
 
-    @Resource
-    private CommentService commentService;
+    private final CommentService commentService;
 
     @Operation(summary = "获取评论分页")
     @GetMapping("page")

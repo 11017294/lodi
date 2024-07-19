@@ -1,8 +1,8 @@
 package com.lodi.admin.controller;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.lodi.common.core.exception.BusinessException;
 import com.lodi.common.core.domain.Result;
+import com.lodi.common.core.exception.BusinessException;
 import com.lodi.common.model.convert.tags.TagsConvert;
 import com.lodi.common.model.entity.Tags;
 import com.lodi.common.model.request.IdRequest;
@@ -13,11 +13,11 @@ import com.lodi.common.model.vo.TagsVO;
 import com.lodi.xo.service.TagsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 import static com.lodi.common.core.enums.ErrorCode.NOT_FOUND_ERROR;
@@ -28,11 +28,11 @@ import static com.lodi.common.core.enums.ErrorCode.NOT_FOUND_ERROR;
  */
 @Tag(name = "标签", description = "标签")
 @RestController
+@AllArgsConstructor
 @RequestMapping("tags")
 public class TagsController {
 
-    @Resource
-    private TagsService tagsService;
+    private final TagsService tagsService;
 
     @Operation(summary = "获取标签分页")
     @GetMapping("page")
