@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.lodi.common.core.enums.ErrorCode;
 import com.lodi.common.core.exception.BusinessException;
 import com.lodi.common.model.convert.user.UserConvert;
-import com.lodi.common.model.entity.Comment;
 import com.lodi.common.model.request.user.UserSelfUpdateRequest;
 import com.lodi.common.mybatis.service.impl.BaseServiceImpl;
 import com.lodi.common.model.entity.User;

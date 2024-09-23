@@ -31,7 +31,7 @@ public interface RedisKeyConstants {
     /**
      * 站点信息
      */
-    String SHOW_BASIC = "show_basic#1d";
+    String SHOW_BASIC = "show_basic#1h";
 
     /**
      * 分类列表
@@ -47,5 +47,15 @@ public interface RedisKeyConstants {
      * 导航分类列表
      */
     String NAV_CATEGORY_LIST = "nav_category_list#2h";
+
+    /**
+     * 各表数据统计
+     */
+    String DATA_COUNT = "user_comment_article_ip_count#5m";
+
+    /**
+     * 文章贡献度
+     */
+    String ARTICLE_CONTRIBUTE_COUNT = "article_contribute_count#1h";
 
 }

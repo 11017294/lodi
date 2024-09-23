@@ -16,6 +16,9 @@ import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import static com.lodi.common.core.constant.StatusConstant.OFF;
+import static com.lodi.common.core.constant.StatusConstant.ON;
+
 /**
  * @author MaybeBin
  * @createDate 2023-11-30
@@ -56,13 +59,13 @@ public class ArticleController {
     @Operation(summary = "发布文章")
     @PostMapping("publish")
     public Result<Boolean> publishArticle(@RequestBody @Validated IdRequest request) {
-        return Result.success(articleService.publishArticle(request.getId()));
+        return Result.success(articleService.togglePublishStatus(request.getId(), ON));
     }
 
     @Operation(summary = "取消发布文章")
     @PostMapping("cancelPublish")
     public Result<Boolean> cancelPublishArticle(@RequestBody @Validated IdRequest request) {
-        return Result.success(articleService.cancelPublishArticle(request.getId()));
+        return Result.success(articleService.togglePublishStatus(request.getId(), OFF));
     }
 
 }

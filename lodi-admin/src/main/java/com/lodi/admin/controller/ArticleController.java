@@ -23,6 +23,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 
+import static com.lodi.common.core.constant.StatusConstant.OFF;
+import static com.lodi.common.core.constant.StatusConstant.ON;
+
 /**
  * @author MaybeBin
  * @createDate 2023-09-22
@@ -81,6 +84,30 @@ public class ArticleController {
     @PutMapping("audit")
     public Result<Boolean> auditArticle(@RequestBody @Validated AuditArticleRequest auditRequest) {
         return Result.success(articleService.auditArticle(auditRequest));
+    }
+
+    @Operation(summary = "发布文章")
+    @PostMapping("publish")
+    public Result<Boolean> publishArticle(@RequestBody @Validated IdRequest request) {
+        return Result.success(articleService.togglePublishStatus(request.getId(), ON));
+    }
+
+    @Operation(summary = "取消发布文章")
+    @PostMapping("cancelPublish")
+    public Result<Boolean> cancelPublishArticle(@RequestBody @Validated IdRequest request) {
+        return Result.success(articleService.togglePublishStatus(request.getId(), OFF));
+    }
+
+    @Operation(summary = "开启评论")
+    @PostMapping("openComment")
+    public Result<Boolean> openComment(@RequestBody @Validated IdRequest request) {
+        return Result.success(articleService.toggleCommentStatus(request.getId(), ON));
+    }
+
+    @Operation(summary = "关闭评论")
+    @PostMapping("closeComment")
+    public Result<Boolean> closeComment(@RequestBody @Validated IdRequest request) {
+        return Result.success(articleService.toggleCommentStatus(request.getId(), OFF));
     }
 
 }

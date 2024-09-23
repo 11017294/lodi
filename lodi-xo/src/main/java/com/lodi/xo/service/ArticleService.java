@@ -178,18 +178,28 @@ public interface ArticleService extends BaseService<Article> {
     Page<ArticleVO> getArticleByUserId(ArticleByUserIdRequest request);
 
     /**
-     * 发布文章
+     * 变更评论状态
      *
-     * @param id
+     * @param id 文章id
+     * @param status 评论状态
      * @return
      */
-    Boolean publishArticle(Long id);
+    Boolean toggleCommentStatus(Long id, Integer status);
 
     /**
-     * 取消发布文章
+     * 变更文章公布状态
      *
-     * @param id
+     * @param id 文章id
+     * @param status 状态
      * @return
      */
-    Boolean cancelPublishArticle(Long id);
+    Boolean togglePublishStatus(Long id, Integer status);
+
+    /**
+     * 获取文章贡献度
+     *
+     * @return
+     */
+    Object getArticleContributeCount();
+
 }

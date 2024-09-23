@@ -18,15 +18,6 @@ public class ArticlePageRequest extends PageRequest {
 
     private static final long serialVersionUID = 1L;
 
-    @Schema(description = "标题")
-    private String title;
-
-    @Schema(description = "文章简介")
-    private String summary;
-
-    @Schema(description = "内容")
-    private String content;
-
     @Schema(description = "作者ID")
     private Long userId;
 

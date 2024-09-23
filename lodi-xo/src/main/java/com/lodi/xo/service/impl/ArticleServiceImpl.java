@@ -25,10 +25,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.lodi.common.core.constant.ArticleConstant.CONTENT;
@@ -121,11 +121,11 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
     }
 
     private LambdaQueryWrapper<Article> buildQueryWrapper(ArticlePageRequest pageRequest) {
+        String keyword = pageRequest.getKeyword();
         return new LambdaQueryWrapper<Article>()
-                .like(StringUtils.isNotBlank(pageRequest.getTitle()), Article::getTitle, pageRequest.getTitle())
-                .like(StringUtils.isNotBlank(pageRequest.getSummary()), Article::getSummary, pageRequest.getSummary())
-                .like(StringUtils.isNotBlank(pageRequest.getContent()), Article::getContent, pageRequest.getContent())
+                .and(StringUtils.isNotBlank(keyword), i -> i.like(Article::getTitle, keyword).or().like(Article::getSummary, keyword))
                 .eq(Objects.nonNull(pageRequest.getUserId()), Article::getUserId, pageRequest.getUserId())
+                .like(StringUtils.isNoneBlank(pageRequest.getTagsId()), Article::getTagsId, pageRequest.getTagsId())
                 .eq(Objects.nonNull(pageRequest.getCategoryId()), Article::getCategoryId, pageRequest.getCategoryId())
                 .eq(Objects.nonNull(pageRequest.getIsPublish()), Article::getIsPublish, pageRequest.getIsPublish())
                 .eq(Objects.nonNull(pageRequest.getOpenComment()), Article::getOpenComment, pageRequest.getOpenComment())
@@ -393,22 +393,47 @@ public class ArticleServiceImpl extends BaseServiceImpl<ArticleMapper, Article> 
     }
 
     @Override
-    public Boolean publishArticle(Long id) {
+    public Boolean toggleCommentStatus(Long id, Integer status) {
         // 检查是否当前用户或管理员
         checkCurrentUserOrAdmin(id);
         LambdaUpdateWrapper<Article> updateWrapper = new LambdaUpdateWrapper<>();
-        updateWrapper.set(Article::getIsPublish, ON)
+        updateWrapper.set(Article::getOpenComment, status)
                 .eq(Article::getId, id);
         return update(updateWrapper);
     }
 
     @Override
-    public Boolean cancelPublishArticle(Long id) {
+    public Boolean togglePublishStatus(Long id, Integer status) {
         // 检查是否当前用户或管理员
         checkCurrentUserOrAdmin(id);
         LambdaUpdateWrapper<Article> updateWrapper = new LambdaUpdateWrapper<>();
-        updateWrapper.set(Article::getIsPublish, OFF)
+        updateWrapper.set(Article::getIsPublish, status)
                 .eq(Article::getId, id);
         return update(updateWrapper);
     }
+
+    @Override
+    public Object getArticleContributeCount() {
+        // 获取日期范围
+        LocalDate endDate = LocalDate.now();
+        LocalDate startDate = endDate.minusYears(1);
+        // 获取时间范围
+        LocalDateTime startDateTime = LocalDateTime.of(startDate, LocalTime.MIN);
+        LocalDateTime endDateTime = LocalDateTime.of(endDate, LocalTime.MAX);
+
+        log.info("文章贡献度统计时间范围：{} - {}", startDateTime, endDateTime);
+        List<Map<String, Object>> articleContributeCount = baseMapper.getArticleContributeCount(startDateTime, endDateTime);
+
+        // 转换为所需的格式
+        List<List<Object>> list = articleContributeCount.stream()
+                .map(map -> Arrays.asList(map.get("dateDate"), map.get("count")))
+                .collect(Collectors.toList());
+
+        Map<String, Object> map = new HashMap<>();
+        LocalDate[] dateRange = new LocalDate[]{startDate, endDate};
+        map.put("dateRange", dateRange);
+        map.put("contributeCount", list);
+        return map;
+    }
+
 }
