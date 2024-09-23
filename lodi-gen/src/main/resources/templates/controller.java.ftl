@@ -10,6 +10,7 @@ import ${VO.packageName}.${entity}${VO.postfix};
 <#if superControllerClassPackage??>
 import ${superControllerClassPackage};
 </#if>
+import lombok.AllArgsConstructor;
 <#if springdoc>
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,7 +21,6 @@ import ${result};
 import com.lodi.common.core.exception.BusinessException;
 import com.lodi.common.model.request.IdRequest;
 import org.springframework.web.bind.annotation.*;
-import javax.annotation.Resource;
 import static com.lodi.common.core.enums.ErrorCode.NOT_FOUND_ERROR;
 
 /**
@@ -35,6 +35,7 @@ import static com.lodi.common.core.enums.ErrorCode.NOT_FOUND_ERROR;
 <#else>
 @Controller
 </#if>
+@AllArgsConstructor
 @RequestMapping("<#if package.ModuleName?? && package.ModuleName != "">${package.ModuleName}/</#if><#if controllerMappingHyphenStyle>${controllerMappingHyphen}/<#else>${table.entityPath}</#if>")
 <#if kotlin>
 class ${table.controllerName}<#if superControllerClass??> : ${superControllerClass}()</#if>
@@ -45,8 +46,7 @@ public class ${table.controllerName} extends ${superControllerClass} {
 public class ${table.controllerName} {
 </#if>
 
-    @Resource
-    private ${table.serviceName} ${table.entityPath}Service;
+    private final ${table.serviceName} ${table.entityPath}Service;
 
 <#if springdoc>
     @Operation(summary = "获取${table.comment}分页")
